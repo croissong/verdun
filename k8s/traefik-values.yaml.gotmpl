@@ -21,6 +21,8 @@ acme:
   staging: false
   dnsProvider:
     name: digitalocean
+    digitalocean:
+      DO_AUTH_TOKEN: {{ .Environment.Values.traefik.acme.DOAuthToken }}
   logging: false
   domains:
     enabled: true
@@ -28,9 +30,13 @@ acme:
       - main: "*.patrician.gold"
       - sans:
         - "patrician.gold"
+    
 dashboard:
   domain: traefik.patrician.gold
   enabled: true
+  ingress:
+    annotations:
+      "traefik.ingress.kubernetes.io/whitelist-source-range": {{ .Environment.Values.traefik.dashboard.whitelistSourceRange }}
 ssl:
   enabled: true
   enforced: true
@@ -38,4 +44,4 @@ ssl:
 rbac:
   enabled: true
 debug:
-  enabled: false
+  enabled: false      

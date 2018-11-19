@@ -5,6 +5,10 @@ helmDefaults:
   verify: true
   wait: true
 
+environments:
+  default:
+    secrets:
+      - helm_vars/secrets.yaml
 
 releases:
 - name: traefik
@@ -12,13 +16,4 @@ releases:
   chart: stable/traefik
   version: ~1.52.6
   values:
-    - traefik-values.yaml
-    - acme:
-        dnsProvider:
-          digitalocean:
-            DO_AUTH_TOKEN: {{ requiredEnv "DO_AUTH_TOKEN" }}
-    - dashboard:
-        ingress:
-          annotations:
-            "traefik.ingress.kubernetes.io/whitelist-source-range": {{ requiredEnv "TRAEFIK_PRIV_SOURCERANGE" }}
-  
+    - traefik-values.yaml.gotmpl
