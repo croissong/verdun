@@ -1,0 +1,41 @@
+imageTag: 1.7.4
+cpuRequest: 200m
+cpuLimit: 400m
+memoryRequest: 100Mi
+memoryLimit: 500Mi
+serviceType: ClusterIP
+externalTrafficPolicy: ""
+deploymentStrategy:
+  type: Recreate
+deployment:
+  hostPort:
+    httpEnabled: true
+    httpsEnabled: true
+acme:
+  enabled: true
+  persistence:
+    enabled: true
+    size: 1Gi
+  email: jan.moeller0@gmail.com
+  challengeType: dns-01
+  staging: false
+  dnsProvider:
+    name: digitalocean
+  logging: false
+  domains:
+    enabled: true
+    domainsList:
+      - main: "*.patrician.gold"
+      - sans:
+        - "patrician.gold"
+dashboard:
+  domain: traefik.patrician.gold
+  enabled: true
+ssl:
+  enabled: true
+  enforced: true
+  permanentRedirect: true
+rbac:
+  enabled: true
+debug:
+  enabled: false

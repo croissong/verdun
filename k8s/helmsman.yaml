@@ -1,0 +1,25 @@
+metadata:
+  maintainer: "jan.moeller0@gmail.com"
+  description: "Verdun Desired State File"
+
+namespaces:
+  traefik:
+    protected: false
+
+helmRepos:
+  stable: "https://kubernetes-charts.storage.googleapis.com"
+  # local: http://127.0.0.1:8879
+
+apps:
+  traefik:
+    namespace: "traefik"
+    enabled: true
+    chart: "stable/traefik"
+    version: "1.52.6"
+    name: "traefik"
+    description: "traefik edge router"
+    valuesFile: "./traefik.yaml"
+    set:
+      acme.dnsProvider.digitalocean.DO_AUTH_TOKEN: "$DO_AUTH_TOKEN"
+      dashboard.ingress.annotations."traefik\.ingress\.kubernetes\.io/whitelist-source-range": "$TRAEFIK_PRIV_SOURCERANGE"
+    wait: true
