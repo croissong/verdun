@@ -1,3 +1,3 @@
 ``` shell
-helmsman --show-diff  -f helmsman.yaml -f helmsman-dev.yaml
+set -a; . .env; set +a; helmfile diff
  ```

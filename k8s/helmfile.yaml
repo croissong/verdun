@@ -1,0 +1,24 @@
+context: {{ requiredEnv "KUBECONTEXT" }}
+
+helmDefaults:
+  tillerNamespace: kube-system  #dedicated default key for tiller-namespace
+  verify: true
+  wait: true
+
+
+releases:
+- name: traefik
+  namespace: traefik
+  chart: stable/traefik
+  version: ~1.52.6
+  values:
+    - traefik-values.yaml
+    - acme:
+        dnsProvider:
+          digitalocean:
+            DO_AUTH_TOKEN: {{ requiredEnv "DO_AUTH_TOKEN" }}
+    - dashboard:
+        ingress:
+          annotations:
+            "traefik.ingress.kubernetes.io/whitelist-source-range": {{ requiredEnv "TRAEFIK_PRIV_SOURCERANGE" }}
+  
