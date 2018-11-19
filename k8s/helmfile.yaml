@@ -2,8 +2,8 @@ context: {{ requiredEnv "KUBECONTEXT" }}
 
 helmDefaults:
   tillerNamespace: kube-system  #dedicated default key for tiller-namespace
-  verify: true
   wait: true
+  recreatePods: false
 
 environments:
   default:
@@ -16,4 +16,14 @@ releases:
   chart: stable/traefik
   version: ~1.52.6
   values:
-    - traefik-values.yaml.gotmpl
+    - "./traefik-values.yaml.gotmpl"
+- name: matrix-synapse
+  namespace: comm-tools
+  chart: ./comm-tools/matrix-synapse/
+  verify: false
+  values:
+    - matrix-synapse-values.yaml.gotmpl
+- name: matrix-riot
+  namespace: comm-tools
+  chart: ./comm-tools/matrix-riot/
+  verify: false

@@ -1,0 +1,63 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "helm-chart.fullname" . }}-config
+  labels:
+    app: {{ include "helm-chart.name" . }}
+    chart: {{ include "helm-chart.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+data:
+  config.json: |
+    {
+        "default_hs_url": "https://matrix.patrician.gold",
+        "default_is_url": "https://vector.im",
+        "default_theme": "dark",
+        "brand": "Riot",
+        "integrations_ui_url": "https://scalar-staging.riot.im/scalar-web/",
+        "integrations_rest_url": "https://scalar-staging.riot.im/scalar/api",
+        "integrations_widgets_urls": [
+            "https://scalar-staging.riot.im/scalar/api",
+            "https://scalar.vector.im/api"
+        ],
+        "bug_report_endpoint_url": "https://riot.im/bugreports/submit",
+        "features": {
+            "feature_rich_quoting": "labs",
+            "feature_pinning": "labs",
+            "feature_presence_management": "labs",
+            "feature_sticker_messages": "labs",
+            "feature_jitsi": "labs",
+            "feature_tag_panel": "enable",
+            "feature_lazyloading": "enable"
+        },
+        "teamServerConfig": {
+            "supportEmail": "support@riot.im",
+            "teamServerURL": "https://riot.im/rts"
+        },
+        "teamTokenMap": {
+            "matrix": "88b6e5b3785960ab",
+            "geektime": "00065f1403571278",
+            "chatbotsummit": "ff5218fc50552903",
+            "studenthack": "2fa79727cc3f56df"
+        },
+        "referralBaseUrl": "https://riot.im/develop",
+        "welcomeUserId": "@riot-bot:matrix.org",
+        "piwik": {
+            "url": "https://piwik.riot.im/",
+            "siteId": 1,
+            "policyUrl": "https://matrix.org/docs/guides/riot_im_cookie_policy"
+        },
+        "enable_presence_by_hs_url": {
+            "https://matrix.org": false
+        },
+        "terms_and_conditions_links": [
+            {
+                "url": "https://riot.im/privacy",
+                "text": "Privacy Policy"
+            },
+            {
+                "url": "https://matrix.org/docs/guides/riot_im_cookie_policy",
+                "text": "Cookie Policy"
+            }
+        ]
+    }
