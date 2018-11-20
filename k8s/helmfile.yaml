@@ -27,3 +27,7 @@ releases:
   namespace: comm-tools
   chart: ./comm-tools/matrix-riot/
   verify: false
+- name: mumble
+  namespace: comm-tools
+  chart: ./comm-tools/mumble/
+  verify: false
