@@ -18,21 +18,21 @@ releases:
   values:
     - "./traefik-values.yaml.gotmpl"
 - name: matrix-synapse
-  namespace: comm-tools
-  chart: ./comm-tools/matrix-synapse/
+  namespace: charts
+  chart: ./charts/matrix-synapse/
   verify: false
   values:
     - matrix-synapse-values.yaml.gotmpl
 - name: matrix-riot
-  namespace: comm-tools
-  chart: ./comm-tools/matrix-riot/
+  namespace: charts
+  chart: ./charts/matrix-riot/
   verify: false
 - name: mumble
-  namespace: comm-tools
-  chart: ./comm-tools/mumble/
+  namespace: charts
+  chart: ./charts/mumble/
   verify: false
 - name: nextcloud
   namespace: nextcloud
-  chart: ./nextcloud
+  chart: ./charts/nextcloud
   verify: false
   recreatePods: true
