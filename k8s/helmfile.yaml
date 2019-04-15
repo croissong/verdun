@@ -31,8 +31,8 @@ releases:
   namespace: comm-tools
   chart: ./my-charts/mumble/
   verify: false
-- name: nextcloud
-  namespace: nextcloud
-  chart: ./my-charts/nextcloud
-  verify: false
-  recreatePods: true
+# - name: nextcloud
+#   namespace: nextcloud
+#   chart: ./my-charts/nextcloud
+#   verify: false
+#   recreatePods: true
