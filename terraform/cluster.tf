@@ -1,3 +1,4 @@
+# TODO: set enable_auto_upgrades once avaialable
 resource "digitalocean_kubernetes_cluster" "verdun" {
   name    = "verdun"
   region  = "fra1"

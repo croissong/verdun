@@ -1,7 +1,7 @@
 context: {{ requiredEnv "KUBECONTEXT" }}
 
 helmDefaults:
-  tillerNamespace: kube-system  #dedicated default key for tiller-namespace
+  tillerNamespace: kube-system
   wait: true
   recreatePods: false
 
@@ -31,8 +31,3 @@ releases:
   namespace: comm-tools
   chart: ./my-charts/mumble/
   verify: false
-# - name: nextcloud
-#   namespace: nextcloud
-#   chart: ./my-charts/nextcloud
-#   verify: false
-#   recreatePods: true
