@@ -30,6 +30,8 @@ data:
         x_forwarded: false
 
         resources:
+          - names: [client]
+            compress: true
           - names: [federation]
             compress: false
 

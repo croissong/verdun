@@ -17,6 +17,7 @@ releases:
   namespace: traefik
   chart: ./my-charts/traefik/
   version: ~1.68.1
+  recreatePods: true
   values:
     - imageTag: 1.7.10-alpine
     - ./traefik-values.yml.gotmpl
@@ -39,4 +40,5 @@ releases:
 - name: mumble
   namespace: comm-tools
   chart: ./my-charts/mumble/
+  recreatePods: true
   verify: false

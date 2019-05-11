@@ -8,6 +8,7 @@ metadata:
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
 data:
+  # https://github.com/vector-im/riot-web/blob/develop/config.sample.json
   config.json: |
     {
         "default_hs_url": "https://matrix.patrician.gold",

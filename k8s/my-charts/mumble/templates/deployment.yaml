@@ -19,6 +19,7 @@ spec:
         app: {{ include "helm-chart.name" . }}
         release: {{ .Release.Name }}
     spec:
+      hostNetwork: true
       securityContext:
         fsGroup: 1000
       containers:
