@@ -24,6 +24,71 @@ data "digitalocean_droplet" "verdun_node" {
   name = "${local.node_name}"
 }
 
+resource "digitalocean_firewall" "verdun_infra" {
+  name = "verdun-infra"
+
+  droplet_ids = ["${data.digitalocean_droplet.verdun_node.id}"]
+
+  inbound_rule {
+      protocol           = "icmp"
+      source_addresses   = ["0.0.0.0/0", "::/0"]
+  }
+
+  inbound_rule {
+      protocol           = "tcp"
+      port_range         = "1-65535"
+      source_addresses   = ["10.0.0.0/8", "172.16.0.0/20", "192.168.0.0/16"]
+  }
+
+  inbound_rule {
+      protocol           = "udp"
+      port_range         = "1-65535"
+      source_addresses   = ["10.0.0.0/8", "172.16.0.0/20", "192.168.0.0/16"]
+  }
+
+  inbound_rule {
+      protocol           = "tcp"
+      port_range         = "30000-32767"
+      source_addresses   = ["0.0.0.0/0"]
+  }
+
+  inbound_rule {
+      protocol           = "udp"
+      port_range         = "30000-32767"
+      source_addresses   = ["0.0.0.0/0"]
+  }
+
+  inbound_rule {
+      protocol           = "tcp"
+      port_range         = "80"
+      source_addresses   = ["0.0.0.0/0", "::/0"]
+  }
+
+  inbound_rule {
+      protocol           = "tcp"
+      port_range         = "443"
+      source_addresses   = ["0.0.0.0/0", "::/0"]
+  }
+
+  outbound_rule {
+      protocol                = "tcp"
+      port_range              = "1-65535"
+      destination_addresses   = ["0.0.0.0/0", "::/0"]
+  }
+
+  outbound_rule {
+      protocol                = "udp"
+      port_range              = "1-65535"
+      destination_addresses   = ["0.0.0.0/0", "::/0"]
+  }
+
+  outbound_rule {
+      protocol                = "icmp"
+      destination_addresses   = ["0.0.0.0/0", "::/0"]
+  }
+}
+
+
 output "cluster_context" {
   value = "${local.cluster_context}"
 }

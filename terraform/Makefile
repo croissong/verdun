@@ -2,10 +2,10 @@ init:
 	terraform init
 
 check-vars:
-	test $(do_token)
-	test $(circleci_token)
-	test $(do_token_get_kubeconf)
-	test $(helm_gpg_key_b64)
+	@test $(do_token) || (echo 'do_token is not defined' && exit 1)
+	@test $(circleci_token) || (echo 'circleci_token is not defined' && exit 1)
+	@test $(do_token_get_kubeconf) || (echo 'do_token_get_kubeconf is not defined' && exit 1)
+	@test $(helm_gpg_key_b64) || (echo 'helm_gpg_key_b64 is not defined' && exit 1)
 
 plan: check-vars init
 	terraform plan -var "do_token=$(do_token)" -var "circleci_token=$(circleci_token)" -var "do_token_get_kubeconf=$(do_token_get_kubeconf)" -var helm_gpg_key_b64=$(helm_gpg_key_b64)
