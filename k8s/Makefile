@@ -5,10 +5,10 @@ get-kubeconf:
 	@curl -s -H "Authorization: Bearer $(do_token)" "https://api.digitalocean.com/v2/kubernetes/clusters/$(cluster_id)/kubeconfig" > $(kubeconf)
 
 check-vars:
-	test $(kubectx)
+	@test $(kubectx) || (echo 'kubectx is not defined' && exit 1)
 
-apply: check-vars
-	KUBECONFIG=$(kubeconf) KUBECONTEXT=$(kubectx) helmfile apply
+sync: check-vars
+	KUBECONFIG=$(kubeconf) KUBECONTEXT=$(kubectx) helmfile sync
 
 diff: check-vars
 	KUBECONFIG=$(kubeconf) KUBECONTEXT=$(kubectx) helmfile diff

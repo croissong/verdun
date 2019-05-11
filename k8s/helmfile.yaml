@@ -2,6 +2,7 @@ context: {{ requiredEnv "KUBECONTEXT" }}
 
 helmDefaults:
   tillerNamespace: tiller
+  atomic: true
   wait: true
   recreatePods: false
 
