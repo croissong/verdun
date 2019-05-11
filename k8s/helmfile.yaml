@@ -11,18 +11,22 @@ environments:
       - helm_vars/secrets.yaml
 
 releases:
+
 - name: traefik
   namespace: traefik
   chart: stable/traefik
-  version: ~1.66.0
+  version: ~1.68.1
   values:
+    - imageTag: 1.7.10-alpine
     - ./traefik-values.yml.gotmpl
+
 - name: matrix-synapse
   namespace: comm-tools
   chart: ./my-charts/matrix-synapse/
   verify: false
   values:
     - matrix-synapse-values.yml.gotmpl
+
 - name: matrix-riot
   namespace: comm-tools
   chart: ./my-charts/matrix-riot/

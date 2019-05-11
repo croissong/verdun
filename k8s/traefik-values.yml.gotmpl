@@ -1,4 +1,3 @@
-imageTag: 1.7.10-alpine
 cpuRequest: 200m
 cpuLimit: 400m
 memoryRequest: 100Mi
@@ -34,9 +33,6 @@ acme:
 dashboard:
   domain: traefik.patrician.gold
   enabled: true
-  ingress:
-    annotations:
-      "traefik.ingress.kubernetes.io/whitelist-source-range": {{ .Environment.Values.traefik.dashboard.whitelistSourceRange }}
 ssl:
   enabled: true
   enforced: true
