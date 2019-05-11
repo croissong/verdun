@@ -1,4 +1,11 @@
+variable "circleci_token" {}
 variable "do_token_get_kubeconf" {}
+
+provider "circleci" {
+  api_token    = "${var.circleci_token}"
+  vcs_type     = "github"
+  organization = "Croissong"
+}
 
 resource "circleci_environment_variable" "do_token_get_kubeconf" {
   project = "verdun"

@@ -2,7 +2,7 @@
 resource "digitalocean_kubernetes_cluster" "verdun" {
   name    = "verdun"
   region  = "fra1"
-  version = "1.13.5-do.1"
+  version = "1.14.1-do.2"
 
   node_pool {
     name       = "worker-pool"
