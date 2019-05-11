@@ -1,0 +1,3 @@
+[submodule "terraform-provider-circleci"]
+	path = terraform/plugin_repos/terraform-provider-circleci
+	url = git@github.com:mrolla/terraform-provider-circleci.git
