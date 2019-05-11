@@ -16,13 +16,13 @@ releases:
   chart: stable/traefik
   version: ~1.66.0
   values:
-    - ./traefik-values.yml
+    - ./traefik-values.yml.gotmpl
 - name: matrix-synapse
   namespace: comm-tools
   chart: ./my-charts/matrix-synapse/
   verify: false
   values:
-    - matrix-synapse-values.yml
+    - matrix-synapse-values.yml.gotmpl
 - name: matrix-riot
   namespace: comm-tools
   chart: ./my-charts/matrix-riot/
