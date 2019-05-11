@@ -5,12 +5,13 @@ check-vars:
 	test $(do_token)
 	test $(circleci_token)
 	test $(do_token_get_kubeconf)
+	test $(helm_gpg_key_b64)
 
 plan: check-vars init
-	terraform plan -var "do_token=$(do_token)" -var "circleci_token=$(circleci_token)" -var "do_token_get_kubeconf=$(do_token_get_kubeconf)"
+	terraform plan -var "do_token=$(do_token)" -var "circleci_token=$(circleci_token)" -var "do_token_get_kubeconf=$(do_token_get_kubeconf)" -var helm_gpg_key_b64=$(helm_gpg_key_b64)
 
 apply: check-vars init
-	terraform apply -var "do_token=$(do_token)" -var "circleci_token=$(circleci_token)" -var "do_token_get_kubeconf=$(do_token_get_kubeconf)"
+	terraform apply -var "do_token=$(do_token)" -var "circleci_token=$(circleci_token)" -var "do_token_get_kubeconf=$(do_token_get_kubeconf)" -var helm_gpg_key_b64=$(helm_gpg_key_b64)
 
 tf-provider-circleci:
 	cd plugin_repos/terraform-provider-circleci
