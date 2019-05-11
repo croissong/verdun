@@ -14,5 +14,5 @@ jobs:
           paths:
             - "/var/cache/apk"
       - run: >
-          curl -s -H "Content-Type: application/json" -H "Authorization: Bearer $DO_TOKEN_GET_KUBECONF" "https://api.digitalocean.com/v2/kubernetes/clusters/$DO_K8S_CLUSTER_ID/kubeconfig" > kubeconfig.yaml
+          curl -s -H "Authorization: Bearer $DO_TOKEN_GET_KUBECONF" "https://api.digitalocean.com/v2/kubernetes/clusters/$DO_K8S_CLUSTER_ID/kubeconfig" > kubeconfig.yaml
       - run: kubectl --kubeconfig="$PWD/kubeconfig.yaml" get ns

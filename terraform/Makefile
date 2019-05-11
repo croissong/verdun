@@ -1,10 +1,15 @@
 init:
 	terraform init
 
-plan: init
+check-vars:
+	test $(do_token)
+	test $(circleci_token)
+	test $(do_token_get_kubeconf)
+
+plan: check-vars init
 	terraform plan -var "do_token=$(do_token)" -var "circleci_token=$(circleci_token)" -var "do_token_get_kubeconf=$(do_token_get_kubeconf)"
 
-apply: init
+apply: check-vars init
 	terraform apply -var "do_token=$(do_token)" -var "circleci_token=$(circleci_token)" -var "do_token_get_kubeconf=$(do_token_get_kubeconf)"
 
 tf-provider-circleci:

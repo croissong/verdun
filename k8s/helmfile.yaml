@@ -1,7 +1,7 @@
 context: {{ requiredEnv "KUBECONTEXT" }}
 
 helmDefaults:
-  tillerNamespace: kube-system
+  tillerNamespace: tiller
   wait: true
   recreatePods: false
 
@@ -16,13 +16,13 @@ releases:
   chart: stable/traefik
   version: ~1.66.0
   values:
-    - "./traefik-values.yaml.gotmpl"
+    - ./traefik-values.yml
 - name: matrix-synapse
   namespace: comm-tools
   chart: ./my-charts/matrix-synapse/
   verify: false
   values:
-    - matrix-synapse-values.yaml.gotmpl
+    - matrix-synapse-values.yml
 - name: matrix-riot
   namespace: comm-tools
   chart: ./my-charts/matrix-riot/

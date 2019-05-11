@@ -16,5 +16,11 @@ resource "circleci_environment_variable" "do_token_get_kubeconf" {
 resource "circleci_environment_variable" "k8s_cluster_id" {
   project = "verdun"
   name    = "DO_K8S_CLUSTER_ID"
-  value   = "${digitalocean_kubernetes_cluster.verdun.id}"
+  value   = "${local.cluster_id}"
+}
+
+resource "circleci_environment_variable" "k8s_cluster_context" {
+  project = "verdun"
+  name    = "K8S_CLUSTER_CONTEXT"
+  value   = "${local.cluster_context}"
 }

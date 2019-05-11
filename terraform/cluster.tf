@@ -12,16 +12,22 @@ resource "digitalocean_kubernetes_cluster" "verdun" {
   }
 }
 
-data "digitalocean_kubernetes_cluster" "verdun" {
-  name = "${digitalocean_kubernetes_cluster.verdun.name}"
-}
-
 locals {
-  node_pool = "${digitalocean_kubernetes_cluster.verdun.node_pool[0]}"
-  json = "${jsonencode(local.node_pool)}"
-  node_name = "${replace(local.json, "/.*worker-pool-([a-z0-9]+).*/", "worker-pool-$1")}"
+  cluster_id = "${digitalocean_kubernetes_cluster.verdun.id}"
+  node_pool = "${jsonencode(digitalocean_kubernetes_cluster.verdun.node_pool[0])}"
+  node_name = "${replace(local.node_pool, "/.*worker-pool-([a-z0-9]+).*/", "worker-pool-$1")}"
+  kube_config = "${jsonencode(digitalocean_kubernetes_cluster.verdun.kube_config.0.raw_config)}"
+  cluster_context = "${replace(local.kube_config, "/.*current-context: ([a-z0-9-]+).*/", "$1")}"
 }
 
 data "digitalocean_droplet" "verdun_node" {
   name = "${local.node_name}"
+}
+
+output "cluster_context" {
+  value = "${local.cluster_context}"
+}
+
+output "cluster_id" {
+  value = "${local.cluster_id}"
 }
