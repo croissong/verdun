@@ -13,7 +13,7 @@ data:
         "default_hs_url": "https://matrix.patrician.gold",
         "default_is_url": "https://vector.im",
         "disable_custom_urls": false,
-        "disable_guests": false,
+        "disable_guests": true,
         "default_theme": "dark",
         "brand": "Riot",
         "integrations_ui_url": "https://scalar.vector.im/",
@@ -26,7 +26,6 @@ data:
             "feature_pinning": "labs",
             "feature_presence_management": "labs",
             "feature_sticker_messages": "labs",
-            "feature_jitsi": "labs",
             "feature_tag_panel": "enable",
             "feature_lazyloading": "enable"
         },

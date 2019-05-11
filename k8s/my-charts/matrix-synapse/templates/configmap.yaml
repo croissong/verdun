@@ -8,14 +8,9 @@ metadata:
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
 data:
+  # https://github.com/matrix-org/synapse/blob/develop/docs/sample_config.yaml
   homeserver.yaml: |
-    # vim:ft=yaml
-
     ## TLS ##
-    
-    tls_certificate_path: "/data/{{ .Values.host }}.tls.crt"
-    tls_private_key_path: "/data/{{ .Values.host }}.tls.key"
-    tls_dh_params_path: "/data/{{ .Values.host }}.tls.dh"
     no_tls: True
 
     ## Server ##
@@ -35,8 +30,6 @@ data:
         x_forwarded: false
 
         resources:
-          - names: [client]
-            compress: true
           - names: [federation]
             compress: false
 
@@ -104,21 +97,11 @@ data:
 
     ## Captcha ##
 
-
-    recaptcha_public_key: "YOUR_PUBLIC_KEY"
-    recaptcha_private_key: "YOUR_PRIVATE_KEY"
     enable_registration_captcha: False
-    recaptcha_siteverify_api: "https://www.google.com/recaptcha/api/siteverify"
-
 
     ## Turn ##
 
-
     turn_uris: []
-    turn_shared_secret: "YOUR_SHARED_SECRET"
-    turn_user_lifetime: "1h"
-    turn_allow_guests: True
-
 
     ## Registration ##
 
@@ -135,8 +118,11 @@ data:
         - vector.im
         - riot.im
 
-    ## Metrics ###
+    auto_join_rooms:
+      - "#hansestadt:{{ .Values.host }}"
+    autocreate_auto_join_rooms: true
 
+    ## Metrics ###
 
     enable_metrics: False
     report_stats: False
@@ -159,7 +145,7 @@ data:
 
     ## Signing Keys ##
 
-    signing_key_path: "/data/matrix.patrician.gold.signing.key"
+    signing_key_path: "/data/{{ .Values.host }}.signing.key"
     old_signing_keys: {}
     key_refresh_interval: "1d" # 1 Day.
 
