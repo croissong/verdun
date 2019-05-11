@@ -25,12 +25,16 @@ releases:
   chart: ./my-charts/matrix-synapse/
   verify: false
   values:
+    - imageTag: v0.99.3.2-py3
+    - postgresql.image.tag: 11.3-alpine
     - matrix-synapse-values.yml.gotmpl
 
 - name: matrix-riot
   namespace: comm-tools
   chart: ./my-charts/matrix-riot/
   verify: false
+  values:
+    - imageTag: v1.1.0
 - name: mumble
   namespace: comm-tools
   chart: ./my-charts/mumble/

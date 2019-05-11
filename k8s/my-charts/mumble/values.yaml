@@ -1,3 +1,2 @@
-imageTag: latest
 persistence:
   size: 1Gi

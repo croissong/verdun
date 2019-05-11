@@ -1,2 +1,6 @@
 postgresql:
   postgresqlPassword: {{ .Environment.Values.synapse.postgresql.postgresqlPassword }}
+  resources:
+    requests:
+      memory: 256Mi
+      cpu: 150m

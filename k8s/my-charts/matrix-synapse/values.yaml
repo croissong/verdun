@@ -1,9 +1,7 @@
 host: matrix.patrician.gold
-imageTag: v0.99.3-py3
 
 persistence:
   size: 5Gi
 postgresql:
-  image.tag: 11.2-alpine
   postgresqlUsername: synapse
   postgresqlDatabase: synapse

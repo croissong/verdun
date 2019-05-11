@@ -19,5 +19,5 @@ jobs:
             make get-kubeconf do_token=$DO_TOKEN_GET_KUBECONF cluster_id=$DO_K8S_CLUSTER_ID
           working_directory: ~/project/k8s
       - run:
-          command: make status kubectx=$K8S_CLUSTER_CONTEXT
+          command: make apply kubectx=$K8S_CLUSTER_CONTEXT
           working_directory: ~/project/k8s
