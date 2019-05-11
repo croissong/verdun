@@ -15,7 +15,7 @@ releases:
 
 - name: traefik
   namespace: traefik
-  chart: stable/traefik
+  chart: ./my-charts/traefik/
   version: ~1.68.1
   values:
     - imageTag: 1.7.10-alpine

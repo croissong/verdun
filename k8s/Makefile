@@ -10,6 +10,9 @@ check-vars:
 sync: check-vars
 	KUBECONFIG=$(kubeconf) KUBECONTEXT=$(kubectx) helmfile sync
 
+apply: check-vars
+	KUBECONFIG=$(kubeconf) KUBECONTEXT=$(kubectx) helmfile apply
+
 diff: check-vars
 	KUBECONFIG=$(kubeconf) KUBECONTEXT=$(kubectx) helmfile diff
 
