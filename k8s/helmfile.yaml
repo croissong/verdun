@@ -36,7 +36,7 @@ releases:
   chart: ./my-charts/matrix-riot/
   verify: false
   values:
-    - imageTag: v1.1.1
+    - imageTag: v1.1.2
 - name: mumble
   namespace: comm-tools
   chart: ./my-charts/mumble/
