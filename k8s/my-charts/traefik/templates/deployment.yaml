@@ -181,6 +181,11 @@ spec:
             secretKeyRef:
               key: cookieSecret
               name: traefik-auth-proxy-conf-secrets
+        - name: OAUTH2_PROXY_GITHUB_ORG
+          valueFrom:
+            secretKeyRef:
+              key: githubOrg
+              name: traefik-auth-proxy-conf-secrets
         volumeMounts:
           - name: auth-proxy-conf
             mountPath: /opt/oauth2_proxy.cfg

@@ -9,10 +9,9 @@ metadata:
     heritage: {{ .Release.Service | quote }}
 data:
   oauth2_proxy.cfg: |
-    provider = "google"
+    provider = "github"
     skip_provider_button = true
     http_address = "0.0.0.0:3000"
-    request_logging = true
     email_domains = [
          "*"
     ]
@@ -22,3 +21,5 @@ data:
     upstreams = [
     "http://{{ .Values.authProxy.upstream }}"
     ]
+    request_logging = false
+    standard_logging = false
