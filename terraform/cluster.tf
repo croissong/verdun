@@ -84,6 +84,13 @@ resource "digitalocean_firewall" "verdun_infra" {
       source_addresses   = ["0.0.0.0/0", "::/0"]
   }
 
+  # rtmp
+  inbound_rule {
+      protocol           = "tcp"
+      port_range         = "1935"
+      source_addresses   = ["0.0.0.0/0", "::/0"]
+  }
+
   outbound_rule {
       protocol                = "tcp"
       port_range              = "1-65535"

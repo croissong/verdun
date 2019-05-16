@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
         - name: {{ .Chart.Name }}
-          image: tiangolo/nginx-rtmp: {{ .Values.imageTag}}
+          image: tiangolo/nginx-rtmp:{{ .Values.imageTag}}
           ports:
             - name: tcp
               containerPort: 1935

@@ -50,8 +50,17 @@ releases:
   verify: false
   values:
     - imageTag: v1.1.2
+
 - name: mumble
   namespace: comm-tools
   chart: ./my-charts/mumble/
   recreatePods: true
   verify: false
+
+- name: nginx-rtmp
+  namespace: comm-tools
+  chart: ./my-charts/nginx-rtmp/
+  verify: false
+  recreatePods: true
+  values:
+    - imageTag: latest
