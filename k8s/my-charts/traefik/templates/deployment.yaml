@@ -160,6 +160,35 @@ spec:
         - {{ . }}
         {{- end }}
 
+      - image: quay.io/pusher/oauth2_proxy:{{ .Values.authProxy.imageTag }}
+        imagePullPolicy: Always
+        name: auth-proxy
+        args:
+        - --config=/opt/oauth2_proxy.cfg
+        env:
+        - name: OAUTH2_PROXY_CLIENT_ID
+          valueFrom:
+            secretKeyRef:
+              key: clientId
+              name: traefik-auth-proxy-conf-secrets
+        - name: OAUTH2_PROXY_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              key: clientSecret
+              name: traefik-auth-proxy-conf-secrets
+        - name: OAUTH2_PROXY_COOKIE_SECRET
+          valueFrom:
+            secretKeyRef:
+              key: cookieSecret
+              name: traefik-auth-proxy-conf-secrets
+        volumeMounts:
+          - name: auth-proxy-conf
+            mountPath: /opt/oauth2_proxy.cfg
+            subPath: oauth2_proxy.cfg
+        ports:
+        - containerPort: 3000
+          protocol: TCP
+
       volumes:
       - name: config
         configMap:
@@ -188,6 +217,9 @@ spec:
         secret:
           secretName: {{ template "traefik.fullname" $ }}-secrets
       {{- end }}
+      - name: auth-proxy-conf
+        configMap:
+          name: traefik-auth-proxy-conf
       {{- if and (.Values.tolerations) (semverCompare "^1.6-0" .Capabilities.KubeVersion.GitVersion) }}
       tolerations:
 {{ toYaml .Values.tolerations | indent 6 }}
