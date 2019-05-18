@@ -41,6 +41,7 @@ resource "kubernetes_cluster_role_binding" "tiller" {
 }
 
 provider "helm" {
+  version = "~> 0.9"
   namespace = "tiller"
   install_tiller  = true
   tiller_image = "gcr.io/kubernetes-helm/tiller:canary"
