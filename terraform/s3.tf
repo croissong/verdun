@@ -1,5 +1,5 @@
-resource "digitalocean_spaces_bucket" "verdun_backup" {
-  name = "verdun-backup"
+resource "digitalocean_spaces_bucket" "verdun" {
+  name = "verdun"
   region  = "fra1"
   acl = "private"
 }
