@@ -41,10 +41,10 @@ data:
     database:
       name: "psycopg2"
       args:
-        user: "synapse"
-        password: "{{ .Values.postgresql.postgresqlPassword }}"
+        user: "$POSTGRES_USER"
+        password: "$POSTGRES_PASSWORD"
         database: "synapse"
-        host: "matrix-synapse-postgresql"
+        host: "{{ .Values.postgres.serviceName }}"
         port: "5432"
         cp_min: 5
         cp_max: 10

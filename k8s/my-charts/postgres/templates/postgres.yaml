@@ -1,0 +1,22 @@
+apiVersion: kubedb.com/v1alpha1
+kind: Postgres
+metadata:
+  name: {{ include "helm-chart.fullname" . }}
+  labels:
+    app: {{ include "helm-chart.name" . }}
+    chart: {{ include "helm-chart.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  version: "{{ .Values.postgresVersion}}"
+  storageType: Durable
+  databaseSecret:
+    secretName: {{ include "helm-chart.fullname" . }}-auth
+  storage:
+    storageClassName: "do-block-storage"
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: {{ .Values.storageSize}}
+  terminationPolicy: DoNotTerminate

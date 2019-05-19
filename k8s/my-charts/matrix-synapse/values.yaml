@@ -1,7 +1,6 @@
 host: matrix.patrician.gold
-
 persistence:
   size: 5Gi
-postgresql:
-  postgresqlUsername: synapse
-  postgresqlDatabase: synapse
+
+postgres:
+  serviceName: matrix-synapse-postgres

@@ -32,21 +32,41 @@ spec:
               protocol: TCP
           env:
             - name: SYNAPSE_CONFIG_PATH
-              value: "/conf/homeserver.yaml"
-            - name: PGPASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "helm-chart.fullname" . }}
-                  key: postgresql-password
+              value: "/envsubst-conf/homeserver.yaml"
           volumeMounts:
-            - name: "synapse-config"
-              mountPath: "/conf/homeserver.yaml"
-              subPath: homeserver.yaml
+            - name: envsubst-conf
+              mountPath: "/envsubst-conf"
             - name: "synapse-config"
               mountPath: "/conf/log.config"
               subPath: log.config
             - name: data
               mountPath: "/data/"
+
+      initContainers:
+        - name: config-envsubst
+          image: supinf/envsubst
+          command: ['/bin/sh']
+          args:
+            - '-c'
+            - 'cat /conf/homeserver.yaml | envsubst > /envsubst-conf/homeserver.yaml'
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: matrix-synapse-postgres-auth
+                  key: POSTGRES_USER
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: matrix-synapse-postgres-auth
+                  key: POSTGRES_PASSWORD
+          volumeMounts:
+            - name: "synapse-config"
+              mountPath: "/conf/homeserver.yaml"
+              subPath: homeserver.yaml
+            - name: envsubst-conf
+              mountPath: "/envsubst-conf"
+
       volumes:
         - name: "synapse-config"
           configMap:
@@ -54,3 +74,5 @@ spec:
         - name: data
           persistentVolumeClaim:
             claimName: {{ include "helm-chart.fullname" . }}-pvc
+        - name: envsubst-conf
+          emptyDir: {}

@@ -1,5 +1,5 @@
 # requirements.yaml
 dependencies:
-- name: postgresql
-  version: "4.0.2"
-  repository: "https://kubernetes-charts.storage.googleapis.com/"
+- name: postgres
+  version: "0.1.0"
+  repository: "file://../postgres"

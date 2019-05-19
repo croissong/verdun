@@ -1,6 +1,3 @@
-postgresql:
-  postgresqlPassword: {{ .Environment.Values.synapse.postgresql.postgresqlPassword }}
-  resources:
-    requests:
-      memory: 256Mi
-      cpu: 150m
+postgres:
+  user: {{ .Environment.Values.synapse.postgres.user }}
+  password: {{ .Environment.Values.synapse.postgres.password }}
