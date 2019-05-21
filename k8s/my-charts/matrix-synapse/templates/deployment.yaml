@@ -25,7 +25,8 @@ spec:
         fsGroup: 991
       containers:
         - name: {{ .Chart.Name }}
-          image: matrixdotorg/synapse:{{ .Values.imageTag }}
+          image: skender/matrix-synapse-s3-storage:{{ .Values.imageTag }}
+          imagePullPolicy: Always
           ports:
             - name: http
               containerPort: 8008
@@ -33,6 +34,16 @@ spec:
           env:
             - name: SYNAPSE_CONFIG_PATH
               value: "/envsubst-conf/homeserver.yaml"
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "helm-chart.fullname" . }}-secret
+                  key: AWS_ACCESS_KEY_ID
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "helm-chart.fullname" . }}-secret
+                  key: AWS_SECRET_ACCESS_KEY
           volumeMounts:
             - name: envsubst-conf
               mountPath: "/envsubst-conf"
@@ -40,7 +51,7 @@ spec:
               mountPath: "/conf/log.config"
               subPath: log.config
             - name: data
-              mountPath: "/data/"
+              mountPath: "/data/uploads"
 
       initContainers:
         - name: config-envsubst

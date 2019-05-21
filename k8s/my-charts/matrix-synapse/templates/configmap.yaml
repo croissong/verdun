@@ -76,6 +76,16 @@ data:
     max_image_pixels: "32M"
     dynamic_thumbnails: false
 
+
+    media_storage_providers:
+    - module: s3_storage_provider.S3StorageProviderBackend
+      store_local: True
+      store_remote: True
+      store_synchronous: True
+      config:
+        bucket: "matrix-synapse"
+        endpoint_url: "https://verdun.fra1.digitaloceanspaces.com"
+
     # List of thumbnail to precalculate when an image is uploaded.
     thumbnail_sizes:
     - width: 32
