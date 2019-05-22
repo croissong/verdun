@@ -1,8 +1,3 @@
-s3AccessId: {{ .Environment.Values.s3AccessId }}
-s3SecretKey: {{ .Environment.Values.s3SecretKey }}
-
 postgres:
   user: {{ .Environment.Values.synapse.postgres.user }}
   password: {{ .Environment.Values.synapse.postgres.password }}
-  s3AccessId: {{ .Environment.Values.s3AccessId }}
-  s3SecretKey: {{ .Environment.Values.s3SecretKey }}

@@ -20,7 +20,7 @@ releases:
   chart: ./my-charts/auth-proxy-conf/
   version: ~0.0.1
   values:
-    - auth-proxy-conf-values.yml.gotmpl
+    - common-values.yml.gotmpl
     - authProxy:
         domain: traefik.patrician.gold
         upstream: 127.0.0.1:8080
@@ -33,7 +33,7 @@ releases:
   values:
     - imageTag: 1.7.10-alpine
     - ./traefik-values.yml.gotmpl
-    - auth-proxy-conf-values.yml.gotmpl
+    - common-values.yml.gotmpl
 
 - name: matrix-synapse
   namespace: comm-tools
@@ -42,6 +42,7 @@ releases:
   values:
     - imageTag: v0.99.4
     - matrix-synapse-values.yml.gotmpl
+    - common-values.yml.gotmpl
 
 - name: matrix-riot
   namespace: comm-tools

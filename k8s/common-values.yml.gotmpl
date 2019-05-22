@@ -1,0 +1,19 @@
+s3AccessId: {{ .Environment.Values.s3AccessId }}
+s3SecretKey: {{ .Environment.Values.s3SecretKey }}
+
+postgres:
+  postgresVersion: {{ .Environment.Values.postgresVersion }}
+  s3AccessId: {{ .Environment.Values.s3AccessId }}
+  s3SecretKey: {{ .Environment.Values.s3SecretKey }}
+
+mysql:
+  mysqlVersion: {{ .Environment.Values.mysqlVersion }}
+  s3AccessId: {{ .Environment.Values.s3AccessId }}
+  s3SecretKey: {{ .Environment.Values.s3SecretKey }}
+
+authProxy:
+  imageTag: {{ .Environment.Values.authProxy.imageTag }}
+  clientId: {{ .Environment.Values.authProxy.clientId }}
+  clientSecret: {{ .Environment.Values.authProxy.clientSecret }}
+  cookieSecret: {{ .Environment.Values.authProxy.cookieSecret }}
+  githubOrg: {{ .Environment.Values.authProxy.githubOrg }}

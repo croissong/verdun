@@ -1,5 +1,5 @@
 apiVersion: kubedb.com/v1alpha1
-kind: Postgres
+kind: MySQL
 metadata:
   name: {{ include "helm-chart.fullname" . }}
   labels:
@@ -8,21 +8,19 @@ metadata:
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
 spec:
-  version: {{ required "postgresVersion is required" .Values.postgresVersion | quote }}
-  storageType: Durable
+  version: {{ required "mysqlVersion is required" .Values.mysqlVersion | quote }}
   databaseSecret:
     secretName: {{ include "helm-chart.fullname" . }}-auth
   storage:
-    storageClassName: "do-block-storage"
     accessModes:
-     - ReadWriteOnce
+    - ReadWriteOnce
     resources:
       requests:
         storage: {{ .Values.storageSize}}
-  terminationPolicy: Pause
-  archiver:
-    storage:
-      storageSecretName: {{ include "helm-chart.fullname" . }}-s3-secret
+  backupSchedule:
+    cronExpression: "@every 24h"
+    storageSecretName: {{ include "helm-chart.fullname" . }}-s3-secret
       s3:
         endpoint:  https://verdun.fra1.digitaloceanspaces.com
         bucket: backup
+  terminationPolicy: Pause
