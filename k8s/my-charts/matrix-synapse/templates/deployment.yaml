@@ -64,12 +64,12 @@ spec:
             - name: POSTGRES_USER
               valueFrom:
                 secretKeyRef:
-                  name: matrix-synapse-postgres-auth
+                  name: {{ include "helm-chart.fullname" . }}-postgres-auth
                   key: POSTGRES_USER
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: matrix-synapse-postgres-auth
+                  name: {{ include "helm-chart.fullname" . }}-postgres-auth
                   key: POSTGRES_PASSWORD
           volumeMounts:
             - name: "synapse-config"

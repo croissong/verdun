@@ -44,7 +44,7 @@ data:
         user: "$POSTGRES_USER"
         password: "$POSTGRES_PASSWORD"
         database: "synapse"
-        host: "{{ .Values.postgres.serviceName }}"
+        host: "{{ include "helm-chart.fullname" . }}-postgres"
         port: "5432"
         cp_min: 5
         cp_max: 10

@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mumble-mysql-init
+data:
+  init.sql: |
+    CREATE DATABASE murmur;

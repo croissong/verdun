@@ -56,6 +56,10 @@ releases:
   chart: ./my-charts/mumble/
   recreatePods: true
   verify: false
+  values:
+    - imageTag: rc
+    - murmur-values.yml.gotmpl
+    - common-values.yml.gotmpl
 
 - name: nginx-rtmp
   namespace: comm-tools

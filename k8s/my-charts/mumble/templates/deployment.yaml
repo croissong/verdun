@@ -9,6 +9,8 @@ metadata:
     heritage: {{ .Release.Service }}
 spec:
   replicas: 1
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app: {{ include "helm-chart.name" . }}
@@ -18,13 +20,41 @@ spec:
       labels:
         app: {{ include "helm-chart.name" . }}
         release: {{ .Release.Name }}
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
     spec:
       hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet
       securityContext:
         fsGroup: 1000
+        runAsUser: 999
+      initContainers:
+        - name: copy-config
+          image: supinf/envsubst
+          command: ['/bin/sh']
+          args:
+            - '-c'
+            - 'cat /tmp/murmur.ini | envsubst > /opt/murmur/config/murmur.ini'
+          env:
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "helm-chart.fullname" . }}-mysql-auth
+                  key: user
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "helm-chart.fullname" . }}-mysql-auth
+                  key: password
+          volumeMounts:
+            - name: murmur-config
+              mountPath: /tmp/murmur.ini
+              subPath: murmur.ini
+            - name: config-dir
+              mountPath: /opt/murmur/config
       containers:
         - name: {{ .Chart.Name }}
-          image: luzifer/mumble:latest
+          image: goofball222/murmur:{{ .Values.imageTag }}
           imagePullPolicy: Always
           ports:
             - name: tcp
@@ -36,15 +66,22 @@ spec:
               hostPort: 64738
               protocol: UDP
           volumeMounts:
-            - name: "mumble-server-config"
-              mountPath: "/config/mumble-server.ini"
-              subPath: "mumble-server.ini"
-            - name: data
-              mountPath: "/data/"
+            - name: config-dir
+              mountPath: /opt/murmur/config
+            - name: murmur-config
+              mountPath: /opt/docker-entrypoint.sh
+              subPath: docker-entrypoint.sh
+            - name: ssl-config
+              mountPath: /opt/murmur/cert
+          command: ['/opt/docker-entrypoint.sh']
+          args: ['murmur']
       volumes:
-        - name: "mumble-server-config"
+        - name: murmur-config
           configMap:
             name: {{ include "helm-chart.fullname" . }}-config
-        - name: data
-          persistentVolumeClaim:
-            claimName: {{ include "helm-chart.fullname" . }}-pvc
+            defaultMode: 0777
+        - name: ssl-config
+          secret:
+            secretName: {{ include "helm-chart.fullname" . }}-ssl
+        - name: config-dir
+          emptyDir: {}

@@ -16,11 +16,17 @@ spec:
     - ReadWriteOnce
     resources:
       requests:
-        storage: {{ .Values.storageSize}}
+        storage: {{ .Values.storageSize }}
+  {{- if .Values.initConfig }}
+  init:
+    scriptSource:
+      configMap:
+        name: {{ .Values.initConfig }}
+  {{- end }}
   backupSchedule:
     cronExpression: "@every 24h"
     storageSecretName: {{ include "helm-chart.fullname" . }}-s3-secret
-      s3:
-        endpoint:  https://verdun.fra1.digitaloceanspaces.com
-        bucket: backup
+    s3:
+      endpoint:  https://verdun.fra1.digitaloceanspaces.com
+      bucket: backup
   terminationPolicy: Pause

@@ -1,2 +1,2 @@
-persistence:
-  size: 1Gi
+mysql:
+  initConfig: mumble-mysql-init
