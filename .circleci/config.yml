@@ -1,26 +1,26 @@
 version: 2
+workflows:
+   version: 2
+   build:
+     jobs:
+       - deploy_k8s
 jobs:
-  build:
+  deploy_k8s:
     docker:
-      - image: quay.io/roboll/helmfile:v0.59.0
+      - image: quay.io/roboll/helmfile:v0.64.2
     steps:
       - checkout
       - restore_cache:
           keys:
             - packages-v1
-      - run: apk add make curl gnupg
+      - run: apk add make curl gnupg python3
       - save_cache:
           key: packages-v1
           paths:
             - "/var/cache/apk"
-      - run: gpg --import <(echo $HELM_GPG_KEY_B64 | base64 -d)
       - run:
           command: |
-            make get-kubeconf do_token=$DO_TOKEN_GET_KUBECONF cluster_id=$DO_K8S_CLUSTER_ID
-          working_directory: ~/project/k8s
-      - run:
-          command: helm init --client-only
-          working_directory: ~/project/k8s
-      - run:
-          command: make apply kubectx=$K8S_CLUSTER_CONTEXT
-          working_directory: ~/project/k8s
+            k8s_changed=`python3 .circleci/changed-since-last-commit.py k8s`
+            if [[ $k8s_changed == "True" ]]; then
+              python3 .circleci/k8s.py
+            fi

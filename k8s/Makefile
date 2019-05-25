@@ -2,7 +2,8 @@ kubeconf = $(PWD)/kubeconfig.yml
 
 get-kubeconf:
 	@test $(cluster_id) || (echo 'cluster_id is not defined' && exit 1)
-	@curl -s -H "Authorization: Bearer $(do_token)" "https://api.digitalocean.com/v2/kubernetes/clusters/$(cluster_id)/kubeconfig" > $(kubeconf)
+	@curl -s -H "Authorization: Bearer $(do_token)" "https://api.digitalocean.com/v2/kubernetes/clusters/$(cluster_id)/kubeconfig" -o $(kubeconf)
+	ls -al $(kubeconf)
 
 check-vars:
 	@test $(kubectx) || (echo 'kubectx is not defined' && exit 1)
