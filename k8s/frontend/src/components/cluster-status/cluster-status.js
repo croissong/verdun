@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import MatrixStatus from './matrix-status';
 import axios from 'axios';
 import parsePrometheusTextFormat from 'parse-prometheus-text-format';
-import { merge } from 'lodash';
+import { get, merge } from 'lodash';
 
 export default class ClusterStatus extends Component {
   state = { loading: false, error: false, metrics: null };
@@ -12,16 +12,9 @@ export default class ClusterStatus extends Component {
   }
 
   render() {
-    if (this.state.metrics) {
-      const { metrics, loading } = this.state;
-      const matrix = metrics['comm-tools']['matrix-synapse'];
-      return (
-        <div>
-          <MatrixStatus loading={loading} metrics={matrix} />
-        </div>
-      );
-    }
-    return <div>Loading</div>;
+    const { metrics, loading } = this.state;
+    const matrix = get(metrics, 'comm-tools');
+    return <MatrixStatus loading={loading} metrics={matrix} />;
   }
 
   fetchMetrics = () => {
@@ -31,6 +24,7 @@ export default class ClusterStatus extends Component {
       .then(({ data }) => {
         let metrics = parsePrometheusTextFormat(data);
         metrics = normalizeMetrics(metrics);
+        console.log(metrics);
         this.setState({
           loading: false,
           metrics
