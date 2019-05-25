@@ -68,3 +68,10 @@ releases:
   recreatePods: true
   values:
     - imageTag: latest
+
+- name: kube-state-metrics
+  namespace: verdun
+  chart: ./my-charts/kube-state-metrics/
+  values:
+    - image.tag: v1.6.0
+    - kube-state-metrics-values.yml
