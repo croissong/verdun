@@ -3,9 +3,14 @@ workflows:
    version: 2
    build:
      jobs:
-       - build_frontend
+       - circle-compare-url/reconstruct
+       - build_frontend:
+           requires:
+            - circle-compare-url/reconstruct
        # - package_frontend
-       - deploy_k8s
+       - deploy_k8s:
+           requires:
+            - circle-compare-url/reconstruct
 
 orbs:
   circle-compare-url: iynere/compare-url@1.0.2
@@ -27,7 +32,8 @@ jobs:
           key: packages-v1
           paths:
             - "/var/cache/apk"
-      - circle-compare-url/reconstruct
+      - attach_workspace:
+          at: workspace
       - run:
           command: |
             if python3 .circleci/changed-since-last-commit.py frontend; then
@@ -50,7 +56,8 @@ jobs:
           key: packages-v1
           paths:
             - "/var/cache/apk"
-      - circle-compare-url/reconstruct
+      - attach_workspace:
+          at: workspace
       - run:
           command: |
             if python3 .circleci/changed-since-last-commit.py k8s; then
