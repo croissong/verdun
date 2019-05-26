@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import MatrixStatus from './matrix-status';
 import MumbleStatus from './mumble-status';
+import MiscStatus from './misc-status';
 import axios from 'axios';
 import parsePrometheusTextFormat from 'parse-prometheus-text-format';
 import { get, merge } from 'lodash';
@@ -18,6 +19,7 @@ export default class ClusterStatus extends Component {
       <div>
         <MatrixStatus loading={loading} metrics={get(metrics, 'comm-tools')} />
         <MumbleStatus loading={loading} metrics={get(metrics, 'comm-tools')} />
+        <MiscStatus loading={loading} metrics={get(metrics, 'comm-tools')} />
       </div>
     );
   }
