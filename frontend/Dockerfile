@@ -3,7 +3,6 @@ WORKDIR /app
 ADD package.json yarn.lock ./
 RUN yarn install
 Add ./ ./
-Run ls
 RUN yarn build
 
 FROM alpine:latest

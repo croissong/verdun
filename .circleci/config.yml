@@ -30,8 +30,8 @@ jobs:
               git config user.email "jan.moeller0@gmail.com"
               git config user.name "Jan Möller"
               tag="v0.0.01"
-              git tag -a $tag -m "version $tag"
-              git push --force origin $tag
+              git tag -f -a $tag -m "version $tag"
+              git push -f origin $tag
             fi
   deploy_k8s:
     docker:
