@@ -8,8 +8,8 @@ def main():
     check_output(f'git push origin {tag}'.split())
 
 def delete_old_tags():
-    run('git push origin --delete $(git tag -l)'.split())
-    run('git tag -d $(git tag -l)'.split())
+    run('git push origin --delete $(git tag -l)'.split(), shell=True)
+    run('git tag -d $(git tag -l)'.split(), shell=True)
 
 def init_git():
     check_output('git config user.email "jan.moeller0@gmail.com"'.split())

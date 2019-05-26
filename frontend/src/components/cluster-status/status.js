@@ -28,6 +28,7 @@ const Status = ({ loading, icon, title, children }) => {
         id="panel1a-header"
       >
         {icon}
+        {title && <h3>{title}</h3>}
         <div style={{ marginLeft: 'auto' }}>
           <HeartbeatIcon
             style={{ height: '2rem', width: '2rem', color: 'green' }}

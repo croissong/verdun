@@ -7,6 +7,7 @@ import { get } from 'lodash';
 
 const MumbleStatus = ({ loading, metrics }) => (
   <Status
+    title="Murmur"
     loading={loading}
     icon={<MumbleIcon style={{ height: '2rem', width: '6rem' }} />}
   >
