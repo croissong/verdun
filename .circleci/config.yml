@@ -3,8 +3,36 @@ workflows:
    version: 2
    build:
      jobs:
+       - build_frontend
+       # - package_frontend
        - deploy_k8s
 jobs:
+  build_frontend:
+    docker:
+      - image: alpine/git
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "40:f3:ca:86:a6:53:99:ce:21:16:58:f9:25:8c:ef:da"
+      - checkout
+      - restore_cache:
+          keys:
+            - packages-v1
+      - run: apk add python3
+      - save_cache:
+          key: packages-v1
+          paths:
+            - "/var/cache/apk"
+      - run:
+          command: |
+            frontend_changed=`python3 .circleci/changed-since-last-commit.py frontend`
+            if [[ $frontend_changed == "True" ]]; then
+              git config user.email "jan.moeller0@gmail.com"
+              git config user.name "Jan Möller"
+              tag="v0.0.01"
+              git tag -a $tag -m "version $tag"
+              git push --force origin $tag
+            fi
   deploy_k8s:
     docker:
       - image: quay.io/roboll/helmfile:v0.64.2
