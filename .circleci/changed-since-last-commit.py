@@ -4,7 +4,10 @@ import sys
 
 def main():
     changed = changed_since_last_run_commit(sys.argv[1:])
-    print(changed)
+    if changed:
+        sys.exit(0)
+    else:
+        sys.exit(1)
 
 def git_compare_url() -> str:
     # something like: https://github.com/mkobit/gradle-test-kotlin-extensions/compare/211a8ef37eb6^...3c546b55628a
@@ -22,13 +25,19 @@ def get_current_run_commit() -> str:
 
 def changed_since_last_run_commit(dirs: list) -> bool:
     if not git_compare_url():
-        # if we cannot parse the previous revision, we believe current commit has changes in the directory
+        print("CIRCLE_COMPARE_URL missing")
         return True
     else:
         # We redirect stderr to stdout. If there is an error (e.g. in the first pipeline or some other edge cases), we regard everything as changed
-        cmd = 'git diff "%s" "%s" %s 2>&1' % (get_last_run_commit(), get_current_run_commit(), ' '.join(dirs))
+        last_run_commit = get_last_run_commit()
+        current_run_commit = get_current_run_commit()
+        directories = ' '.join(dirs)
+        cmd = f'git diff {last_run_commit} {current_run_commit} {directories} 2>&1'
+        print(cmd)
         result = os.popen(cmd).read()
-        return not not result
+        changed = not not result
+        print(f'{result} - changed: {changed}')
+        return changed
 
 
 if __name__ == "__main__":
