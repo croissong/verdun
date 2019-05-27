@@ -38,11 +38,12 @@ jobs:
       - setup_remote_docker:
           docker_layer_caching: true
       - run:
+          working_directory: frontend
           command: |
             # if python3 .circleci/changed-since-last-commit.py frontend; then
             #   python3 .circleci/frontend.py
             # fi
-            python3 .circleci/frontend.py
+            python3 ../.circleci/frontend.py
   deploy_k8s:
     docker:
       - image: quay.io/roboll/helmfile:v0.64.2
