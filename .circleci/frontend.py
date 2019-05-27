@@ -1,15 +1,14 @@
-from subprocess import check_output, run
+from subprocess import check_output
 
 def main():
     init_git()
-    delete_old_tags()
-    tag = check_output('git rev-parse --short HEAD'.split())
-    check_output(f'git tag {tag}'.split())
-    check_output(f'git push origin {tag}'.split())
+    tag = check_output('git rev-parse --short HEAD'.split(), universal_newlines=True).split()[0]
+    build_push_container(tag)
 
-def delete_old_tags():
-    run('git push origin --delete $(git tag -l)'.split(), shell=True)
-    run('git tag -d $(git tag -l)'.split(), shell=True)
+def build_push_container(tag):
+    image = f'cloud.canister.io:5000/croissong/verdun:{tag}'
+    check_output(f'docker build -t {image}'.split())
+    check_output(f'docker pull {image}'.split())
 
 def init_git():
     check_output('git config user.email "jan.moeller0@gmail.com"'.split())
