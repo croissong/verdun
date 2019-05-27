@@ -1,4 +1,8 @@
 from subprocess import check_output
+from os import environ
+
+canister_user = environ['CANISTER_USER']
+canister_password = environ['CANISTER_PASSWORD']
 
 def main():
     init_git()
@@ -6,6 +10,7 @@ def main():
     build_push_container(tag)
 
 def build_push_container(tag):
+    check_output(f"docker login --username={canister_user} --password='{canister_password}' cloud.canister.io:5000".split())
     image = f'cloud.canister.io:5000/croissong/verdun:{tag}'
     check_output(f'docker build -t {image}'.split())
     check_output(f'docker pull {image}'.split())

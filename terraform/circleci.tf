@@ -1,6 +1,8 @@
 variable "circleci_token" {}
 variable "do_token_get_kubeconf" {}
 variable "helm_gpg_key_b64" {}
+variable "canister_user" {}
+variable "canister_password" {}
 
 provider "circleci" {
   api_token    = "${var.circleci_token}"
@@ -30,4 +32,16 @@ resource "circleci_environment_variable" "helm_gpg_key_b64" {
   project = "verdun"
   name    = "HELM_GPG_KEY_B64"
   value   = "${var.helm_gpg_key_b64}"
+}
+
+resource "circleci_environment_variable" "canister_user" {
+  project = "verdun"
+  name    = "CANISTER_USER"
+  value   = "${var.canister_user}"
+}
+
+resource "circleci_environment_variable" "canister_password" {
+  project = "verdun"
+  name    = "CANISTER_PASSWORD"
+  value   = "${var.canister_password}"
 }
