@@ -1,5 +1,5 @@
 from os import environ, path
-from subprocess import check_output, run
+from subprocess import check_output
 from base64 import b64decode
 
 kubectx = environ['K8S_CLUSTER_CONTEXT']
@@ -11,15 +11,15 @@ def main():
     import_gpg_key()
     get_kubeconfig()
     helm_init()
-    check_output(f'make apply kubectx={kubectx}'.split(), cwd='k8s')
+    check_output(f'make apply kubectx={kubectx}'.split())
 
 def import_gpg_key():
     key = b64decode(key_b64)
-    run('gpg --import'.split(), input=key, check=True)
+    check_output('gpg --import'.split(), input=key)
 
 def get_kubeconfig():
     cmd = f'make get-kubeconf do_token={do_token} cluster_id={cluster_id}'
-    check_output(cmd.split(), cwd='k8s')
+    check_output(cmd.split())
     environ["KUBECONFIG"] = path.abspath('kubeconfig.yml')
 
 def helm_init():
