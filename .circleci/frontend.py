@@ -2,8 +2,8 @@ from subprocess import check_output, run
 from os import environ
 from base64 import b64decode
 
-canister_user = environ['CANISTER_USER']
-canister_password_b64 = environ['CANISTER_PASSWORD_B64']
+docker_user = environ['DOCKER_USER']
+docker_password_b64 = environ['DOCKER_PASSWORD_B64']
 
 def main():
     init_git()
@@ -11,10 +11,9 @@ def main():
     build_push_container(tag)
 
 def build_push_container(tag):
-    canister_password = b64decode(canister_password_b64)
-    run(f"docker login --username={canister_user} --password-stdin cloud.canister.io:5000".split(), input=canister_password, check=True)
-    image = f'cloud.canister.io:5000/croissong/verdun:{tag}'
-    print(image)
+    docker_password = b64decode(docker_password_b64)
+    run(f"docker login --username={docker_user} --password-stdin".split(), input=docker_password, check=True)
+    image = f'croissong/verdun-frontend:{tag}'
     check_output(f'docker build -t {image} .'.split())
     print(image)
     check_output(f'docker push {image}'.split())

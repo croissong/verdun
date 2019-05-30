@@ -75,3 +75,10 @@ releases:
   values:
     - image.tag: v1.6.0
     - kube-state-metrics-values.yml
+
+- name: verdun-frontend
+  namespace: verdun
+  chart: ./my-charts/verdun-frontend/
+  values:
+    - imageTag: 2cb6121
+    - common-values.yml.gotmpl

@@ -1,0 +1,68 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ include "helm-chart.fullname" . }}
+  labels:
+    app: {{ include "helm-chart.fullname" . }}
+    chart: {{ include "helm-chart.chart" . }}
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+spec:
+  selector:
+    matchLabels:
+      app: {{ include "helm-chart.fullname" . }}
+      release: "{{ .Release.Name }}"
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: {{ include "helm-chart.fullname" . }}
+        chart: {{ include "helm-chart.chart" . }}
+        release: "{{ .Release.Name }}"
+        heritage: "{{ .Release.Service }}"
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+    spec:
+      initContainers:
+        - name: {{ include "helm-chart.fullname" . }}-copy
+          image: croissong/verdun-frontend:{{ .Values.imageTag }}
+          command: ['/bin/cp']
+          args:
+            - '-r'
+            - '/app'
+            - '/verdun/frontend'
+          volumeMounts:
+            - name: app-dir
+              mountPath: /verdun
+      containers:
+      - name: {{ include "helm-chart.fullname" . }}
+        image: bitnami/nginx:{{ .Values.nginx.imageTag }}
+        imagePullPolicy: Always
+        ports:
+        - name: http
+          containerPort: 8080
+        livenessProbe:
+          httpGet:
+            path: /
+            port: http
+          initialDelaySeconds: 30
+          timeoutSeconds: 5
+          failureThreshold: 6
+        readinessProbe:
+          httpGet:
+            path: /
+            port: http
+          initialDelaySeconds: 5
+          timeoutSeconds: 3
+          periodSeconds: 5
+        volumeMounts:
+        - name: nginx-server-block
+          mountPath: /opt/bitnami/nginx/conf/server_blocks
+        - name: app-dir
+          mountPath: /verdun
+      volumes:
+      - name: nginx-server-block
+        configMap:
+          name: {{ include "helm-chart.fullname" . }}
+      - name: app-dir
+        emptyDir: {}

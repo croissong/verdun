@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "helm-chart.fullname" . }}
+  labels:
+    app: {{ include "helm-chart.name" . }}
+    chart: {{ include "helm-chart.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+data:
+  # https://github.com/vector-im/riot-web/blob/develop/config.sample.json
+  verdun-nginx.conf: |-
+{{ .Values.nginxConf | indent 4 }}

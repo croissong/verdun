@@ -17,3 +17,6 @@ authProxy:
   clientSecret: {{ .Environment.Values.authProxy.clientSecret }}
   cookieSecret: {{ .Environment.Values.authProxy.cookieSecret }}
   githubOrg: {{ .Environment.Values.authProxy.githubOrg }}
+
+nginx:
+  imageTag: {{ .Environment.Values.nginx.imageTag }}

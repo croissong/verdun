@@ -2,3 +2,5 @@ authProxy:
   imageTag: v3.2.0
 postgresVersion: 11.2
 mysqlVersion: 5.7.25
+nginx:
+  imageTag: 1.16.0

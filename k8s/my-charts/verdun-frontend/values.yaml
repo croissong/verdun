@@ -1,0 +1,16 @@
+host: verdun.patrician.gold
+
+nginxConf: |
+  server {
+    listen 0.0.0.0:8080;
+
+    location ~ \..* {
+      add_header Cache-Control "public, max-age=31536000, immutable";
+      root   /verdun/frontend;
+    }
+
+    location / {
+      root   /verdun/frontend;
+      try_files /index.html /index.html;
+    }
+  }
