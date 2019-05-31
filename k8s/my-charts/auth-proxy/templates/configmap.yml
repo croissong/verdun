@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ template "auth-proxy-conf.fullname" . }}
+  name: {{ template "auth-proxy.fullname" . }}
   labels:
-    app: {{ template "auth-proxy-conf.name" . }}
+    app: {{ template "auth-proxy.name" . }}
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
     release: {{ .Release.Name | quote }}
     heritage: {{ .Release.Service | quote }}
@@ -17,9 +17,9 @@ data:
     ]
     cookie_refresh = "1h"
 
-    redirect_url = "https://{{ .Values.authProxy.domain }}/oauth2/callback"
+    redirect_url = "https://{{ .Values.domain }}/oauth2/callback"
     upstreams = [
-    "http://{{ .Values.authProxy.upstream }}"
+    "http://{{ .Values.upstream }}"
     ]
     request_logging = false
     standard_logging = false

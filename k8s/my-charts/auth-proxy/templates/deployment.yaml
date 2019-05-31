@@ -1,0 +1,65 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "auth-proxy.fullname" . }}
+  labels:
+    app: {{ template "auth-proxy.name" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: {{ .Release.Name | quote }}
+    heritage: {{ .Release.Service | quote }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ template "auth-proxy.name" . }}
+      release: {{ .Release.Name | quote }}
+  template:
+    metadata:
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yml") . | sha256sum }}
+      labels:
+        app: {{ template "auth-proxy.name" . }}
+        chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+        release: {{ .Release.Name | quote }}
+        heritage: {{ .Release.Service | quote }}
+    spec:
+      containers:
+
+      - image: {{ .Values.image.name }}:{{ .Values.image.tag }}
+        imagePullPolicy: Always
+        name: auth-proxy
+        args:
+        - --config=/opt/oauth2_proxy.cfg
+        env:
+        - name: OAUTH2_PROXY_CLIENT_ID
+          valueFrom:
+            secretKeyRef:
+              key: clientId
+              name: {{ template "auth-proxy.fullname" . }}
+        - name: OAUTH2_PROXY_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              key: clientSecret
+              name: {{ template "auth-proxy.fullname" . }}
+        - name: OAUTH2_PROXY_COOKIE_SECRET
+          valueFrom:
+            secretKeyRef:
+              key: cookieSecret
+              name: {{ template "auth-proxy.fullname" . }}
+        - name: OAUTH2_PROXY_GITHUB_ORG
+          valueFrom:
+            secretKeyRef:
+              key: githubOrg
+              name: {{ template "auth-proxy.fullname" . }}
+        volumeMounts:
+          - name: auth-proxy
+            mountPath: /opt/oauth2_proxy.cfg
+            subPath: oauth2_proxy.cfg
+        ports:
+        - name: auth-proxy
+          containerPort: 3000
+
+      volumes:
+      - name: auth-proxy
+        configMap:
+          name: {{ template "auth-proxy.fullname" . }}

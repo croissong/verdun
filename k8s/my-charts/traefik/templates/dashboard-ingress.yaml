@@ -1,11 +1,11 @@
-{{- if .Values.dashboard.enabled }}
+{{- if and .Values.dashboard.enabled .Values.dashboard.ingress }}
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: {{ template "traefik.fullname" . }}-dashboard
   labels:
     app: {{ template "traefik.name" . }}
-    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    chart: {{ template "traefik.chart" . }}
     release: {{ .Release.Name | quote }}
     heritage: {{ .Release.Service | quote }}
   {{- if .Values.dashboard.ingress }}

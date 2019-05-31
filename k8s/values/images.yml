@@ -7,3 +7,6 @@ mysql:
   version: 5.7.25
 nginx:
   tag: 1.16.0
+traefik:
+  image: traefik
+  tag: 1.7.12-alpine

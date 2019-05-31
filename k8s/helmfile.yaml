@@ -1,7 +1,7 @@
 context: {{ requiredEnv "KUBECONTEXT" }}
 
 helmDefaults:
-  tillerNamespace: tiller
+  tillerNamespace: false
   tillerless: true
   atomic: true
   wait: true
@@ -10,31 +10,26 @@ helmDefaults:
 environments:
   default:
     values:
-      - helm_vars/values.yaml
+      - values/images.yml
     secrets:
-      - helm_vars/secrets.yaml
+      - values/secrets.yaml
 
 releases:
 
-- name: traefik-auth-proxy-conf
+- name: traefik-auth-proxy
   namespace: traefik
-  chart: ./my-charts/auth-proxy-conf/
-  version: ~0.0.1
+  chart: ./my-charts/auth-proxy/
   values:
-    - common-values.yml.gotmpl
-    - authProxy:
-        domain: traefik.patrician.gold
-        upstream: 127.0.0.1:8080
+    - values/auth-proxy.yml.gotmpl
+    - domain: traefik.patrician.gold
+      upstream: traefik-dashboard:80
 
 - name: traefik
   namespace: traefik
   chart: ./my-charts/traefik/
-  version: ~1.68.1
   recreatePods: true
   values:
-    - imageTag: 1.7.10-alpine
-    - ./traefik-values.yml.gotmpl
-    - common-values.yml.gotmpl
+    - values/traefik.yml.gotmpl
 
 - name: matrix-synapse
   namespace: comm-tools
