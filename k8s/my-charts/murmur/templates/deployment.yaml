@@ -23,8 +23,6 @@ spec:
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
     spec:
-      hostNetwork: true
-      dnsPolicy: ClusterFirstWithHostNet
       securityContext:
         fsGroup: 1000
         runAsUser: 999
