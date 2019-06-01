@@ -16,6 +16,11 @@ environments:
 
 releases:
 
+# https://www.digitalocean.com/community/questions/hi-after-some-update-of-the-kubernetes-ltd-access-to-a-container-through-hostport-was-broken-i-assume-this-is-related-to-cilium-anyone-known-how-to-fix-that
+- name: cilium-portmap
+  namespace: kube-system
+  chart: ./my-charts/cilium-portmap/
+
 - name: traefik-auth-proxy
   namespace: traefik
   chart: ./my-charts/auth-proxy/
