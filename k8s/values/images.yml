@@ -19,3 +19,6 @@ riot:
 murmur:
   image: goofball222/murmur
   tag: rc
+nginxRtmp:
+  image: tiangolo/nginx-rtmp
+  tag: latest
