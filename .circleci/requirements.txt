@@ -1,0 +1,4 @@
+ruamel.yaml==0.15.96
+click==7.0
+gitpython==2.1.11
+coloredlogs==10.0

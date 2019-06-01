@@ -32,7 +32,7 @@ jobs:
           name: install deps
           command: |
             apk add python3 docker
-            pip install pyaml
+            pip install -r .circleci/requirements.txt
       - save_cache:
           key: packages-v1
           paths:
@@ -43,10 +43,10 @@ jobs:
           docker_layer_caching: true
       - run:
           name: check frontend changed
-          command: python3 .circleci/changed-since-last-commit.py frontend
-      - run:
-          name: run frontend pipeline
-          command: python3 .circleci/frontend.py
+          command: |
+            if python3 .circleci/changed-since-last-commit.py frontend; then
+              python3 .circleci/frontend.py
+            fi
 
   deploy_k8s:
     docker:
@@ -66,9 +66,9 @@ jobs:
       - attach_workspace:
           at: workspace
       - run:
-          name: check k8s changed
-          command: python3 .circleci/changed-since-last-commit.py k8s
-      # - run:
-      #     name: run k8s pipeline
-      #     command: python3 ../.circleci/k8s.py
-      #     working_directory: k8s
+          name: run k8s if changed
+          working_directory: k8s
+          command: |
+            if python3 ../.circleci/changed-since-last-commit.py k8s; then
+              python3 ../.circleci/k8s.py
+            fi

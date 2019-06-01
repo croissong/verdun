@@ -25,7 +25,7 @@ spec:
     spec:
       initContainers:
         - name: {{ include "helm-chart.fullname" . }}-copy
-          image: croissong/verdun-frontend:{{ .Values.imageTag }}
+          image: {{ .Values.image.repo }}:{{ .Values.image.tag }}
           command: ['/bin/cp']
           args:
             - '-r'

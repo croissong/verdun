@@ -1,27 +1,36 @@
-authProxy:
-  image: quay.io/pusher/oauth2_proxy
-  tag: v3.2.0
-postgres:
-  version: 11.2
-mysql:
-  version: 5.7.25
-nginx:
-  tag: 1.16.0
-traefik:
-  image: traefik
-  tag: 1.7.12-alpine
-synapse:
-  image: croissong/matrix-synapse-s3-storage
-  tag: v0.99.5.2
-riot:
-  image: bubuntux/riot-web
-  tag: v1.2.1
+common:
+  authProxy:
+    repo: quay.io/pusher/oauth2_proxy
+    tag: v3.2.0
+  mysql:
+    version: 5.7.25
+  nginx:
+    tag: 1.16.0
+  postgres:
+    version: 11.2
+matrix:
+  riot:
+    repo: bubuntux/riot-web
+    tag: v1.2.1
+  synapse:
+    repo: croissong/matrix-synapse-s3-storage
+    tag: v0.99.5.2
+misc:
+  nginxRtmp:
+    repo: tiangolo/nginx-rtmp
+    tag: latest
 murmur:
-  image: goofball222/murmur
-  tag: rc
-nginxRtmp:
-  image: tiangolo/nginx-rtmp
-  tag: latest
-kubeStateMetrics:
-  repo: quay.io/coreos/kube-state-metrics
-  tag: v1.6.0
+  murmur:
+    repo: goofball222/murmur
+    tag: rc
+traefik:
+  traefik:
+    repo: traefik
+    tag: 1.7.12-alpine
+verdun:
+  frontend:
+    repo: croissong/verdun-frontend
+    tag: 34ceddf9
+  kubeStateMetrics:
+    repo: quay.io/coreos/kube-state-metrics
+    tag: v1.6.0
