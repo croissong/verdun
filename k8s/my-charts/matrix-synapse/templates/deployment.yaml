@@ -25,7 +25,7 @@ spec:
         fsGroup: 991
       containers:
         - name: {{ .Chart.Name }}
-          image: skender/matrix-synapse-s3-storage:{{ .Values.imageTag }}
+          image: {{ .Values.image.name }}:{{ .Values.image.tag }}
           imagePullPolicy: Always
           ports:
             - name: http
@@ -50,8 +50,10 @@ spec:
             - name: "synapse-config"
               mountPath: "/conf/log.config"
               subPath: log.config
-            - name: data
+            - name: uploads
               mountPath: "/data/uploads"
+            - name: data
+              mountPath: "/data"
 
       initContainers:
         - name: config-envsubst
@@ -82,8 +84,10 @@ spec:
         - name: "synapse-config"
           configMap:
             name: {{ include "helm-chart.fullname" . }}-config
-        - name: data
+        - name: uploads
           persistentVolumeClaim:
             claimName: {{ include "helm-chart.fullname" . }}-pvc
         - name: envsubst-conf
+          emptyDir: {}
+        - name: data
           emptyDir: {}

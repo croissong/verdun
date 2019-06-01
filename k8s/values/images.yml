@@ -10,3 +10,12 @@ nginx:
 traefik:
   image: traefik
   tag: 1.7.12-alpine
+synapse:
+  image: croissong/matrix-synapse-s3-storage
+  tag: v0.99.5.2
+riot:
+  image: bubuntux/riot-web
+  tag: v1.2.1
+murmur:
+  image: goofball222/murmur
+  tag: rc

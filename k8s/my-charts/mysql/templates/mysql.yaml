@@ -24,7 +24,7 @@ spec:
         name: {{ .Values.initConfig }}
   {{- end }}
   backupSchedule:
-    cronExpression: "@every 24h"
+    cronExpression: "@midnight"
     storageSecretName: {{ include "helm-chart.fullname" . }}-s3-secret
     s3:
       endpoint:  https://verdun.fra1.digitaloceanspaces.com

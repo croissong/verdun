@@ -1,7 +1,7 @@
 context: {{ requiredEnv "KUBECONTEXT" }}
 
 helmDefaults:
-  tillerNamespace: false
+  tillerNamespace: tiller
   tillerless: true
   atomic: true
   wait: true
@@ -37,33 +37,31 @@ releases:
     - values/traefik.yml.gotmpl
 
 - name: matrix-synapse
-  namespace: comm-tools
+  namespace: matrix
   chart: ./my-charts/matrix-synapse/
   verify: false
   values:
-    - imageTag: v0.99.5.1
-    - matrix-synapse-values.yml.gotmpl
-    - common-values.yml.gotmpl
+    - values/synapse.yml.gotmpl
+    - values/common.yml.gotmpl
 
 - name: matrix-riot
-  namespace: comm-tools
+  namespace: matrix
   chart: ./my-charts/matrix-riot/
   verify: false
   values:
-    - imageTag: v1.1.2
+    - values/riot.yml.gotmpl
 
-- name: mumble
-  namespace: comm-tools
-  chart: ./my-charts/mumble/
+- name: murmur
+  namespace: murmur
+  chart: ./my-charts/murmur/
   recreatePods: true
   verify: false
   values:
-    - imageTag: rc
-    - murmur-values.yml.gotmpl
-    - common-values.yml.gotmpl
+    - values/murmur.yml.gotmpl
+    - values/common.yml.gotmpl
 
 - name: nginx-rtmp
-  namespace: comm-tools
+  namespace: misc
   chart: ./my-charts/nginx-rtmp/
   verify: false
   recreatePods: true

@@ -26,3 +26,10 @@ spec:
       s3:
         endpoint:  https://verdun.fra1.digitaloceanspaces.com
         bucket: backup
+  init:
+    postgresWAL:
+      storageSecretName: {{ include "helm-chart.fullname" . }}-s3-secret
+      s3:
+        endpoint:  https://fra1.digitaloceanspaces.com
+        bucket: verdun
+        prefix: 'backup/kubedb/matrix/matrix-synapse-postgres/archive'

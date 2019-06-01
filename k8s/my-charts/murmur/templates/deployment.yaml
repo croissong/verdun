@@ -54,7 +54,7 @@ spec:
               mountPath: /opt/murmur/config
       containers:
         - name: {{ .Chart.Name }}
-          image: goofball222/murmur:{{ .Values.imageTag }}
+          image: {{ .Values.image.name }}:{{ .Values.image.tag }}
           imagePullPolicy: Always
           ports:
             - name: tcp
