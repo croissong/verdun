@@ -68,7 +68,7 @@ jobs:
       - run:
           name: check k8s changed
           command: python3 .circleci/changed-since-last-commit.py k8s
-      - run:
-          name: run k8s pipeline
-          command: python3 ../.circleci/k8s.py
-          working_directory: k8s
+      # - run:
+      #     name: run k8s pipeline
+      #     command: python3 ../.circleci/k8s.py
+      #     working_directory: k8s
