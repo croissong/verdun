@@ -9,13 +9,13 @@ check-vars:
 	@test $(kubectx) || (echo 'kubectx is not defined' && exit 1)
 
 sync: check-vars
-	KUBECONFIG=$(kubeconf) KUBECONTEXT=$(kubectx) helmfile sync
+	KUBECONFIG=$(kubeconf) KUBECONTEXT=$(kubectx) helmfile sync --concurrency=1
 
 apply: check-vars
-	KUBECONFIG=$(kubeconf) KUBECONTEXT=$(kubectx) helmfile apply
+	KUBECONFIG=$(kubeconf) KUBECONTEXT=$(kubectx) helmfile apply --concurrency=1
 
 diff: check-vars
-	KUBECONFIG=$(kubeconf) KUBECONTEXT=$(kubectx) helmfile diff
+	KUBECONFIG=$(kubeconf) KUBECONTEXT=$(kubectx) helmfile diff --concurrency=1
 
 status: check-vars
 	KUBECONFIG=$(kubeconf) KUBECONTEXT=$(kubectx) helmfile status

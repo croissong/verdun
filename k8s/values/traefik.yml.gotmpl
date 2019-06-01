@@ -1,4 +1,5 @@
-imageTag: {{ .Environment.Values.traefik.tag }}
+image: {{ .Environment.Values.traefik.traefik.repo }}
+imageTag: {{ .Environment.Values.traefik.traefik.tag }}
 cpuRequest: 50m
 cpuLimit: 200m
 memoryRequest: 100Mi

@@ -1,6 +1,6 @@
 image:
-  name: {{ .Environment.Values.authProxy.image }}
-  tag: {{ .Environment.Values.authProxy.tag }}
+  repo: {{ .Environment.Values.common.authProxy.repo }}
+  tag: {{ .Environment.Values.common.authProxy.tag }}
 clientId: {{ .Environment.Values.authProxy.clientId }}
 clientSecret: {{ .Environment.Values.authProxy.clientSecret }}
 cookieSecret: {{ .Environment.Values.authProxy.cookieSecret }}

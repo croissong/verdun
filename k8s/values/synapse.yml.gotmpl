@@ -1,6 +1,6 @@
 image:
-  name: {{ .Environment.Values.synapse.image }}
-  tag: {{ .Environment.Values.synapse.tag }}
+  name: {{ .Environment.Values.matrix.synapse.repo }}
+  tag: {{ .Environment.Values.matrix.synapse.tag }}
 postgres:
   user: {{ .Environment.Values.synapse.postgres.user }}
   password: {{ .Environment.Values.synapse.postgres.password }}

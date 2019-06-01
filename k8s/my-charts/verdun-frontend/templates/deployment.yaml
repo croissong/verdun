@@ -36,7 +36,7 @@ spec:
               mountPath: /verdun
       containers:
       - name: {{ include "helm-chart.fullname" . }}
-        image: bitnami/nginx:{{ .Values.nginx.imageTag }}
+        image: {{ .Values.nginx.repo }}:{{ .Values.nginx.tag }}
         imagePullPolicy: Always
         ports:
         - name: http

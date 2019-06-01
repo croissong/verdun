@@ -5,6 +5,7 @@ common:
   mysql:
     version: 5.7.25
   nginx:
+    repo: bitnami/nginx
     tag: 1.16.0
   postgres:
     version: 11.2
@@ -30,7 +31,7 @@ traefik:
 verdun:
   frontend:
     repo: croissong/verdun-frontend
-    tag: 34ceddf9
+    tag: ba6f274b
   kubeStateMetrics:
     repo: quay.io/coreos/kube-state-metrics
     tag: v1.6.0

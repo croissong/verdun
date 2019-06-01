@@ -44,6 +44,8 @@ def git_push(repo, tag, local, dev):
         repo.git.checkout(branch)
         repo.git.pull('origin', branch)
         logger.info(f'checked out and pulled branch {branch}')
+    else:
+        branch = repo.active_branch
 
     repo.git.add('k8s')
     repo.git.commit('-m', 'Bump verdun-frontend -> {tag}[ci skip]', author='jan.moeller0@gmail.com')

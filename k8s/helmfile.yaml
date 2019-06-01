@@ -78,4 +78,5 @@ releases:
   namespace: verdun
   chart: ./my-charts/verdun-frontend/
   values:
-    - common-values.yml.gotmpl
+    - values/common.yml.gotmpl
+    - values/verdun.yml.gotmpl

@@ -2,14 +2,15 @@ s3AccessId: {{ .Environment.Values.s3AccessId }}
 s3SecretKey: {{ .Environment.Values.s3SecretKey }}
 
 postgres:
-  postgresVersion: {{ .Environment.Values.postgres.version }}
+  postgresVersion: {{ .Environment.Values.common.postgres.version }}
   s3AccessId: {{ .Environment.Values.s3AccessId }}
   s3SecretKey: {{ .Environment.Values.s3SecretKey }}
 
 mysql:
-  mysqlVersion: {{ .Environment.Values.mysql.version }}
+  mysqlVersion: {{ .Environment.Values.common.mysql.version }}
   s3AccessId: {{ .Environment.Values.s3AccessId }}
   s3SecretKey: {{ .Environment.Values.s3SecretKey }}
 
 nginx:
-  imageTag: {{ .Environment.Values.nginx.tag }}
+  repo: {{ .Environment.Values.common.nginx.repo }}
+  tag: {{ .Environment.Values.common.nginx.tag }}
