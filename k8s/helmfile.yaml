@@ -72,8 +72,7 @@ releases:
   namespace: verdun
   chart: ./my-charts/kube-state-metrics/
   values:
-    - image.tag: v1.6.0
-    - kube-state-metrics-values.yml
+    - values/kube-state-metrics.yml.gotmpl
 
 - name: verdun-frontend
   namespace: verdun

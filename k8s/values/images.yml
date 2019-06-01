@@ -22,3 +22,6 @@ murmur:
 nginxRtmp:
   image: tiangolo/nginx-rtmp
   tag: latest
+kubeStateMetrics:
+  repo: quay.io/coreos/kube-state-metrics
+  tag: v1.6.0
