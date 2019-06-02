@@ -11,6 +11,7 @@ workflows:
        - deploy_k8s:
            requires:
             - circle-compare-url/reconstruct
+            - build_frontend
 
 orbs:
   circle-compare-url: iynere/compare-url@1.0.2
@@ -32,7 +33,7 @@ jobs:
           name: install deps
           command: |
             apk add python3 docker
-            pip install -r .circleci/requirements.txt
+            pip3 install -r .circleci/requirements.txt
       - save_cache:
           key: packages-v1
           paths:
