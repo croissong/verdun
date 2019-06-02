@@ -43,11 +43,11 @@ jobs:
       - setup_remote_docker:
           docker_layer_caching: true
       - run:
-          name: check frontend changed
+          name: run frontend if changed
           command: |
-            if python3 .circleci/changed-since-last-commit.py frontend; then
-              python3 .circleci/frontend.py
-            fi
+            python3 .circleci/frontend.py
+            # if python3 .circleci/changed-since-last-commit.py frontend; then
+            # fi
 
   deploy_k8s:
     docker:

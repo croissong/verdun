@@ -40,7 +40,7 @@ def git_push(repo, tag, local, dev):
     if not repo.is_dirty():
         return
     if not local:
-        branch = environ('CIRCLE_BRANCH')
+        branch = environ['CIRCLE_BRANCH']
         repo.git.checkout(branch)
         repo.git.pull('origin', branch)
         logger.info(f'checked out and pulled branch {branch}')
@@ -48,25 +48,26 @@ def git_push(repo, tag, local, dev):
         branch = repo.active_branch
 
     repo.git.add('k8s')
-    repo.git.commit('-m', 'Bump verdun-frontend -> {tag}[ci skip]', author='jan.moeller0@gmail.com')
+    repo.git.commit('-m', 'Bump verdun-frontend -> {tag}[ci skip]')
     if not dev:
-        repo.git.pull('origin', branch)
+        repo.git.push('origin', branch)
 
 def init_git(local):
-    # if not local:
-    #     run_cmd('git config user.email "jan.moeller0@gmail.com"')
-    #     run_cmd('git config user.name "Jan Möller""')
     repo = Repo(getcwd())
+    if not local:
+        repo.config_writer().set_value("user", "name", "Verdun CI Bot").release()
+        repo.config_writer().set_value("user", "email", "verdun-ci-bot@patrician.gold").release()
     return repo
 
 def login_docker():
     docker_user = environ['DOCKER_USER']
     docker_password_b64 = environ['DOCKER_PASSWORD_B64']
     docker_password = b64decode(docker_password_b64)
-    run_cmd(f"docker login --username={docker_user} --password-stdin", input=docker_password)
+    print(docker_password)
+    run_cmd(f"docker login --username={docker_user} --password-stdin", input=docker_password.decode("utf-8"))
 
-def run_cmd(cmd, check=True, input=None, capture=False):
-    p = run(shlex.split(cmd), check=check, input=input, universal_newlines=True, capture_output=capture)
+def run_cmd(cmd, check=True, input=None):
+    p = run(shlex.split(cmd), check=check, input=input, universal_newlines=True)
     return p.stdout
 
 def global_config():

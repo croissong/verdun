@@ -15,7 +15,7 @@ const MumbleStatus = ({ loading, metrics }) => (
       icon={<MumbleIcon style={{ height: '2rem', width: '2rem' }} />}
       title="Murmur"
       subheader="Mumble Server"
-      metrics={get(metrics, 'mumble')}
+      metrics={get(metrics, 'murmur')}
     />
 
     <ContainerStatus

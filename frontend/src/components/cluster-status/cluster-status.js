@@ -17,9 +17,9 @@ export default class ClusterStatus extends Component {
     const { metrics, loading } = this.state;
     return (
       <div>
-        <MatrixStatus loading={loading} metrics={get(metrics, 'comm-tools')} />
-        <MumbleStatus loading={loading} metrics={get(metrics, 'comm-tools')} />
-        <MiscStatus loading={loading} metrics={get(metrics, 'comm-tools')} />
+        <MatrixStatus loading={loading} metrics={get(metrics, 'matrix')} />
+        <MumbleStatus loading={loading} metrics={get(metrics, 'murmur')} />
+        <MiscStatus loading={loading} metrics={get(metrics, 'misc')} />
       </div>
     );
   }
