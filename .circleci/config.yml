@@ -4,20 +4,15 @@ workflows:
    build:
      jobs:
        - circle-compare-url/reconstruct
-       - build_frontend:
+       - run_ci:
            requires:
             - circle-compare-url/reconstruct
-       # - package_frontend
-       - deploy_k8s:
-           requires:
-            - circle-compare-url/reconstruct
-            - build_frontend
 
 orbs:
   circle-compare-url: iynere/compare-url@1.0.2
 
 jobs:
-  build_frontend:
+  run_ci:
     docker:
       - image: alpine/git
     working_directory: ~/project
@@ -32,8 +27,8 @@ jobs:
       - run:
           name: install deps
           command: |
-            apk add python3 docker
-            pip3 install -r .circleci/requirements.txt
+            apk add python3 docker git make curl gnupg openssh-client --repository=http://dl-cdn.alpinelinux.org/alpine/edge/main
+            wget https://github.com/roboll/helmfile/releases/download/v0.73.0/helmfile_linux_amd64 -O /usr/local/bin/helmfile
       - save_cache:
           key: packages-v1
           paths:
@@ -42,34 +37,13 @@ jobs:
           at: workspace
       - setup_remote_docker:
           docker_layer_caching: true
-      - run:
-          name: run frontend if changed
-          command: |
-            python3 .circleci/frontend.py
-            # if python3 .circleci/changed-since-last-commit.py frontend; then
-            # fi
-
-  deploy_k8s:
-    docker:
-      - image: quay.io/roboll/helmfile:v0.64.2
-    steps:
-      - checkout
+      - run: pip3 install -r .circleci/requirements.txt
       - restore_cache:
-          keys:
-            - packages-v1
+          key: dependency-cache-{{ checksum "frontend/yarn.lock" }}
       - run:
-          name: install deps
-          command: apk add make curl gnupg python3
+          name: run ci
+          command: python3 .circleci/circle.py
       - save_cache:
-          key: packages-v1
+          key: dependency-cache-{{ checksum "frontend/yarn.lock" }}
           paths:
-            - "/var/cache/apk"
-      - attach_workspace:
-          at: workspace
-      - run:
-          name: run k8s if changed
-          working_directory: k8s
-          command: |
-            if python3 ../.circleci/changed-since-last-commit.py k8s; then
-              python3 ../.circleci/k8s.py
-            fi
+            - ./frontend/node_modules
