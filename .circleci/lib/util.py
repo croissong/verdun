@@ -1,7 +1,8 @@
 import click
-import os
-import sys
 import shlex
+from base64 import b64decode
+from git import Repo
+from os import environ, getcwd, popen
 from subprocess import run
 from lib.config import logger
 
@@ -20,7 +21,7 @@ def changed_since_last_run_commit(dirs: list) -> bool:
         directories = ' '.join(dirs)
         cmd = f'git diff {last_run_commit} {current_run_commit} {directories} 2>&1'
         logger.info(cmd)
-        result = os.popen(cmd).read()
+        result = popen(cmd).read()
         changed = not not result
         logger.info(f'{result} - changed: {changed}')
         return changed
@@ -37,7 +38,7 @@ def get_last_run_commit() -> str:
 
 
 def get_current_run_commit() -> str:
-    return os.getenv('CIRCLE_SHA1', '')
+    return environ['CIRCLE_SHA1']
 
 def is_local() -> bool:
     return click.get_current_context().params['local']
@@ -48,3 +49,28 @@ def is_dev() -> bool:
 def run_cmd(cmd, check=True, input=None, cwd=None):
     p = run(shlex.split(cmd), check=check, input=input, universal_newlines=True, cwd=cwd)
     return p.stdout
+
+def get_git_hash(repo):
+    return repo.git.rev_parse(f'HEAD', short=8)
+
+def init_git():
+    repo = Repo(getcwd())
+    if not is_local():
+        repo.config_writer().set_value('user', 'name', 'Verdun CI Bot').release()
+        repo.config_writer().set_value('user', 'email', 'verdun-ci-bot@patrician.gold').release()
+    return repo
+
+def login_docker():
+    docker_user = environ['DOCKER_USER']
+    docker_password_b64 = environ['DOCKER_PASSWORD_B64']
+    docker_password = b64decode(docker_password_b64)
+    run_cmd(f'docker login --username={docker_user} --password-stdin', input=docker_password.decode('utf-8'))
+
+def build_push_container(directory, image):
+    if not is_local():
+        login_docker()
+    if is_dev():
+        logger.info(f'Skipping building image {image}')
+    else:
+        run_cmd(f'docker build -t {image} {directory}')
+        run_cmd(f'docker push {image}')

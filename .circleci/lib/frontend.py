@@ -1,27 +1,15 @@
-from git import Repo
-from os import environ, getcwd
-from base64 import b64decode
-from lib.util import is_dev, is_local, run_cmd
+from lib.util import is_dev, is_local, run_cmd, get_git_hash, init_git, build_push_container
 from lib.config import logger, yaml
 
 def frontend():
     repo = init_git()
-    tag = repo.git.rev_parse('HEAD', short=8)
+    tag = get_git_hash(repo)
     run_cmd('yarn install')
     run_cmd('yarn build')
-    build_push_container(tag)
+    image = f'croissong/verdun-frontend:{tag}'
+    build_push_container('frontend', image)
     update_images(tag)
     git_push(repo, tag)
-
-def build_push_container(tag):
-    if not is_local():
-        login_docker()
-    image = f'croissong/verdun-frontend:{tag}'
-    if is_dev():
-        logger.info(f'Skipping building image {image}')
-    else:
-        run_cmd(f'docker build -t {image} frontend')
-        run_cmd(f'docker push {image}')
 
 def update_images(tag):
     with open('k8s/values/images.yml', 'r+', encoding='utf-8') as f:
@@ -47,16 +35,4 @@ def git_push(repo, tag):
     if not is_dev():
         repo.git.push('origin', branch)
 
-def init_git():
-    repo = Repo(getcwd())
-    if not is_local():
-        repo.config_writer().set_value('user', 'name', 'Verdun CI Bot').release()
-        repo.config_writer().set_value('user', 'email', 'verdun-ci-bot@patrician.gold').release()
-    return repo
-
-def login_docker():
-    docker_user = environ['DOCKER_USER']
-    docker_password_b64 = environ['DOCKER_PASSWORD_B64']
-    docker_password = b64decode(docker_password_b64)
-    run_cmd(f'docker login --username={docker_user} --password-stdin', input=docker_password.decode('utf-8'))
 

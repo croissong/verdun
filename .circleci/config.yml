@@ -14,30 +14,16 @@ orbs:
 jobs:
   run_ci:
     docker:
-      - image: alpine/git
+      - image: croissong/verdun-ci:latest
     working_directory: ~/project
     steps:
       - add_ssh_keys:
           fingerprints:
             - "40:f3:ca:86:a6:53:99:ce:21:16:58:f9:25:8c:ef:da"
       - checkout
-      - restore_cache:
-          keys:
-            - packages-v1
-      - run:
-          name: install deps
-          command: |
-            apk add python3 docker git make curl gnupg openssh-client --repository=http://dl-cdn.alpinelinux.org/alpine/edge/main
-            wget https://github.com/roboll/helmfile/releases/download/v0.73.0/helmfile_linux_amd64 -O /usr/local/bin/helmfile
-      - save_cache:
-          key: packages-v1
-          paths:
-            - "/var/cache/apk"
       - attach_workspace:
           at: workspace
-      - setup_remote_docker:
-          docker_layer_caching: true
-      - run: pip3 install -r .circleci/requirements.txt
+      - setup_remote_docker
       - restore_cache:
           key: dependency-cache-{{ checksum "frontend/yarn.lock" }}
       - run:
