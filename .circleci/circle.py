@@ -10,13 +10,13 @@ from lib.ci import build_ci_image
 @click.option('--local/--circleci', default=False)
 @click.option('--dev/--prod', default=False)
 def main(local, dev):
-    if changed_since_last_run_commit('.circleci'):
+    if changed_since_last_run_commit(['.circleci']):
         build_ci_image()
-    # if changed_since_last_run_commit('frontend'):
-    #     frontend()
-    #     k8s()
-    # elif changed_since_last_run_commit('k8s'):
-    #     k8s()
+    elif changed_since_last_run_commit(['frontend']):
+        frontend()
+        k8s()
+    elif changed_since_last_run_commit(['k8s']):
+        k8s()
 
 if __name__ == '__main__':
     init()
