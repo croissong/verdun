@@ -1,11 +1,12 @@
+from os import environ
 from lib.util import is_dev, is_local, run_cmd, get_git_hash, init_git, build_push_container
 from lib.config import logger, yaml
 
 def frontend():
     repo = init_git()
     tag = get_git_hash(repo)
-    run_cmd('yarn install')
-    run_cmd('yarn build')
+    run_cmd('yarn install', cwd='frontend')
+    run_cmd('yarn build', cwd='frontend')
     image = f'croissong/verdun-frontend:{tag}'
     build_push_container('frontend', image)
     update_images(tag)
