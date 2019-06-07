@@ -1,0 +1,17 @@
+kind: pipeline
+name: default
+
+steps:
+- name: k8s
+  image: croissong/verdun-ci:latest
+  environment:
+    K8S_CLUSTER_CONTEXT:
+      from_secret: K8S_CLUSTER_CONTEXT
+    HELM_GPG_KEY_B64:
+      from_secret: HELM_GPG_KEY_B64
+    DO_TOKEN_GET_KUBECONF:
+      from_secret: DO_TOKEN_GET_KUBECONF
+    DO_K8S_CLUSTER_ID:
+      from_secret: DO_K8S_CLUSTER_ID
+  commands:
+  - python3 .ci/circle.py --run-k8s

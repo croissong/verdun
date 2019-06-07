@@ -3,7 +3,7 @@ import shlex
 from base64 import b64decode
 from git import Repo
 from os import environ, getcwd, popen
-from subprocess import run
+from subprocess import run, CalledProcessError, STDOUT
 from lib.config import logger
 
 def changed_since_last_run_commit(dirs: list) -> bool:
@@ -47,8 +47,12 @@ def is_dev() -> bool:
     return click.get_current_context().params['dev']
 
 def run_cmd(cmd, check=True, input=None, cwd=None):
-    p = run(shlex.split(cmd), check=check, input=input, universal_newlines=True, cwd=cwd)
-    return p.stdout
+    try:
+        p = run(shlex.split(cmd), stderr=STDOUT, check=check, input=input, universal_newlines=True, cwd=cwd)
+        return p.stdout
+    except CalledProcessError as e:
+        print(e.output)
+        raise e
 
 def get_git_hash(repo):
     return repo.git.rev_parse(f'HEAD', short=8)
