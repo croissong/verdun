@@ -15,7 +15,7 @@ matrix:
     tag: v1.2.1
   synapse:
     repo: croissong/matrix-synapse-s3-storage
-    tag: v0.99.5.2
+    tag: v1.0.0rc2
 misc:
   nginxRtmp:
     repo: tiangolo/nginx-rtmp
