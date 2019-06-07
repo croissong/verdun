@@ -9,8 +9,15 @@ from lib.ci import build_ci_image
 @click.command()
 @click.option('--local/--circleci', default=False)
 @click.option('--dev/--prod', default=False)
-def main(local, dev):
-    if changed_since_last_run_commit(['.circleci']):
+@click.option('--run-k8s', is_flag=True)
+@click.option('--run-frontend', is_flag=True)
+def main(local, dev, run_k8s, run_frontend):
+    if run_k8s:
+        k8s()
+    elif run_frontend:
+        frontend()
+        k8s()
+    elif changed_since_last_run_commit(['.circleci']):
         build_ci_image()
     elif changed_since_last_run_commit(['frontend']):
         frontend()

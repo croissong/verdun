@@ -15,7 +15,7 @@ def k8s():
 def import_gpg_key():
     key_b64 = environ['HELM_GPG_KEY_B64']
     key = b64decode(key_b64)
-    run_cmd('gpg --import', input=key)
+    run_cmd('gpg --import', input=key.decode('utf-8'))
 
 def get_kubeconfig():
     do_token = environ['DO_TOKEN_GET_KUBECONF']
