@@ -3,7 +3,8 @@ name: default
 
 steps:
 - name: k8s
-  image: croissong/verdun-ci:latest
+  image: croissong/verdun-ci:k8s
+  pull: always
   environment:
     K8S_CLUSTER_CONTEXT:
       from_secret: K8S_CLUSTER_CONTEXT
