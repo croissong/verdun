@@ -9,13 +9,14 @@ init()
 @click.command()
 @click.option('--local/--ci', default=False)
 @click.option('--dev/--prod', default=False)
-def ci():
-    if is_local():
-        return
-    import_gpg_key()
-    get_kubeconfig()
-    helm_init()
-    kubectx = environ['K8S_CLUSTER_CONTEXT']
+def ci(local, dev):
+    if not is_local():
+        import_gpg_key()
+        get_kubeconfig()
+        helm_init()
+        kubectx = environ['K8S_CLUSTER_CONTEXT']
+    else:
+        kubectx = environ['KUBECONTEXT']
     run_cmd(f'make apply kubectx={kubectx}', cwd='k8s')
 
 def import_gpg_key():
@@ -34,4 +35,9 @@ def get_kubeconfig():
     environ["KUBECONFIG"] = path.abspath('kubeconfig.yml')
 
 def helm_init():
+    run_cmd('helm init --client-only')
     run_cmd('helmfile -v')
+
+
+if __name__ == '__main__':
+    ci()
