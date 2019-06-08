@@ -1,14 +1,18 @@
 DRONE_SERVER := "https://cloud.drone.io"
 DRONE_TOKEN := $(shell sops -d --extract '["drone"]["token"]' secrets.yml)
 
+check-vars:
+	@test $(do_token) || (echo 'do_token is not defined' && exit 1)
+	@test $(github_token) || (echo 'github_token is not defined' && exit 1)
+
 init:
 	terraform init
 
 plan: init
-	terraform plan -var "do_token=$(do_token)" -var "drone_token=$(drone_token)" -var "do_token_get_kubeconf=$(do_token_get_kubeconf)" -var helm_gpg_key_b64=$(helm_gpg_key_b64) -var do_spaces_access_id=$(do_spaces_access_id) -var do_spaces_secret_key=$(do_spaces_secret_key) -var docker_user=$(docker_user) -var docker_password_b64=$(docker_password_b64)
+	terraform plan -var "do_token=$(do_token)" -var "gh_token=$(gh_token)"
 
 apply: init
-	DRONE_SERVER=$(DRONE_SERVER) DRONE_TOKEN=$(DRONE_TOKEN) terraform apply
+	DRONE_SERVER=$(DRONE_SERVER) DRONE_TOKEN=$(DRONE_TOKEN) terraform apply -var "do_token=$(do_token)" -var "gh_token=$(gh_token)" 
 
 tf-provider-circleci:
 	cd plugin_repos/terraform-provider-circleci

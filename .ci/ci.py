@@ -38,6 +38,5 @@ def helm_init():
     run_cmd('helm init --client-only')
     run_cmd('helmfile -v')
 
-
 if __name__ == '__main__':
     ci()
