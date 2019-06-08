@@ -1,10 +1,12 @@
-variable "do_token" {}
-variable "do_spaces_access_id" {}
-variable "do_spaces_secret_key" {}
-
 provider "digitalocean" {
   version = "~> 1.3"
-  token = "${var.do_token}"
-  spaces_access_id  = "${var.do_spaces_access_id}"
-  spaces_secret_key = "${var.do_spaces_secret_key}"
+  token = "${data.sops_file.secrets.data.digitalocean.token}"
+  spaces_access_id  = "${data.sops_file.secrets.data.digitalocean.spaces.accessId}"
+  spaces_secret_key = "${data.sops_file.secrets.data.digitalocean.spaces.secretKey}"
+}
+
+provider "sops" {}
+
+data "sops_file" "secrets" {
+  source_file = "secrets.yml"
 }

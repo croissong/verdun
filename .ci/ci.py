@@ -1,9 +1,15 @@
 from os import environ, path
+import click
 from base64 import b64decode
+from lib.config import init
 from lib.util import is_local, run_cmd
 
+init()
 
-def k8s():
+@click.command()
+@click.option('--local/--ci', default=False)
+@click.option('--dev/--prod', default=False)
+def ci():
     if is_local():
         return
     import_gpg_key()

@@ -15,4 +15,4 @@ steps:
     DO_K8S_CLUSTER_ID:
       from_secret: DO_K8S_CLUSTER_ID
   commands:
-  - python3 .ci/circle.py --run-k8s
+  - python3 .ci/ci.py
