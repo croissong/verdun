@@ -1,1 +1,1 @@
-[![CircleCI](https://circleci.com/gh/Croissong/verdun.svg?style=svg)](https://circleci.com/gh/Croissong/verdun)
+[![Build Status](https://cloud.drone.io/api/badges/Croissong/verdun/status.svg)](https://cloud.drone.io/Croissong/verdun)

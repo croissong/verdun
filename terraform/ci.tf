@@ -49,7 +49,7 @@ resource "drone_secret" "frontend_docker_user" {
 resource "drone_secret" "frontend_docker_password" {
   repository = "Croissong/verdun-frontend"
   name    = "DOCKER_PASSWORD"
-  value   = "${data.sops_file.secrets.data.docker.password}"
+  value   = "${chomp(data.sops_file.secrets.data.docker.password)}"
 }
 
 resource "drone_secret" "ci_docker_user" {
