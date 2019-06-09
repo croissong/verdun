@@ -17,7 +17,7 @@ def ci(local, dev):
         kubectx = environ['K8S_CLUSTER_CONTEXT']
     else:
         kubectx = environ['KUBECONTEXT']
-    run_cmd(f'make apply kubectx={kubectx}', cwd='k8s')
+    run_cmd(f'make apply kubectx={kubectx}', cwd='k8s', check=False)
 
 def import_gpg_key():
     key_b64 = environ['HELM_GPG_KEY_B64']
@@ -30,8 +30,7 @@ def get_kubeconfig():
     do_token = environ['DO_TOKEN_GET_KUBECONF']
     cluster_id = environ['DO_K8S_CLUSTER_ID']
     cmd = f'make get-kubeconf do_token={do_token} cluster_id={cluster_id}'
-    print(cmd)
-    run_cmd(cmd, cwd='k8s', check=False)
+    run_cmd(cmd, cwd='k8s')
     environ["KUBECONFIG"] = path.abspath('kubeconfig.yml')
 
 def helm_init():
