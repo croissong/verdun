@@ -1,9 +1,9 @@
-image:
-  repository: {{ .Environment.Values.verdun.kubeStateMetrics.repo }}
-  tag: {{ .Environment.Values.verdun.kubeStateMetrics.tag }}
 host: verdun.patrician.gold
 path: /metrics
 kube-state-metrics:
+  image:
+    repository: {{ .Environment.Values.verdun.kubeStateMetrics.repo }}
+    tag: {{ .Environment.Values.verdun.kubeStateMetrics.tag }}
   prometheusScrape: false
   collectors:
     certificatesigningrequests: false
