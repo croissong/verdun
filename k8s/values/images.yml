@@ -31,7 +31,7 @@ traefik:
 verdun:
   frontend:
     repo: croissong/verdun-frontend
-    tag: 87970f51
+    tag: 3d15eef9
   kubeStateMetrics:
     repo: quay.io/coreos/kube-state-metrics
     tag: v1.6.0
