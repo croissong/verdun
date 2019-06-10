@@ -31,7 +31,7 @@ traefik:
 verdun:
   frontend:
     repo: croissong/verdun-frontend
-    tag: '452453e9'
+    tag: ec6cf15c
   kubeStateMetrics:
     repo: bitnami/kube-state-metrics
     tag: 1.6.0-r28
