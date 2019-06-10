@@ -80,3 +80,9 @@ releases:
   values:
     - values/common.yml.gotmpl
     - values/verdun.yml.gotmpl
+
+- name: hefeteig-app
+  namespace: hefeteig
+  chart: ./my-charts/hefeteig-app/
+  values:
+    - values/common.yml.gotmpl

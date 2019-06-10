@@ -21,3 +21,20 @@ resource "digitalocean_record" "patrician_wildcard" {
   value = "${data.digitalocean_droplet.verdun_node.ipv4_address}"
   name    = "*"
 }
+
+## hefeteig.io
+
+### domain
+
+resource "digitalocean_domain" "hefeteig" {
+  name = "hefeteig.io"
+}
+
+### records
+
+resource "digitalocean_record" "hefeteig_root" {
+  domain  = "${digitalocean_domain.hefeteig.name}"
+  type = "A"
+  value = "${data.digitalocean_droplet.verdun_node.ipv4_address}"
+  name    = "@"
+}
