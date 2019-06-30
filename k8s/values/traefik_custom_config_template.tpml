@@ -176,7 +176,8 @@
     ContentTypeNosniff = true
     BrowserXSSFilter = true
     FrameDeny = true
-    ContentSecurityPolicy = "default-src 'self' https:; font-src 'self' https: data:; img-src 'self' https: data:; object-src 'none'; script-src https:; style-src 'self' https: 'unsafe-inline'"
+    # ContentSecurityPolicy = "default-src 'self' https:; font-src 'self' https: data:; img-src 'self' https: data:; object-src 'none'; script-src https:; style-src 'self' https: 'unsafe-inline'"
+    ContentSecurityPolicy = ""
     ReferrerPolicy = "no-referrer"
   {{if $frontend.Headers }}
     SSLHost = "{{ $frontend.Headers.SSLHost }}"
