@@ -140,6 +140,10 @@ data:
     [ping]
     entryPoint = "http"
     [kubernetes]
+    filename = "/configs/custom_config_template.tpml"
+    # Enable debug logging of generated configuration template.
+    debugLogGeneratedTemplate = false
+
     {{- if .Values.kubernetes}}
       {{- if .Values.kubernetes.endpoint }}
     endpoint = {{ .Values.kubernetes.endpoint | quote }}

@@ -56,3 +56,7 @@ rbac:
 debug:
   enabled: false      
 sendAnonymousUsage: true
+
+configFiles:
+  custom_config_template.tpml: |
+{{ readFile "traefik_custom_config_template.tpml" | indent 4 }}
