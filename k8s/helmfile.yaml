@@ -7,6 +7,12 @@ helmDefaults:
   wait: true
   recreatePods: false
 
+repositories:
+- name: stable
+  url: https://kubernetes-charts.storage.googleapis.com
+- name: appscode
+  url: https://charts.appscode.com/stable/
+
 environments:
   default:
     values:
@@ -84,5 +90,14 @@ releases:
 - name: hefeteig-app
   namespace: hefeteig
   chart: ./my-charts/hefeteig-app/
+  values:
+    - values/common.yml.gotmpl
+
+- name: stash-operator
+  namespace: stash
+  chart: appscode/stash
+  version: 0.8.3
+  wait: false
+  atomic: false
   values:
     - values/common.yml.gotmpl

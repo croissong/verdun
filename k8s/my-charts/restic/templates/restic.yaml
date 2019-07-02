@@ -1,0 +1,32 @@
+apiVersion: stash.appscode.com/v1alpha1
+kind: Restic
+metadata:
+  name: {{ include "helm-chart.fullname" . }}
+  labels:
+    app: {{ include "helm-chart.name" . }}
+    chart: {{ include "helm-chart.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  selector: {{ required "selector is required" .Values.selector }}
+  fileGroups:
+  {{- range $volume := .Values.volumes }}
+  - path: /{{ $volume }}
+    retentionPolicyName: 'keep-last-5'
+  {{- end }}
+  backend:
+    s3:
+      endpoint: 'fra1.digitaloceanspaces.com'
+      bucket: verdun
+      prefix: backup/stash/
+    storageSecretName: {{ include "helm-chart.fullname" . }}
+  schedule: '@midnight'
+  volumeMounts:
+  {{- range $volume := .Values.volumes }}
+  - mountPath: /{{ $volume }}
+    name: {{ $volume }}
+  {{- end }}
+  retentionPolicies:
+  - name: 'keep-last-5'
+    keepLast: 5
+    prune: true
