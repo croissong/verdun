@@ -1,0 +1,7 @@
+dependencies:
+- name: traefik
+  repository: "file://../traefik-fork"
+  version: 1.70.0
+- name: auth-proxy
+  repository: "file://../auth-proxy"
+  version: 0.0.1

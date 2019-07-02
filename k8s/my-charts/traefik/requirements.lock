@@ -1,0 +1,9 @@
+dependencies:
+- name: traefik
+  repository: file://../traefik-fork
+  version: 1.70.0
+- name: auth-proxy
+  repository: file://../auth-proxy
+  version: 0.0.1
+digest: sha256:1e70657572cefa4fb27e7486869731ac3ebf05b70069bcb84570346e1b02e307
+generated: "2019-07-02T19:50:59.856368288+02:00"

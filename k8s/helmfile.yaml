@@ -27,20 +27,15 @@ releases:
   namespace: kube-system
   chart: ./my-charts/cilium-portmap/
 
-- name: traefik-auth-proxy
-  namespace: traefik
-  chart: ./my-charts/auth-proxy/
-  values:
-    - values/auth-proxy.yml.gotmpl
-    - domain: traefik.patrician.gold
-      upstream: traefik-dashboard:80
-
 - name: traefik
   namespace: traefik
   chart: ./my-charts/traefik/
-  recreatePods: true
   values:
     - values/traefik.yml.gotmpl
+    - values/auth-proxy.yml.gotmpl
+    - auth-proxy:
+        domain: traefik.patrician.gold
+        upstream: traefik-dashboard:80
 
 - name: matrix-synapse
   namespace: matrix

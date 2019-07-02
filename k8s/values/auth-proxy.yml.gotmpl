@@ -1,7 +1,8 @@
-image:
-  repo: {{ .Environment.Values.common.authProxy.repo }}
-  tag: {{ .Environment.Values.common.authProxy.tag }}
-clientId: {{ .Environment.Values.authProxy.clientId }}
-clientSecret: {{ .Environment.Values.authProxy.clientSecret }}
-cookieSecret: {{ .Environment.Values.authProxy.cookieSecret }}
-githubOrg: {{ .Environment.Values.authProxy.githubOrg }}
+auth-proxy:
+  image:
+    repo: {{ .Environment.Values.common.authProxy.repo }}
+    tag: {{ .Environment.Values.common.authProxy.tag }}
+  clientId: {{ .Environment.Values.authProxy.clientId }}
+  clientSecret: {{ .Environment.Values.authProxy.clientSecret }}
+  cookieSecret: {{ .Environment.Values.authProxy.cookieSecret }}
+  githubOrg: {{ .Environment.Values.authProxy.githubOrg }}
