@@ -32,7 +32,7 @@ releases:
   chart: ./my-charts/traefik/
   values:
     - values/traefik.yml.gotmpl
-    - values/auth-proxy.yml.gotmpl
+    - values/common.yml.gotmpl
     - auth-proxy:
         domain: traefik.patrician.gold
         upstream: traefik-dashboard:80

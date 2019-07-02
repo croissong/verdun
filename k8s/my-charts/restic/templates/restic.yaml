@@ -8,7 +8,8 @@ metadata:
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
 spec:
-  selector: {{ required "selector is required" .Values.selector }}
+  selector:
+{{ required "selector is required" .Values.selector | toYaml | indent 4 }}
   fileGroups:
   {{- range $volume := .Values.volumes }}
   - path: /{{ $volume }}

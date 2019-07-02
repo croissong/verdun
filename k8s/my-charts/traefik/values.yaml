@@ -1,0 +1,6 @@
+restic:
+  selector:
+    matchLabels:
+      app: traefik
+  volumes:
+    - acme

@@ -1,3 +1,4 @@
 apiVersion: v1
-description: A stash restic backup chart
 name: restic
+description: A stash restic backup chart
+version: 0.0.1
