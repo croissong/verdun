@@ -50,6 +50,9 @@ spec:
             - name: "synapse-config"
               mountPath: "/conf/log.config"
               subPath: log.config
+            - name: "signing-key"
+              mountPath: "/data/{{ .Values.host }}.signing.key"
+              subPath: signing.key
             - name: uploads
               mountPath: "/data/uploads"
             - name: data
@@ -84,6 +87,9 @@ spec:
         - name: "synapse-config"
           configMap:
             name: {{ include "helm-chart.fullname" . }}-config
+        - name: "signing-key"
+          secret:
+            secretName: {{ include "helm-chart.fullname" . }}-secret
         - name: uploads
           persistentVolumeClaim:
             claimName: {{ include "helm-chart.fullname" . }}-pvc
