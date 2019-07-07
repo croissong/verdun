@@ -97,5 +97,4 @@ releases:
   version: 5.15.0
   values:
     - values/my-prometheus.yml.gotmpl
-    - values/common.yml.gotmpl
 

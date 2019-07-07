@@ -1,10 +1,5 @@
 host: verdun.patrician.gold
 path: /metrics
-auth-proxy:
-  domain: prometheus.patrician.gold
-  upstream: prometheus-prometheus-oper-prometheus:9090
-  clientId: {{ .Environment.Values.prometheus.authProxy.clientId }}
-  clientSecret: {{ .Environment.Values.prometheus.authProxy.clientSecret }}
 prometheus-operator:
   prometheusSpec:
     image:
@@ -14,6 +9,7 @@ prometheus-operator:
     image:
       repository: {{ .Environment.Values.prometheus.kubeStateMetrics.repo }}
       tag: {{ .Environment.Values.prometheus.kubeStateMetrics.tag }}
+    namespace: 'hefeteig,kubedb,matrix,misc,murmur,prometheus,stash,tiller,traefik,verdun'
 {{ readFile "kube-state-metrics.yml" | indent 4 }}
   grafana:
     enabled: false

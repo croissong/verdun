@@ -79,3 +79,7 @@ prometheus:
     selfMonitor: false
   prometheusSpec:
     serviceMonitorSelectorNilUsesHelmValues: false
+  ingress:
+    enabled: true
+    hosts:
+      - prometheus.patrician.gold
