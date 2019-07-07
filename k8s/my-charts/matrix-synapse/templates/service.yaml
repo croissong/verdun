@@ -13,6 +13,9 @@ spec:
     protocol: TCP
     port: 8008
     targetPort: http
+  - name: metrics
+    port: 9000
+    targetPort: metrics
   selector:
     app: {{ include "helm-chart.name" . }}
     release: {{ .Release.Name }}

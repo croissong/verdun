@@ -2,6 +2,8 @@ defaultRules:
   create: false
 
 alertmanager:
+  serviceMonitor:
+    selfMonitor: false
   config:
     receivers:
     - name: 'null'
@@ -52,6 +54,8 @@ kubeStateMetrics:
 ##
 prometheusOperator:
   enabled: true
+  serviceMonitor:
+    selfMonitor: false
   kubeletService:
     enabled: false
 
@@ -71,3 +75,7 @@ prometheusOperator:
 
 prometheus:
   enabled: true
+  serviceMonitor:
+    selfMonitor: false
+  prometheusSpec:
+    serviceMonitorSelectorNilUsesHelmValues: false

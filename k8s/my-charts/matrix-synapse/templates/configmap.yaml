@@ -34,6 +34,10 @@ data:
             compress: true
           - names: [federation]
             compress: false
+      - type: metrics
+        port: 9000
+        bind_addresses:
+          - '0.0.0.0'
 
     ## Database ##
 
@@ -136,8 +140,8 @@ data:
 
     ## Metrics ###
 
-    enable_metrics: False
-    report_stats: False
+    enable_metrics: True
+    report_stats: True
 
 
     ## API Configuration ##
