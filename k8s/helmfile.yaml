@@ -69,12 +69,6 @@ releases:
   values:
     - values/nginx-rtmp.yml.gotmpl
 
-- name: kube-state-metrics
-  namespace: verdun
-  chart: ./my-charts/kube-state-metrics/
-  values:
-    - values/kube-state-metrics.yml.gotmpl
-
 - name: verdun-frontend
   namespace: verdun
   chart: ./my-charts/verdun-frontend/
@@ -96,3 +90,12 @@ releases:
   atomic: false
   values:
     - values/common.yml.gotmpl
+
+- name: prometheus
+  namespace: prometheus
+  chart: ./my-charts/prometheus/
+  version: 5.15.0
+  values:
+    - values/my-prometheus.yml.gotmpl
+    - values/common.yml.gotmpl
+

@@ -1,3 +1,0 @@
-apiVersion: v1
-description: An extended kube-state-metrics chart
-name: kube-state-metrics

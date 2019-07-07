@@ -1,7 +1,7 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: {{ include "helm-chart.fullname" . }}
+  name: {{ include "helm-chart.fullname" . }}-kube-state-metrics
   labels:
     app: {{ include "helm-chart.name" . }}
     chart: {{ include "helm-chart.chart" . }}
@@ -13,7 +13,7 @@ spec:
     http:
       paths:
       - backend:
-          serviceName: {{ include "helm-chart.fullname" . }}
+          serviceName: {{ include "helm-chart.fullname" . }}-kube-state-metrics
           servicePort: 8080
         {{- if .Values.path }}
         path: {{ .Values.path }}

@@ -1,0 +1,24 @@
+prometheusScrape: false
+collectors:
+  certificatesigningrequests: false
+  configmaps: false
+  cronjobs: false
+  daemonsets: false
+  deployments: false
+  endpoints: false
+  horizontalpodautoscalers: false
+  ingresses: false
+  jobs: false
+  limitranges: false
+  namespaces: false
+  nodes: false
+  persistentvolumeclaims: false
+  persistentvolumes: false
+  poddisruptionbudgets: false
+  pods: true
+  replicasets: false
+  replicationcontrollers: false
+  resourcequotas: false
+  secrets: false
+  services: false
+  statefulsets: false

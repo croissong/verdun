@@ -1,0 +1,25 @@
+host: verdun.patrician.gold
+path: /metrics
+auth-proxy:
+  domain: prometheus.patrician.gold
+  upstream: prometheus-prometheus-oper-prometheus:9090
+  clientId: {{ .Environment.Values.prometheus.authProxy.clientId }}
+  clientSecret: {{ .Environment.Values.prometheus.authProxy.clientSecret }}
+prometheus-operator:
+  prometheusSpec:
+    image:
+      tag: v2.10.0
+{{ readFile "prometheus-operator.yml" | indent 2 }}
+  kube-state-metrics:
+    image:
+      repository: {{ .Environment.Values.prometheus.kubeStateMetrics.repo }}
+      tag: {{ .Environment.Values.prometheus.kubeStateMetrics.tag }}
+{{ readFile "kube-state-metrics.yml" | indent 4 }}
+  grafana:
+    enabled: false
+  nodeExporter:
+    enabled: false
+grafana:
+  enabled: false
+nodeExporter:
+  enabled: false

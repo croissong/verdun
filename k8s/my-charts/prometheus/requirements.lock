@@ -1,0 +1,9 @@
+dependencies:
+- name: prometheus-operator
+  repository: https://kubernetes-charts.storage.googleapis.com
+  version: 5.14.1
+- name: auth-proxy
+  repository: file://../auth-proxy
+  version: 0.0.1
+digest: sha256:9453bfde7becf7dc6a0638983bcd67459513a4e2c593a07fb24f708e3797b878
+generated: "2019-07-07T20:01:15.817182856+02:00"

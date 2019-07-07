@@ -1,0 +1,73 @@
+defaultRules:
+  create: false
+
+alertmanager:
+  config:
+    receivers:
+    - name: 'null'
+
+kubeApiServer:
+  enabled: false
+
+kubelet:
+  enabled: false
+
+kubeControllerManager:
+  enabled: false
+
+coreDns:
+  enabled: false
+
+kubeEtcd:
+  enabled: false
+
+kubeScheduler:
+  enabled: false
+
+kubeStateMetrics:
+  enabled: true
+  serviceMonitor:
+    ## Scrape interval. If not set, the Prometheus default scrape interval is used.
+    ##
+    interval: ""
+
+    ##  metric relabel configs to apply to samples before ingestion.
+    ##
+    metricRelabelings: []
+    # - action: keep
+    #   regex: 'kube_(daemonset|deployment|pod|namespace|node|statefulset).+'
+    #   sourceLabels: [__name__]
+
+    #   relabel configs to apply to samples before ingestion.
+    ##
+    relabelings: []
+    # - sourceLabels: [__meta_kubernetes_pod_node_name]
+    #   separator: ;
+    #   regex: ^(.*)$
+    #   target_label: nodename
+    #   replacement: $1
+    #   action: replace
+
+## Manages Prometheus and Alertmanager components
+##
+prometheusOperator:
+  enabled: true
+  kubeletService:
+    enabled: false
+
+  image:
+    tag: v0.31.1
+    pullPolicy: Always
+
+  configmapReloadImage:
+    tag: v0.0.1
+
+  prometheusConfigReloaderImage:
+    tag: v0.31.1
+
+  hyperkubeImage:
+    tag: v1.12.1
+    pullPolicy: Always
+
+prometheus:
+  enabled: true

@@ -1,3 +1,6 @@
 image:
   repo: {{ .Environment.Values.verdun.frontend.repo }}
   tag: {{ .Environment.Values.verdun.frontend.tag }}
+auth-proxy:
+  clientId: {{ .Environment.Values.authProxy.clientId }}
+  clientSecret: {{ .Environment.Values.authProxy.clientSecret }}

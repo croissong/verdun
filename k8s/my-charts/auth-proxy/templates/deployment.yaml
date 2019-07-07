@@ -17,6 +17,7 @@ spec:
     metadata:
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/configmap.yml") . | sha256sum }}
+        checksum/secret: {{ include (print $.Template.BasePath "/secret.yml") . | sha256sum }}
       labels:
         app: {{ template "auth-proxy.name" . }}
         chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
