@@ -1,3 +1,6 @@
+auth-proxy:
+  clientId: {{ .Environment.Values.authProxy.clientId }}
+  clientSecret: {{ .Environment.Values.authProxy.clientSecret }}
 traefik:
   image: {{ .Environment.Values.traefik.traefik.repo }}
   imageTag: {{ .Environment.Values.traefik.traefik.tag }}
@@ -61,3 +64,7 @@ traefik:
   configFiles:
     custom_config_template.tpml: |
 {{ readFile "traefik_custom_config_template.tpml" | indent 6 }}
+
+  metrics:
+    prometheus:
+      enabled: true

@@ -36,8 +36,7 @@ data:
             compress: false
       - type: metrics
         port: 9000
-        bind_addresses:
-          - '0.0.0.0'
+        bind_addresses: ['0.0.0.0']
 
     ## Database ##
 

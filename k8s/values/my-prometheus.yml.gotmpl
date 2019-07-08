@@ -1,15 +1,11 @@
 host: verdun.patrician.gold
 path: /metrics
 prometheus-operator:
-  prometheusSpec:
-    image:
-      tag: v2.10.0
 {{ readFile "prometheus-operator.yml" | indent 2 }}
   kube-state-metrics:
     image:
       repository: {{ .Environment.Values.prometheus.kubeStateMetrics.repo }}
       tag: {{ .Environment.Values.prometheus.kubeStateMetrics.tag }}
-    namespace: 'hefeteig,kubedb,matrix,misc,murmur,prometheus,stash,tiller,traefik,verdun'
 {{ readFile "kube-state-metrics.yml" | indent 4 }}
   grafana:
     enabled: false
