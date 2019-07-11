@@ -24,6 +24,10 @@ murmur:
   murmur:
     repo: goofball222/murmur
     tag: rc
+prometheus:
+  kubeStateMetrics:
+    repo: bitnami/kube-state-metrics
+    tag: 1.6.0-r57
 traefik:
   traefik:
     repo: traefik
@@ -31,8 +35,4 @@ traefik:
 verdun:
   frontend:
     repo: croissong/verdun-frontend
-    tag: 9d938597
-prometheus:
-  kubeStateMetrics:
-    repo: bitnami/kube-state-metrics
-    tag: 1.6.0-r57
+    tag: 3e34a154
