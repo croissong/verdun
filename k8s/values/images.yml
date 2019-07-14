@@ -35,4 +35,4 @@ traefik:
 verdun:
   frontend:
     repo: croissong/verdun-frontend
-    tag: 3e34a154
+    tag: 4129c2d3
