@@ -2,7 +2,8 @@
 resource "digitalocean_kubernetes_cluster" "verdun" {
   name    = "verdun"
   region  = "fra1"
-  version = "1.14.2-do.0"
+  # curl -s -H "Authorization: Bearer $do_token" "https://api.digitalocean.com/v2/kubernetes/options" | jq '.options.versions'
+  version = "1.14.3-do.0"
 
   node_pool {
     name       = "worker-pool"
