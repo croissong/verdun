@@ -19,9 +19,3 @@ diff: check-vars
 
 status: check-vars
 	KUBECONFIG=$(kubeconf) KUBECONTEXT=$(kubectx) helmfile status
-
-# TODO change to helm chart https://github.com/kubedb/project/issues/522
-kubedb:
-	kubectl create ns kubedb
-	curl -fsSL https://raw.githubusercontent.com/kubedb/cli/0.12.0/hack/deploy/kubedb.sh \
-		| bash -s -- --namespace=kubedb --rbac

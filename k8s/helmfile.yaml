@@ -33,6 +33,20 @@ releases:
         kube-state-metrics:
 {{ readFile "values/kube-state-metrics.yml" | indent 10 }}
 
+- name: kubedb-operator
+  namespace: kubedb
+  chart: appscode/kubedb
+  version: 0.12.0
+  wait: false
+  atomic: false
+
+- name: kubedb-catalog
+  namespace: kubedb
+  chart: appscode/kubedb-catalog
+  version: 0.12.0
+  wait: false
+  atomic: false
+
 - name: stash-operator
   namespace: stash
   chart: appscode/stash
