@@ -22,6 +22,26 @@ environments:
 
 releases:
 
+- name: prometheus
+  namespace: prometheus
+  chart: ./my-charts/prometheus/
+  version: 5.15.0
+  values:
+    - values/my-prometheus.yml.gotmpl
+    - prometheus-operator:
+{{ readFile "values/prometheus-operator.yml" | indent 8 }}
+        kube-state-metrics:
+{{ readFile "values/kube-state-metrics.yml" | indent 10 }}
+
+- name: stash-operator
+  namespace: stash
+  chart: appscode/stash
+  version: 0.8.3
+  wait: false
+  atomic: false
+  values:
+    - values/common.yml.gotmpl
+  
 # https://www.digitalocean.com/community/questions/hi-after-some-update-of-the-kubernetes-ltd-access-to-a-container-through-hostport-was-broken-i-assume-this-is-related-to-cilium-anyone-known-how-to-fix-that
 - name: cilium-portmap
   namespace: kube-system
@@ -81,20 +101,3 @@ releases:
   chart: ./my-charts/hefeteig-app/
   values:
     - values/common.yml.gotmpl
-
-- name: stash-operator
-  namespace: stash
-  chart: appscode/stash
-  version: 0.8.3
-  wait: false
-  atomic: false
-  values:
-    - values/common.yml.gotmpl
-
-- name: prometheus
-  namespace: prometheus
-  chart: ./my-charts/prometheus/
-  version: 5.15.0
-  values:
-    - values/my-prometheus.yml.gotmpl
-

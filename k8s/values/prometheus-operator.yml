@@ -45,17 +45,6 @@ prometheusOperator:
     enabled: false
 
   image:
-    tag: v0.31.1
-    pullPolicy: Always
-
-  configmapReloadImage:
-    tag: v0.0.1
-
-  prometheusConfigReloaderImage:
-    tag: v0.31.1
-
-  hyperkubeImage:
-    tag: v1.12.1
     pullPolicy: Always
 
 prometheus:
@@ -65,8 +54,6 @@ prometheus:
   prometheusSpec:
     serviceMonitorSelectorNilUsesHelmValues: false
     retention: 1d
-    image:
-      tag: v2.10.0
   ingress:
     enabled: true
     hosts:
