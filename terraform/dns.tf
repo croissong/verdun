@@ -22,6 +22,13 @@ resource "digitalocean_record" "patrician_wildcard" {
   name    = "*"
 }
 
+resource "digitalocean_record" "keybase_verification" {
+  domain  = "${digitalocean_domain.patrician.name}"
+  type = "TXT"
+  value = "keybase-site-verification=vaZthUW-J-KeEXNZv3iWNn85WLmE-T4_gsOy4mCZsZU"
+  name    = "@"
+}
+
 ## hefeteig.io
 
 ### domain
