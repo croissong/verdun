@@ -7,6 +7,8 @@ metadata:
     chart: {{ include "helm-chart.chart" . }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
+  annotations:
+    "monitor.stakater.com/enabled": "true"
 spec:
   rules:
   - host: {{ .Values.host }}

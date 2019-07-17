@@ -1,0 +1,9 @@
+ingressMonitorController:
+  mount: secret
+  data:
+    config.yaml: |-
+      providers:
+      - name: UptimeRobot
+        apiURL: https://api.uptimerobot.com/v2/
+        alertContacts: {{ .Environment.Values.ingressMonitorController.alertContacts | quote }}
+        apiKey: {{ .Environment.Values.ingressMonitorController.apiKey }}

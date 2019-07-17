@@ -110,3 +110,9 @@ releases:
   chart: ./my-charts/hefeteig-app/
   values:
     - values/common.yml.gotmpl
+
+- name: ingress-monitor-controller
+  namespace: verdun
+  chart: ./my-charts/ingressmonitorcontroller/
+  values:
+    - values/ingressmonitorcontroller.yml.gotmpl
