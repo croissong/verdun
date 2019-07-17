@@ -1,3 +1,0 @@
-apiVersion: v1
-name: cilium-portmap
-version: 0.0.1

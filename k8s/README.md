@@ -1,12 +1,17 @@
-# Update kubeconfig & kubecontext
-```
-cluster_id=$(cd ../terraform && terraform output cluster_id && cd ../k8s)
-make get-kubeconf do_token=$(do_token) cluster_id=$cluster_id
-export KUBECONFIG=$PWD/kubeconfig.yml
-export KUBECONTEXT=$(cd ../terraform && terraform output cluster_context && cd ../k8s)
-```
-
-# Run apply
+## Run apply
 ```
 make apply kubectx=$KUBECONTEXT
+```
+
+## Cilium patch portmap conf to allow hostports
+via https://github.com/snormore/cilium-portmap#deploy-as-an-initcontainer
+```
+kc edit ds -n kube-system cilium
+# Insert initContainers *first* in list:
+- name: cilium-portmap
+  image: snormore/cilium-portmap-init
+  imagePullPolicy: IfNotPresent
+  volumeMounts:
+  - mountPath: /host/etc/cni/net.d
+    name: etc-cni-netd
 ```
