@@ -24,10 +24,6 @@ murmur:
   murmur:
     repo: goofball222/murmur
     tag: rc
-prometheus:
-  kubeStateMetrics:
-    repo: bitnami/kube-state-metrics
-    tag: 1.7.0
 traefik:
   traefik:
     repo: traefik
@@ -42,4 +38,4 @@ prometheus:
   tag: v2.11.1
   kubeStateMetrics:
     repo: bitnami/kube-state-metrics
-    tag: 1.6.0-r57
+    tag: 1.7.0
