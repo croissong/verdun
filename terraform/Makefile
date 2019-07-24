@@ -9,10 +9,10 @@ init:
 	terraform init
 
 plan: check-vars init
-	DRONE_SERVER=$(DRONE_SERVER) DRONE_TOKEN=$(DRONE_TOKEN) terraform plan -var "do_token=$(do_token)" -var "gh_token=$(gh_token)"
+	@DRONE_SERVER=$(DRONE_SERVER) DRONE_TOKEN=$(DRONE_TOKEN) terraform plan -var "do_token=$(do_token)" -var "gh_token=$(gh_token)"
 
 apply: check-vars init
-	DRONE_SERVER=$(DRONE_SERVER) DRONE_TOKEN=$(DRONE_TOKEN) terraform apply -var "do_token=$(do_token)" -var "gh_token=$(gh_token)" 
+	@DRONE_SERVER=$(DRONE_SERVER) DRONE_TOKEN=$(DRONE_TOKEN) terraform apply -var "do_token=$(do_token)" -var "gh_token=$(gh_token)" 
 
 tf-provider-circleci:
 	cd plugin_repos/terraform-provider-circleci
