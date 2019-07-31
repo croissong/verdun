@@ -33,3 +33,14 @@ spec:
         endpoint:  https://fra1.digitaloceanspaces.com
         bucket: verdun
         prefix: 'backup/kubedb/matrix/matrix-synapse-postgres/archive'
+  podTemplate:
+    metadata:
+      labels:
+        app: {{ include "helm-chart.name" . }}
+  monitor:
+    agent: prometheus.io/coreos-operator
+    prometheus:
+      namespace: {{ .Release.Namespace }}
+      # labels:
+      #   app: {{ include "helm-chart.name" . }}
+      interval: 10s
