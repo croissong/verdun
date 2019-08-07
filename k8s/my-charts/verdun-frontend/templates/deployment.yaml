@@ -27,6 +27,7 @@ spec:
       initContainers:
         - name: {{ include "helm-chart.fullname" . }}-copy
           image: {{ .Values.image.repo }}:{{ .Values.image.tag }}
+          imagePullPolicy: Always
           command: ['/bin/cp']
           args:
             - '-r'
