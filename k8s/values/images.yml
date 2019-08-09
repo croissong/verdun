@@ -24,21 +24,21 @@ murmur:
   murmur:
     repo: goofball222/murmur
     tag: rc
+prometheus:
+  kubeStateMetrics:
+    repo: bitnami/kube-state-metrics
+    tag: 1.7.2
+  operator:
+    tag: v0.31.1
+  tag: v2.11.1
 traefik:
   traefik:
     repo: traefik
     tag: 1.7.12-alpine
 verdun:
-  frontend:
-    repo: croissong/verdun-frontend
-    tag: latest
   api:
     repo: croissong/verdun-api
     tag: latest
-prometheus:
-  operator:
-    tag: v0.31.1
-  tag: v2.11.1
-  kubeStateMetrics:
-    repo: bitnami/kube-state-metrics
-    tag: 1.7.2
+  frontend:
+    repo: croissong/verdun-frontend
+    tag: 88c83572
