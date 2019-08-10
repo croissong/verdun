@@ -5,11 +5,11 @@ common:
   mysql:
     version: 5.7.25
   nginx:
-    repo: bitnami/nginx
-    tag: 1.16.0
     metrics:
       repo: bitnami/nginx-exporter
       tag: 0.4.2
+    repo: bitnami/nginx
+    tag: 1.16.0
   postgres:
     version: 11.2
 matrix:
@@ -44,4 +44,4 @@ verdun:
     tag: latest
   frontend:
     repo: croissong/verdun-frontend
-    tag: 1580ec50
+    tag: 82aba2e9
