@@ -7,6 +7,9 @@ common:
   nginx:
     repo: bitnami/nginx
     tag: 1.16.0
+    metrics:
+      repo: bitnami/nginx-exporter
+      tag: 0.4.2
   postgres:
     version: 11.2
 matrix:

@@ -1,3 +1,6 @@
-image:
-  repo: {{ .Environment.Values.verdun.frontend.repo }}
-  tag: {{ .Environment.Values.verdun.frontend.tag }}
+nginx:
+  fileContainers:
+    - name: frontend
+      image: {{ .Environment.Values.verdun.frontend.repo }}:{{ .Environment.Values.verdun.frontend.tag }}
+      srcPath: /app
+      dstPath: frontend

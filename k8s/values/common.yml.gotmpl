@@ -19,6 +19,9 @@ restic:
 nginx:
   repo: {{ .Environment.Values.common.nginx.repo }}
   tag: {{ .Environment.Values.common.nginx.tag }}
+  metrics:
+    repo: {{ .Environment.Values.common.nginx.metrics.repo }}
+    tag: {{ .Environment.Values.common.nginx.metrics.tag }}
 
 auth-proxy:
   image:
