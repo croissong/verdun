@@ -36,7 +36,7 @@ data:
     gzip_comp_level 5;
     gzip_min_length 256;
     gzip_proxied any;
-    gzip_vary on;
+    gzip_vary off;
 
     gzip_types
       application/atom+xml

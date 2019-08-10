@@ -4,12 +4,7 @@ nginx:
     server {
       listen 0.0.0.0:8080;
 
-      location ~ ^/index.html {
-        root   /static/frontend;
-      }
-
       location ~ \..* {
-        add_header Cache-Control "public, max-age=31536000, immutable";
         root   /static/frontend;
       }
 

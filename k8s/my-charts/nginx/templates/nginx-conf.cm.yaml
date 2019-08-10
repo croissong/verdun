@@ -53,10 +53,10 @@ data:
       include h5bp/pre-compressed_content_gzip.conf;
       include h5bp/cache_expiration.conf;
 
-      map $sent_http_content_type $content_security_policy {
-        ~*text/html "default-src 'self'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests";
-      }
-      include h5bp/content-security-policy.conf;
+      # map $sent_http_content_type $content_security_policy {
+      #   ~*text/html "default-src 'self'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests";
+      # }
+      # include h5bp/content-security-policy.conf;
 
       map $sent_http_content_type $x_ua_compatible {
         ~*text/html "IE=edge";
