@@ -44,4 +44,4 @@ verdun:
     tag: latest
   frontend:
     repo: croissong/verdun-frontend
-    tag: 3d618360
+    tag: 6d45a2f3
