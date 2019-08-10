@@ -37,7 +37,7 @@ prometheus:
 traefik:
   traefik:
     repo: traefik
-    tag: 1.7.12-alpine
+    tag: 1.7.13-alpine
 verdun:
   api:
     repo: croissong/verdun-api
