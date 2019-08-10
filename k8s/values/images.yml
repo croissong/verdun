@@ -41,4 +41,4 @@ verdun:
     tag: latest
   frontend:
     repo: croissong/verdun-frontend
-    tag: dfa76929
+    tag: 1580ec50
