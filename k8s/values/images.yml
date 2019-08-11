@@ -41,7 +41,7 @@ traefik:
 verdun:
   api:
     repo: croissong/verdun-api
-    tag: latest
+    tag: 526f5b8c
   frontend:
     repo: croissong/verdun-frontend
     tag: 6d45a2f3

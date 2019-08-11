@@ -20,7 +20,6 @@ spec:
         chart: {{ include "helm-chart.chart" . }}
         release: "{{ .Release.Name }}"
         heritage: "{{ .Release.Service }}"
-        version: "{{ .Values.image.tag }}"
     spec:
       containers:
       - name: {{ include "helm-chart.fullname" . }}
