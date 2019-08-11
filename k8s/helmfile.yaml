@@ -45,14 +45,14 @@ releases:
   wait: false
   atomic: false
 
-# - name: stash-operator
-#   namespace: stash
-#   chart: appscode/stash
-#   version: 0.8.3
-#   wait: false
-#   atomic: false
-#   values:
-#     - values/common.yml.gotmpl
+- name: stash-operator
+  namespace: stash
+  chart: appscode/stash
+  version: v0.9.0-rc.0
+  wait: false
+  atomic: false
+  values:
+    - values/common.yml.gotmpl
 
 - name: traefik
   namespace: traefik
