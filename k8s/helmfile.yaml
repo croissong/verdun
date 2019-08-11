@@ -24,13 +24,11 @@ releases:
 
 - name: prometheus
   namespace: prometheus
-  chart: ./my-charts/prometheus/
-  version: 5.15.0
+  chart: stable/prometheus-operator
+  version: 6.4.3
   values:
     - values/my-prometheus.yml.gotmpl
-    - prometheus-operator:
-{{ readFile "values/prometheus-operator.yml" | indent 8 }}
-        kube-state-metrics:
+    - kube-state-metrics:
 {{ readFile "values/kube-state-metrics.yml" | indent 10 }}
 
 - name: kubedb-operator

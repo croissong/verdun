@@ -1,24 +1,19 @@
-host: verdun.patrician.cloud
-path: /metrics
-prometheus-operator:
-  prometheusOperator:
+prometheusOperator:
+  image:
+    tag: {{ .Environment.Values.prometheus.operator.tag }}
+  prometheusConfigReloaderImage:
+    tag: {{ .Environment.Values.prometheus.operator.tag }}
+kube-state-metrics:
+  image:
+    repository: {{ .Environment.Values.prometheus.kubeStateMetrics.repo }}
+    tag: {{ .Environment.Values.prometheus.kubeStateMetrics.tag }}
+prometheus:
+  prometheusSpec:
     image:
-      tag: {{ .Environment.Values.prometheus.operator.tag }}
-    prometheusConfigReloaderImage:
-      tag: {{ .Environment.Values.prometheus.operator.tag }}
-  kube-state-metrics:
-    image:
-      repository: {{ .Environment.Values.prometheus.kubeStateMetrics.repo }}
-      tag: {{ .Environment.Values.prometheus.kubeStateMetrics.tag }}
-  prometheus:
-    prometheusSpec:
-      image:
-        tag: {{ .Environment.Values.prometheus.tag }}
-  grafana:
-    enabled: false
-  nodeExporter:
-    enabled: false
+      tag: {{ .Environment.Values.prometheus.tag }}
 grafana:
   enabled: false
 nodeExporter:
   enabled: false
+
+{{ readFile "prometheus-operator.yml" }}

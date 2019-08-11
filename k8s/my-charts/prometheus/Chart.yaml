@@ -1,3 +1,0 @@
-apiVersion: v1
-description: An extended prometheus chart
-name: prometheus
