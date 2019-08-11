@@ -57,4 +57,4 @@ prometheus:
   ingress:
     enabled: true
     hosts:
-      - prometheus.patrician.gold
+      - prometheus.patrician.cloud

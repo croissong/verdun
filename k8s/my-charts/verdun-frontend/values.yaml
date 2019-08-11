@@ -1,5 +1,5 @@
 nginx:
-  host: verdun.patrician.gold
+  host: verdun.patrician.cloud
   serverBlock: |
     server {
       listen 0.0.0.0:8080;

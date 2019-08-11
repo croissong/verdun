@@ -1,9 +1,9 @@
-## patrician.gold
+## patrician.cloud
 
 ### domain
 
 resource "digitalocean_domain" "patrician" {
-  name = "patrician.gold"
+  name = "patrician.cloud"
 }
 
 ### records

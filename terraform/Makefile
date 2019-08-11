@@ -21,7 +21,7 @@ tf-provider-circleci:
 	terraform init
 
 delete-acme-records:
-	for f in $(doctl compute domain records list patrician.gold | tail -n+2 | grep '_acme-challenge' | awk '{print $1}'); do doctl compute domain records delete patrician.gold "$f"; done
+	for f in $(doctl compute domain records list patrician.cloud | tail -n+2 | grep '_acme-challenge' | awk '{print $1}'); do doctl compute domain records delete patrician.cloud "$f"; done
 
 delete-volumes:
 	#todo

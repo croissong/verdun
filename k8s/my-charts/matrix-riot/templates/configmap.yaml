@@ -11,7 +11,7 @@ data:
   # https://github.com/vector-im/riot-web/blob/develop/config.sample.json
   config.json: |
     {
-        "default_hs_url": "https://matrix.patrician.gold",
+        "default_hs_url": "https://matrix.patrician.cloud",
         "default_is_url": "https://vector.im",
         "disable_custom_urls": false,
         "disable_guests": true,

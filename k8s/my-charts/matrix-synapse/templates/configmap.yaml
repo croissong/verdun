@@ -15,7 +15,8 @@ data:
 
     ## Server ##
 
-    server_name: {{ .Values.host }}
+    # server_name cannot be changed
+    server_name: matrix.patrician.gold
     pid_file: /homeserver.pid
     web_client: False
     soft_file_limit: 0

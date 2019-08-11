@@ -63,7 +63,7 @@ releases:
     - values/traefik.yml.gotmpl
     - values/common.yml.gotmpl
     - auth-proxy:
-        domain: traefik.patrician.gold
+        domain: traefik.patrician.cloud
         upstream: traefik-dashboard:80
 
 - name: matrix-synapse
@@ -133,13 +133,13 @@ releases:
         ingress:
           enabled: true
           hosts:
-          - concourse.patrician.gold
+          - concourse.patrician.cloud
     - secrets:
         githubClientId: 36e8d7181c9014981d0b
         githubClientSecret: 34363aa0fde9e563bd3e49d39915db621316b0f7
     - concourse:
         web:
-          externalUrl: https://concourse.patrician.gold
+          externalUrl: https://concourse.patrician.cloud
           localAuth:
             enabled: false
           auth:
