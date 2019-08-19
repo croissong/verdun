@@ -27,9 +27,7 @@ releases:
   chart: stable/prometheus-operator
   version: 6.4.3
   values:
-    - values/my-prometheus.yml.gotmpl
-    - kube-state-metrics:
-{{ readFile "values/kube-state-metrics.yml" | indent 10 }}
+    - values/prometheus.yml.gotmpl
 
 - name: kubedb-operator
   namespace: kubedb

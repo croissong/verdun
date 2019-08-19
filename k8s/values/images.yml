@@ -1,7 +1,7 @@
 common:
   authProxy:
     repo: quay.io/pusher/oauth2_proxy
-    tag: v3.2.0
+    tag: v4.0.0
   mysql:
     version: 5.7.25
   nginx:
@@ -15,10 +15,10 @@ common:
 matrix:
   riot:
     repo: bubuntux/riot-web
-    tag: v1.3.2
+    tag: v1.3.3
   synapse:
     repo: croissong/matrix-synapse-s3-storage
-    tag: v1.2.1
+    tag: v1.3.1
 misc:
   nginxRtmp:
     repo: tiangolo/nginx-rtmp
@@ -33,11 +33,11 @@ prometheus:
     tag: 1.7.2
   operator:
     tag: v0.31.1
-  tag: v2.11.1
+  tag: v2.12.0
 traefik:
   traefik:
     repo: traefik
-    tag: 1.7.13-alpine
+    tag: 1.7.14-alpine
 verdun:
   api:
     repo: croissong/verdun-api
