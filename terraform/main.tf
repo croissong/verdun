@@ -12,7 +12,7 @@ provider "digitalocean" {
 }
 
 provider "sops" {
-  version           = "~> v0.3.3"
+  version = "~> v0.3.3"
 }
 
 data "sops_file" "secrets" {
@@ -23,7 +23,7 @@ provider "drone" {
 }
 
 provider "github" {
-  version           = "~> 2.2"
+  version      = "~> 2.2"
   token        = var.gh_token
   organization = "croissong"
 }
