@@ -1,31 +1,31 @@
-s3AccessId: {{ .Environment.Values.s3AccessId }}
-s3SecretKey: {{ .Environment.Values.s3SecretKey }}
+s3AccessId: {{ .Values.s3AccessId }}
+s3SecretKey: {{ .Values.s3SecretKey }}
 
 postgres:
-  postgresVersion: {{ .Environment.Values.common.postgres.version }}
-  s3AccessId: {{ .Environment.Values.s3AccessId }}
-  s3SecretKey: {{ .Environment.Values.s3SecretKey }}
+  postgresVersion: {{ .Values.common.postgres.version }}
+  s3AccessId: {{ .Values.s3AccessId }}
+  s3SecretKey: {{ .Values.s3SecretKey }}
 
 mysql:
-  mysqlVersion: {{ .Environment.Values.common.mysql.version }}
-  s3AccessId: {{ .Environment.Values.s3AccessId }}
-  s3SecretKey: {{ .Environment.Values.s3SecretKey }}
+  mysqlVersion: {{ .Values.common.mysql.version }}
+  s3AccessId: {{ .Values.s3AccessId }}
+  s3SecretKey: {{ .Values.s3SecretKey }}
 
 restic:
-  s3AccessId: {{ .Environment.Values.s3AccessId }}
-  s3SecretKey: {{ .Environment.Values.s3SecretKey }}
-  password: {{ .Environment.Values.restic.password }}
+  s3AccessId: {{ .Values.s3AccessId }}
+  s3SecretKey: {{ .Values.s3SecretKey }}
+  password: {{ .Values.restic.password }}
 
 nginx:
-  repo: {{ .Environment.Values.common.nginx.repo }}
-  tag: {{ .Environment.Values.common.nginx.tag }}
+  repo: {{ .Values.common.nginx.repo }}
+  tag: {{ .Values.common.nginx.tag }}
   metrics:
-    repo: {{ .Environment.Values.common.nginx.metrics.repo }}
-    tag: {{ .Environment.Values.common.nginx.metrics.tag }}
+    repo: {{ .Values.common.nginx.metrics.repo }}
+    tag: {{ .Values.common.nginx.metrics.tag }}
 
 auth-proxy:
   image:
-    repo: {{ .Environment.Values.common.authProxy.repo }}
-    tag: {{ .Environment.Values.common.authProxy.tag }}
-  cookieSecret: {{ .Environment.Values.authProxy.cookieSecret }}
-  githubOrg: {{ .Environment.Values.authProxy.githubOrg }}
+    repo: {{ .Values.common.authProxy.repo }}
+    tag: {{ .Values.common.authProxy.tag }}
+  cookieSecret: {{ .Values.authProxy.cookieSecret }}
+  githubOrg: {{ .Values.authProxy.githubOrg }}

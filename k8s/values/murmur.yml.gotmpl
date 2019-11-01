@@ -1,6 +1,6 @@
 image:
-  name: {{ .Environment.Values.murmur.murmur.repo }}
-  tag: {{ .Environment.Values.murmur.murmur.tag }}
+  name: {{ .Values.murmur.murmur.repo }}
+  tag: {{ .Values.murmur.murmur.tag }}
 mysql:
-  user: {{ .Environment.Values.murmur.mysql.user }}
-  password: {{ .Environment.Values.murmur.mysql.password }}
+  user: {{ .Values.murmur.mysql.user }}
+  password: {{ .Values.murmur.mysql.password }}
