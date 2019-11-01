@@ -20,6 +20,7 @@ spec:
         release: {{ .Release.Name }}
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+
     spec:
       securityContext:
         fsGroup: 991
@@ -32,6 +33,7 @@ spec:
               containerPort: 8008
             - name: metrics
               containerPort: 9000
+
           env:
             - name: SYNAPSE_CONFIG_PATH
               value: "/envsubst-conf/homeserver.yaml"
@@ -45,6 +47,7 @@ spec:
                 secretKeyRef:
                   name: {{ include "helm-chart.fullname" . }}-secret
                   key: AWS_SECRET_ACCESS_KEY
+
           volumeMounts:
             - name: envsubst-conf
               mountPath: "/envsubst-conf"
@@ -58,6 +61,15 @@ spec:
               mountPath: "/data/uploads"
             - name: data
               mountPath: "/data"
+
+          livenessProbe:
+            httpGet:
+              path: /_matrix/static/
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /_matrix/static/
+              port: http
 
       initContainers:
         - name: config-envsubst

@@ -20,6 +20,7 @@ spec:
         release: {{ .Release.Name }}
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+
     spec:
       containers:
         - name: {{ .Chart.Name }}
@@ -27,11 +28,20 @@ spec:
           ports:
             - name: riot
               containerPort: 80
-              protocol: TCP
           volumeMounts:
             - name: "riot-config"
               mountPath: /etc/riot-web/config.json
               subPath: config.json
+
+          livenessProbe:
+            httpGet:
+              path: /
+              port: riot
+          readinessProbe:
+            httpGet:
+              path: /
+              port: riot
+
       volumes:
         - name: "riot-config"
           configMap:
