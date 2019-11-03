@@ -15,12 +15,12 @@ spec:
     options:
       name: default
     domains:
-      - main: "patrician.cloud"
+      - main: "{{ .Values.domain }}"
       - sans:
-          - "*.patrician.cloud"
+          - "*.{{ .Values.domain }}"
 
   routes:
-  - match: Host(`traefik.patrician.cloud`)
+  - match: Host(`{{ .Values.host }}`)
     kind: Rule
     services:
     - name:  {{ template "traefik.fullname" . }}-dashboard
@@ -34,7 +34,7 @@ spec:
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
-  name: {{ template "traefik.fullname" . }}-dashboard-http-redirect
+  name: {{ template "traefik.fullname" . }}-dashboard-https-redirect
   labels:
     app: {{ template "traefik.name" . }}
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
@@ -45,10 +45,10 @@ spec:
     - web
 
   routes:
-  - match: Host(`traefik.patrician.cloud`)
+  - match: Host(`{{ .Values.host }}`)
     kind: Rule
     services:
     - name:  {{ template "traefik.fullname" . }}-dashboard
       port: 80
     middlewares:
-    - name: redirect
+    - name: redirect-https

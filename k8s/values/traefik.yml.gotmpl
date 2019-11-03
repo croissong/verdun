@@ -4,6 +4,8 @@ auth-proxy:
 image:
   name: {{ .Values.traefik.repo }}
   tag: {{ .Values.traefik.tag }}
+host: traefik.patrician.cloud
+domain: patrician.cloud
 log:
   level: warn
 acme:

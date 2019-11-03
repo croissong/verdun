@@ -15,12 +15,8 @@ spec:
     options:
       name: default
       namespace: traefik
-    domains:
-      - main: "patrician.cloud"
-      - sans:
-          - "*.patrician.cloud"
   routes:
-  - match: Host(`prometheus.patrician.cloud`)
+  - match: Host(`{{ .Values.host }}`)
     kind: Rule
     services:
     - name:  {{ include "helm-chart.fullname" . }}-prometheus-oper-prometheus
@@ -34,7 +30,7 @@ spec:
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
-  name: {{ include "helm-chart.fullname" . }}-dashboard-http-redirect
+  name: {{ include "helm-chart.fullname" . }}-https-redirect
   labels:
     app: {{ include "helm-chart.fullname" . }}
     chart: {{ include "helm-chart.chart" . }}
@@ -44,11 +40,11 @@ spec:
   entryPoints:
     - web
   routes:
-  - match: Host(`prometheus.patrician.cloud`)
+  - match: Host(`{{ .Values.host }}`)
     kind: Rule
     services:
     - name:  {{ include "helm-chart.fullname" . }}-prometheus-oper-prometheus
       port: 9090
     middlewares:
-    - name: redirect
+    - name: redirect-https
       namespace: traefik
