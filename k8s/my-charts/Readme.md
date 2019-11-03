@@ -1,10 +1,6 @@
-#  traefik-fork
-## Why?
-- disable ingress
-- custom traefik config templates
-## Rebase
+# traefik
 ```
-rm -fr traefik-fork && helm fetch --untar --untardir traefik-fork-tmp 'stable/traefik' && mv traefik-fork-tmp/traefik traefik-fork && rm -r traefik-fork-tmp
+rm -fr traefik && curl https://codeload.github.com/containous/traefik-helm-chart/tar.gz/master | tar -xz && mv traefik-helm-chart-master traefik
 ```
 
 # ingress-monitor-controller
