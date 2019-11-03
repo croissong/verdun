@@ -1,9 +1,9 @@
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
-  name: {{ template "traefik.fullname" . }}-dashboard
+  name: {{ template "auth-proxy.fullname" . }}
   labels:
-    app: {{ template "traefik.name" . }}
+    app: {{ template "auth-proxy.name" . }}
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
     release: {{ .Release.Name | quote }}
     heritage: {{ .Release.Service | quote }}
@@ -14,41 +14,42 @@ spec:
     certResolver: default
     options:
       name: default
-    domains:
-      - main: "{{ .Values.domain }}"
-      - sans:
-          - "*.{{ .Values.domain }}"
-
+      namespace: traefik
+{{- if .Values.domains }}
+    domains: 
+{{ toYaml .Values.domains | indent 6 }}
+{{- end }}
+      
   routes:
   - match: Host(`{{ .Values.host }}`)
     kind: Rule
     services:
-    - name:  {{ template "traefik.fullname" . }}-dashboard
+    - name:  {{ template "auth-proxy.fullname" . }}
       port: 80
     middlewares:
     - name: sec-headers
-    - name: sec-headers-csp
+      namespace: traefik
 
 
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
-  name: {{ template "traefik.fullname" . }}-dashboard-https-redirect
+  name: {{ template "auth-proxy.fullname" . }}-https-redirect
   labels:
-    app: {{ template "traefik.name" . }}
+    app: {{ template "auth-proxy.name" . }}
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
     release: {{ .Release.Name | quote }}
     heritage: {{ .Release.Service | quote }}
 spec:
   entryPoints:
     - web
-
   routes:
   - match: Host(`{{ .Values.host }}`)
     kind: Rule
     services:
-    - name:  {{ template "traefik.fullname" . }}-dashboard
+    - name:  {{ template "auth-proxy.fullname" . }}
       port: 80
     middlewares:
     - name: redirect-https
+      namespace: traefik

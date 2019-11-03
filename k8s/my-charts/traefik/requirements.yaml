@@ -1,0 +1,7 @@
+dependencies:
+  - name: auth-proxy
+    repository: "file://../auth-proxy"
+    version: 0.0.1
+  - name: restic
+    repository: "file://../restic"
+    version: 0.0.1

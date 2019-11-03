@@ -17,7 +17,7 @@ data:
     ]
     cookie_refresh = "1h"
 
-    redirect_url = "https://{{ .Values.domain }}/oauth2/callback"
+    redirect_url = "https://{{ .Values.host }}/oauth2/callback"
     upstreams = [
     "http://{{ .Values.upstream }}"
     ]

@@ -43,21 +43,20 @@ releases:
 - name: stash-operator
   namespace: stash
   chart: appscode/stash
-  version: v0.9.0-rc.0
+  version: v0.9.0-rc.2
   wait: false
   atomic: false
+  recreatePods: true
   values:
     - values/common.yml.gotmpl
+    - values/stash-operator.yml.gotmpl
 
 - name: traefik
   namespace: traefik
-  chart: ./my-charts/traefik/
+  chart: ./my-charts/traefik
   values:
     - values/traefik.yml.gotmpl
     - values/common.yml.gotmpl
-    # - auth-proxy:
-    #     domain: traefik.patrician.cloud
-    #     upstream: traefik-dashboard:80
 
 - name: matrix-synapse
   namespace: matrix
