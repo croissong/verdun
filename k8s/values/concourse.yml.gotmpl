@@ -1,0 +1,22 @@
+host: concourse.patrician.cloud
+
+concourse:
+  persistence.enabled: false
+  postgresql.persistence.enabled: false
+  secrets:
+    githubClientId: {{ .Values.concourse.authProxy.clientId }}
+    githubClientSecret: {{ .Values.concourse.authProxy.clientSecret }}
+  concourse:
+    web:
+      externalUrl: https://concourse.patrician.cloud
+      localAuth:
+        enabled: false
+      auth:
+        github:
+          enabled: true
+        mainTeam:
+          github:
+            org: {{ .Values.authProxy.githubOrg }}
+    worker:
+      baggageclaim:
+        driver: btrfs

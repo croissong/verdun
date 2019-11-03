@@ -111,29 +111,6 @@ releases:
 
 - name: concourse
   namespace: concourse
-  chart: stable/concourse
+  chart: ./my-charts/concourse
   values:
-    - persistence.enabled: false
-    - postgresql.persistence.enabled: false
-    - web:
-        ingress:
-          enabled: true
-          hosts:
-          - concourse.patrician.cloud
-    - secrets:
-        githubClientId: 36e8d7181c9014981d0b
-        githubClientSecret: 34363aa0fde9e563bd3e49d39915db621316b0f7
-    - concourse:
-        web:
-          externalUrl: https://concourse.patrician.cloud
-          localAuth:
-            enabled: false
-          auth:
-            github:
-              enabled: true
-            mainTeam:
-              github:
-                org: {{ .Values.authProxy.githubOrg }}
-        worker:
-          baggageclaim:
-            driver: btrfs
+    - values/concourse.yml.gotmpl
