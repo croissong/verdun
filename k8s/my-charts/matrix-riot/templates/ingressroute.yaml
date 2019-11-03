@@ -1,5 +1,5 @@
-apiVersion: extensions/v1beta1
-kind: Ingress
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
 metadata:
   name: {{ include "helm-chart.fullname" . }}
   labels:
@@ -10,10 +10,13 @@ metadata:
   annotations:
     "monitor.stakater.com/enabled": "true"
 spec:
-  rules:
-  - host: {{ .Values.host }}
-    http:
-      paths:
-      - backend:
-          serviceName: {{ include "helm-chart.fullname" . }}
-          servicePort: 80
+  entryPoints:
+    - websecure
+  tls:
+    certResolver: default
+  routes:
+  - match: Host(`{{ .Values.host }}`)
+    kind: Rule
+    services:
+    - name:  {{ include "helm-chart.fullname" . }}
+      port: 80

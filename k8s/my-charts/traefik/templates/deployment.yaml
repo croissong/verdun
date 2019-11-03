@@ -17,6 +17,8 @@ spec:
     matchLabels:
       app: {{ template "traefik.name" . }}
       release: {{ .Release.Name }}
+  strategy:
+    type: Recreate
   template:
     metadata:
       labels:
@@ -24,6 +26,8 @@ spec:
         chart: {{ template "traefik.chart" . }}
         release: {{ .Release.Name | quote }}
         heritage: {{ .Release.Service | quote }}
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
     spec:
       serviceAccountName: {{ template "traefik.fullname" . }}
       terminationGracePeriodSeconds: 60
@@ -65,19 +69,31 @@ spec:
         ports:
         - name: web
           containerPort: {{ .Values.ports.web.port }}
+          hostPort: 80
           protocol: TCP
         - name: websecure
           containerPort: {{ .Values.ports.websecure.port }}
+          hostPort: 443
           protocol: TCP
         - name: traefik
           containerPort: {{ .Values.ports.traefik.port }}
           protocol: TCP
         args:
-          - "--entryPoints.web.address=:{{ .Values.ports.web.port }}"
-          - "--entryPoints.websecure.address=:{{ .Values.ports.websecure.port }}"
-          - "--entryPoints.traefik.address=:{{ .Values.ports.traefik.port }}"
-          - "--api.dashboard=true"
-          - "--api.insecure=true"
-          - "--ping=true"
-          - "--providers.kubernetescrd"
-          - "--log.level={{ .Values.logs.loglevel }}"
+          - "--configfile=/config/traefik.yaml"
+        envFrom:
+          - secretRef:
+              name: {{ template "traefik.fullname" . }}-acme
+
+        volumeMounts:
+        - mountPath: /config
+          name: config
+        - mountPath: /acme
+          name: acme
+
+      volumes:
+      - name: config
+        configMap:
+          name: {{ template "traefik.fullname" . }}
+      - name: acme
+        persistentVolumeClaim:
+          claimName: {{ template "traefik.fullname" . }}-acme

@@ -1,0 +1,21 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: TLSOption
+metadata:
+  name: default
+  labels:
+    app: {{ template "traefik.name" . }}
+    chart: {{ template "traefik.chart" . }}
+    release: {{ .Release.Name | quote }}
+    heritage: {{ .Release.Service | quote }}
+spec:
+  minVersion: VersionTLS12
+  sniStrict: true
+  # https://stackoverflow.com/questions/52128979/recommended-tls-ciphers-for-traefik
+  cipherSuites:
+    - "TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384"
+    - "TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384"
+    - "TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305"
+    - "TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305"
+    - "TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256"
+    - "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256"
+    - "TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256"

@@ -1,101 +1,104 @@
-defaultRules:
-  create: false
+prometheus-operator:
+  defaultRules:
+    create: false
 
-alertmanager:
-  serviceMonitor:
-    selfMonitor: false
-  config:
-    receivers:
-    - name: 'null'
+  alertmanager:
+    serviceMonitor:
+      selfMonitor: false
+    config:
+      receivers:
+      - name: 'null'
 
-kubeApiServer:
-  enabled: false
-
-kubelet:
-  enabled: false
-
-kubeControllerManager:
-  enabled: false
-
-coreDns:
-  enabled: false
-
-kubeEtcd:
-  enabled: false
-
-kubeScheduler:
-  enabled: false
-
-kubeStateMetrics:
-  enabled: true
-  serviceMonitor:
-    metricRelabelings:
-      - sourceLabels: [namespace]
-        regex: kube-system
-        action: drop
-
-
-## Manages Prometheus and Alertmanager components
-##
-prometheusOperator:
-  enabled: true
-  image:
-    tag: {{ .Environment.Values.prometheus.operator.tag }}
-  prometheusConfigReloaderImage:
-    tag: {{ .Environment.Values.prometheus.operator.tag }}
-  serviceMonitor:
-    selfMonitor: false
-  kubeletService:
+  kubeApiServer:
     enabled: false
 
-  image:
-    pullPolicy: Always
+  kubelet:
+    enabled: false
 
-prometheus:
-  enabled: true
-  serviceMonitor:
-    selfMonitor: false
-  prometheusSpec:
-    image:
-      tag: {{ .Environment.Values.prometheus.tag }}
-    serviceMonitorSelectorNilUsesHelmValues: false
-    retention: 1d
-  ingress:
+  kubeControllerManager:
+    enabled: false
+
+  coreDns:
+    enabled: false
+
+  kubeEtcd:
+    enabled: false
+
+  kubeScheduler:
+    enabled: false
+
+  kubeStateMetrics:
     enabled: true
-    hosts:
-      - prometheus.patrician.cloud
+    serviceMonitor:
+      metricRelabelings:
+        - sourceLabels: [namespace]
+          regex: kube-system
+          action: drop
 
-kube-state-metrics:
-  image:
-    repository: {{ .Environment.Values.prometheus.kubeStateMetrics.repo }}
-    tag: {{ .Environment.Values.prometheus.kubeStateMetrics.tag }}
-  prometheusScrape: false
-  collectors:
-    certificatesigningrequests: false
-    configmaps: false
-    cronjobs: false
-    daemonsets: false
-    deployments: false
-    endpoints: false
-    horizontalpodautoscalers: false
-    ingresses: false
-    jobs: false
-    limitranges: false
-    namespaces: false
-    nodes: false
-    persistentvolumeclaims: false
-    persistentvolumes: false
-    poddisruptionbudgets: false
-    pods: true
-    replicasets: false
-    replicationcontrollers: false
-    resourcequotas: false
-    secrets: false
-    services: false
-    statefulsets: false
 
-grafana:
-  enabled: false
+  ## Manages Prometheus and Alertmanager components
+  ##
+  prometheusOperator:
+    enabled: true
+    image:
+      tag: {{ .Environment.Values.prometheus.operator.tag }}
+    prometheusConfigReloaderImage:
+      tag: {{ .Environment.Values.prometheus.operator.tag }}
+    serviceMonitor:
+      selfMonitor: false
+    kubeletService:
+      enabled: false
 
-nodeExporter:
-  enabled: false
+    image:
+      pullPolicy: Always
+
+  prometheus:
+    enabled: true
+    serviceMonitor:
+      selfMonitor: false
+    prometheusSpec:
+      image:
+        tag: {{ .Environment.Values.prometheus.tag }}
+      serviceMonitorSelectorNilUsesHelmValues: false
+      retention: 1d
+    ingress:
+      enabled: false
+
+  grafana:
+    enabled: false
+
+  nodeExporter:
+    enabled: false
+
+
+
+  ### subcharts
+
+  kube-state-metrics:
+    image:
+      repository: {{ .Environment.Values.prometheus.kubeStateMetrics.repo }}
+      tag: {{ .Environment.Values.prometheus.kubeStateMetrics.tag }}
+    prometheusScrape: false
+    collectors:
+      certificatesigningrequests: false
+      configmaps: false
+      cronjobs: false
+      daemonsets: false
+      deployments: false
+      endpoints: false
+      horizontalpodautoscalers: false
+      ingresses: false
+      jobs: false
+      limitranges: false
+      namespaces: false
+      nodes: false
+      persistentvolumeclaims: false
+      persistentvolumes: false
+      poddisruptionbudgets: false
+      pods: true
+      replicasets: false
+      replicationcontrollers: false
+      resourcequotas: false
+      secrets: false
+      services: false
+      statefulsets: false

@@ -1,0 +1,20 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ template "traefik.fullname" . }}
+  labels:
+    app: {{ template "traefik.name" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: {{ .Release.Name | quote }}
+    heritage: {{ .Release.Service | quote }}
+spec:
+  endpoints:
+  - port: traefik
+    metricRelabelings:
+      - sourceLabels: [__name__]
+        regex: ^traefik_.+
+        action: keep
+  selector:
+    matchLabels:
+      app: {{ template "traefik.fullname" . }}
+      release: {{ .Release.Name | quote }}

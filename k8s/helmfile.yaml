@@ -22,8 +22,7 @@ releases:
 
 - name: prometheus
   namespace: prometheus
-  chart: stable/prometheus-operator
-  version: 6.4.3
+  chart: ./my-charts/prometheus
   values:
     - values/prometheus.yml.gotmpl
 
@@ -56,9 +55,9 @@ releases:
   values:
     - values/traefik.yml.gotmpl
     - values/common.yml.gotmpl
-    - auth-proxy:
-        domain: traefik.patrician.cloud
-        upstream: traefik-dashboard:80
+    # - auth-proxy:
+    #     domain: traefik.patrician.cloud
+    #     upstream: traefik-dashboard:80
 
 - name: matrix-synapse
   namespace: matrix

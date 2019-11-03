@@ -8,8 +8,7 @@ metadata:
     release: {{ .Release.Name | quote }}
     heritage: {{ .Release.Service | quote }}
 spec:
-  type: LoadBalancer
-  externalTrafficPolicy: {{ default "Cluster" .Values.service.externalTrafficPolicy }}
+  type: ClusterIP
   selector:
     app: {{ template "traefik.name" . }}
     release: {{ .Release.Name }}

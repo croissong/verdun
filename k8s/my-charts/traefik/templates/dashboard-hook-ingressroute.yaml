@@ -2,8 +2,39 @@ apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
   name: {{ template "traefik.fullname" . }}-dashboard
-  annotations:
-    helm.sh/hook: "post-install"
+  labels:
+    app: {{ template "traefik.name" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: {{ .Release.Name | quote }}
+    heritage: {{ .Release.Service | quote }}
+spec:
+  entryPoints:
+    - websecure
+  tls:
+    certResolver: default
+    options:
+      name: default
+    domains:
+      - main: "patrician.cloud"
+      - sans:
+          - "*.patrician.cloud"
+
+  routes:
+  - match: Host(`traefik.patrician.cloud`)
+    kind: Rule
+    services:
+    - name:  {{ template "traefik.fullname" . }}-dashboard
+      port: 80
+    middlewares:
+    - name: sec-headers
+    - name: sec-headers-csp
+
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: {{ template "traefik.fullname" . }}-dashboard-http-redirect
   labels:
     app: {{ template "traefik.name" . }}
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
@@ -12,9 +43,12 @@ metadata:
 spec:
   entryPoints:
     - web
+
   routes:
-  - match: PathPrefix(`/dashboard`) || PathPrefix(`/api`)
+  - match: Host(`traefik.patrician.cloud`)
     kind: Rule
     services:
     - name:  {{ template "traefik.fullname" . }}-dashboard
       port: 80
+    middlewares:
+    - name: redirect
