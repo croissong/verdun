@@ -2,7 +2,6 @@ context: {{ requiredEnv "KUBECONTEXT" }}
 
 helmDefaults:
   atomic: true
-  wait: true
   recreatePods: false
 
 repositories:
@@ -37,14 +36,12 @@ releases:
   namespace: kubedb
   chart: appscode/kubedb-catalog
   version: 0.13.0-rc.0
-  wait: false
   atomic: false
 
 - name: stash-operator
   namespace: stash
   chart: appscode/stash
   version: v0.9.0-rc.2
-  wait: false
   atomic: false
   recreatePods: true
   values:
@@ -65,6 +62,9 @@ releases:
   values:
     - values/synapse.yml.gotmpl
     - values/common.yml.gotmpl
+  # needs:
+  #   - traefik
+  #   - kubedb-operator
 
 - name: matrix-riot
   namespace: matrix
@@ -72,12 +72,13 @@ releases:
   verify: false
   values:
     - values/riot.yml.gotmpl
+  # needs:
+  #   - traefik
 
 - name: murmur
   namespace: murmur
   chart: ./my-charts/murmur/
   recreatePods: true
-  verify: false
   values:
     - values/murmur.yml.gotmpl
     - values/common.yml.gotmpl
@@ -85,7 +86,6 @@ releases:
 - name: nginx-rtmp
   namespace: misc
   chart: ./my-charts/nginx-rtmp/
-  verify: false
   recreatePods: true
   values:
     - values/nginx-rtmp.yml.gotmpl
