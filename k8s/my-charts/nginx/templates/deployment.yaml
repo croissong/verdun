@@ -1,4 +1,4 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ include "helm-chart.fullname" . }}
@@ -47,19 +47,11 @@ spec:
         - name: http
           containerPort: 8080
         livenessProbe:
-          httpGet:
-            path: /
-            port: http
-          initialDelaySeconds: 30
-          timeoutSeconds: 5
-          failureThreshold: 6
+          tcpSocket:
+            port: 8080
         readinessProbe:
-          httpGet:
-            path: /
-            port: http
-          initialDelaySeconds: 5
-          timeoutSeconds: 3
-          periodSeconds: 5
+          tcpSocket:
+            port: 8080
         volumeMounts:
         - name: nginx-conf
           mountPath: /opt/bitnami/nginx/conf/nginx.conf
