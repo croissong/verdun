@@ -35,26 +35,19 @@ spec:
               containerPort: 9000
 
           env:
-            - name: SYNAPSE_CONFIG_PATH
-              value: "/envsubst-conf/homeserver.yaml"
-            - name: AWS_ACCESS_KEY_ID
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "helm-chart.fullname" . }}-secret
-                  key: AWS_ACCESS_KEY_ID
-            - name: AWS_SECRET_ACCESS_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "helm-chart.fullname" . }}-secret
-                  key: AWS_SECRET_ACCESS_KEY
+          - name: SYNAPSE_CONFIG_PATH
+            value: "/envsubst-conf/homeserver.yaml"
+          envFrom:
+          - secretRef:
+              name:  {{ include "helm-chart.fullname" . }}-secret
 
           volumeMounts:
             - name: envsubst-conf
               mountPath: "/envsubst-conf"
-            - name: "synapse-config"
+            - name: synapse-config
               mountPath: "/conf/log.config"
               subPath: log.config
-            - name: "signing-key"
+            - name: signing-key
               mountPath: "/data/{{ .Values.host }}.signing.key"
               subPath: signing.key
             - name: uploads
@@ -78,17 +71,9 @@ spec:
           args:
             - '-c'
             - 'cat /conf/homeserver.yaml | envsubst > /envsubst-conf/homeserver.yaml'
-          env:
-            - name: POSTGRES_USER
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "helm-chart.fullname" . }}-postgres-auth
-                  key: POSTGRES_USER
-            - name: POSTGRES_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "helm-chart.fullname" . }}-postgres-auth
-                  key: POSTGRES_PASSWORD
+          envFrom:
+          - secretRef:
+              name: {{ include "helm-chart.fullname" . }}-postgres-auth
           volumeMounts:
             - name: "synapse-config"
               mountPath: "/conf/homeserver.yaml"
