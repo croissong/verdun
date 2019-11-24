@@ -25,12 +25,12 @@ releases:
   values:
     - values/prometheus.yml.gotmpl
 
-- name: kubedb-operator
-  namespace: kubedb
-  chart: appscode/kubedb
-  version: 0.13.0-rc.0
-  wait: false
-  atomic: false
+# - name: kubedb-operator
+#   namespace: kubedb
+#   chart: appscode/kubedb
+#   version: 0.13.0-rc.0
+#   wait: false
+#   atomic: false
 
 - name: kubedb-catalog
   namespace: kubedb
@@ -38,15 +38,15 @@ releases:
   version: 0.13.0-rc.0
   atomic: false
 
-- name: stash-operator
-  namespace: stash
-  chart: appscode/stash
-  version: v0.9.0-rc.2
-  atomic: false
-  recreatePods: true
-  values:
-    - values/common.yml.gotmpl
-    - values/stash-operator.yml.gotmpl
+# - name: stash-operator
+#   namespace: stash
+#   chart: appscode/stash
+#   version: v0.9.0-rc.2
+#   atomic: false
+#   recreatePods: true
+#   values:
+#     - values/common.yml.gotmpl
+#     - values/stash-operator.yml.gotmpl
 
 - name: traefik
   namespace: traefik
