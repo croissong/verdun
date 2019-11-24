@@ -22,6 +22,10 @@ data "sops_file" "secrets" {
 provider "drone" {
 }
 
+provider "tls" {
+  version = "~> 2.1"
+}
+
 provider "github" {
   version      = "~> 2.2"
   token        = var.gh_token
