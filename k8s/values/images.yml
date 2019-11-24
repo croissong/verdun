@@ -36,7 +36,7 @@ prometheus:
   tag: v2.14.0
 traefik:
   repo: traefik
-  tag: 2.0.4
+  tag: v2.1
 verdun:
   api:
     repo: croissong/verdun-api
