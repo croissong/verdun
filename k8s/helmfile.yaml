@@ -108,9 +108,3 @@ releases:
   chart: ./my-charts/hefeteig-app/
   values:
     - values/common.yml.gotmpl
-
-- name: concourse
-  namespace: concourse
-  chart: ./my-charts/concourse
-  values:
-    - values/concourse.yml.gotmpl
