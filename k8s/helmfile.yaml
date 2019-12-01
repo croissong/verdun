@@ -21,7 +21,7 @@ releases:
 
 - name: prometheus
   namespace: prometheus
-  chart: ./my-charts/prometheus
+  chart: ./charts/prometheus
   values:
     - values/prometheus.yml.gotmpl
 

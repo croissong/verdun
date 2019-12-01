@@ -3,4 +3,4 @@ dependencies:
   repository: file://../nginx
   version: 0.1.0
 digest: sha256:28d350974d500269dc254711a4dc29bf8a15aa0049eb0a1f407f8f19a7cc5c88
-generated: "2019-11-24T05:22:11.113061789+01:00"
+generated: "2019-12-01T01:59:20.641515022+01:00"

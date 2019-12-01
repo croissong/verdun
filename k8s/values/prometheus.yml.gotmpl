@@ -40,16 +40,11 @@ prometheus-operator:
   prometheusOperator:
     enabled: true
     image:
-      tag: {{ .Environment.Values.prometheus.operator.tag }}
-    prometheusConfigReloaderImage:
-      tag: {{ .Environment.Values.prometheus.operator.tag }}
+      pullPolicy: Always
     serviceMonitor:
       selfMonitor: false
     kubeletService:
       enabled: false
-
-    image:
-      pullPolicy: Always
 
   prometheus:
     enabled: true

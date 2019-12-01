@@ -41,7 +41,7 @@ spec:
   entryPoints:
     - web
   routes:
-  - match: Host(`{{ .Values.host }}`) && PathPrefix(`{{ .Values.path }}`, `vendor`)
+  - match: Host(`{{ .Values.host }}`) && PathPrefix(`{{ .Values.path }}`)
     kind: Rule
     services:
     - name:  {{ include "helm-chart.fullname" . }}

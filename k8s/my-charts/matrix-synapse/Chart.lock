@@ -3,4 +3,4 @@ dependencies:
   repository: file://../postgres
   version: 0.1.0
 digest: sha256:74bd0932a22b1d56c5f7182503ee8d7b1f3e053c8e330913eacbc96974bdc29d
-generated: "2019-11-24T05:22:02.384463757+01:00"
+generated: "2019-12-01T01:59:07.460947715+01:00"
