@@ -108,3 +108,13 @@ releases:
   chart: ./my-charts/hefeteig-app/
   values:
     - values/common.yml.gotmpl
+
+- name: hefeteig-scribble-backend
+  namespace: hefeteig
+  chart: ./charts/hefeteig-scribble-backend
+
+- name: hefeteig-scribble-app
+  namespace: hefeteig
+  chart: ./charts/hefeteig-scribble-app
+  values:
+    - values/common.yml.gotmpl

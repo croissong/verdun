@@ -1,4 +1,5 @@
 .env
 charts/
+!/charts/
 kubeconfig.yml
 my.sh

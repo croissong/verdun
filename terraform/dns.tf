@@ -56,3 +56,10 @@ resource "digitalocean_record" "hefeteig_root" {
   name   = "@"
 }
 
+resource "digitalocean_record" "hefeteig_wildcard" {
+  domain = digitalocean_domain.hefeteig.name
+  type   = "A"
+  value  = data.digitalocean_droplet.verdun_node.ipv4_address
+  ttl    = 60
+  name   = "*"
+}
