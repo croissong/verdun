@@ -1,6 +1,8 @@
 # run it
-```
-make apply do_token=$(do_token) circleci_token=$(circleci_token) do_token_get_kubeconf=$(do_token_get_kubeconf) helm_gpg_key_b64=$(helm_gpg_key_b64)
+```sh
+# export TF_VAR_do_token=digitalocean_token
+# export TF_VAR_gh_token=github_token
+make apply
 ```
 
 # setup circleci terraform provider
