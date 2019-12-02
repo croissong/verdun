@@ -118,3 +118,9 @@ releases:
   chart: ./charts/hefeteig-scribble-app
   values:
     - values/common.yml.gotmpl
+
+- name: tekton
+  namespace: tekton
+  chart: ./charts/tekton
+  values:
+    - values/tekton.yml
