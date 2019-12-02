@@ -50,14 +50,14 @@ releases:
 
 - name: traefik
   namespace: traefik
-  chart: ./my-charts/traefik
+  chart: ./charts/traefik
   values:
     - values/traefik.yml.gotmpl
     - values/common.yml.gotmpl
 
 - name: matrix-synapse
   namespace: matrix
-  chart: ./my-charts/matrix-synapse/
+  chart: ./charts/matrix-synapse/
   verify: false
   values:
     - values/synapse.yml.gotmpl
@@ -68,7 +68,7 @@ releases:
 
 - name: matrix-riot
   namespace: matrix
-  chart: ./my-charts/matrix-riot/
+  chart: ./charts/matrix-riot/
   verify: false
   values:
     - values/riot.yml.gotmpl
@@ -77,7 +77,7 @@ releases:
 
 - name: murmur
   namespace: murmur
-  chart: ./my-charts/murmur/
+  chart: ./charts/murmur/
   recreatePods: true
   values:
     - values/murmur.yml.gotmpl
@@ -85,27 +85,27 @@ releases:
 
 - name: nginx-rtmp
   namespace: misc
-  chart: ./my-charts/nginx-rtmp/
+  chart: ./charts/nginx-rtmp/
   recreatePods: true
   values:
     - values/nginx-rtmp.yml.gotmpl
 
 - name: verdun-frontend
   namespace: verdun
-  chart: ./my-charts/verdun-frontend/
+  chart: ./charts/verdun-frontend/
   values:
     - values/common.yml.gotmpl
     - values/verdun.yml.gotmpl
 
 - name: verdun-api
   namespace: verdun
-  chart: ./my-charts/verdun-api/
+  chart: ./charts/verdun-api/
   values:
     - values/verdun-api.yml.gotmpl
 
 - name: hefeteig-app
   namespace: hefeteig
-  chart: ./my-charts/hefeteig-app/
+  chart: ./charts/hefeteig-app/
   values:
     - values/common.yml.gotmpl
 
