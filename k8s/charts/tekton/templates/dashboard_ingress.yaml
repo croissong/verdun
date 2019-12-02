@@ -1,0 +1,16 @@
+{{- if .Values.dashboard.ingress.enabled }}
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: tekton
+  annotations:
+{{ .Values.dashboard.ingress.annotations | toYaml | indent 4 }}
+spec:
+  rules:
+    - host: {{ .Values.dashboard.ingress.host }}
+      http:
+        paths:
+          - backend:
+              serviceName: tekton-dashboard
+              servicePort: 9097
+{{- end }}
