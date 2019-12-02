@@ -3,4 +3,4 @@ dependencies:
   repository: file://../mysql
   version: 0.1.0
 digest: sha256:4809745b718a8ad2211b2c1c8ee5a63d3e995f089b9adcd2967fbeba33774cb6
-generated: "2019-12-01T01:59:14.073140822+01:00"
+generated: "2019-12-01T02:26:27.465502844+01:00"
