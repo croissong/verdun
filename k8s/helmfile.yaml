@@ -1,6 +1,5 @@
-context: {{ requiredEnv "KUBECONTEXT" }}
-
 helmDefaults:
+  kubeContext: do-fra1-verdun
   atomic: true
   recreatePods: false
 
