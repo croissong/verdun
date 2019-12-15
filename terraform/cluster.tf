@@ -3,7 +3,7 @@ resource "digitalocean_kubernetes_cluster" "verdun" {
   name   = "verdun"
   region = "fra1"
 
-  # curl -s -H "Authorization: Bearer $do_token" "https://api.digitalocean.com/v2/kubernetes/options" | jq '.options.versions'
+  # doctl kubernetes options versions
   version = "1.16.2-do.1"
 
   node_pool {
@@ -48,30 +48,6 @@ resource "digitalocean_firewall" "verdun_infra" {
 
   inbound_rule {
     protocol         = "tcp"
-    port_range       = "1-65535"
-    source_addresses = ["10.0.0.0/8", "172.16.0.0/20", "192.168.0.0/16"]
-  }
-
-  inbound_rule {
-    protocol         = "udp"
-    port_range       = "1-65535"
-    source_addresses = ["10.0.0.0/8", "172.16.0.0/20", "192.168.0.0/16"]
-  }
-
-  inbound_rule {
-    protocol         = "tcp"
-    port_range       = "30000-32767"
-    source_addresses = ["0.0.0.0/0"]
-  }
-
-  inbound_rule {
-    protocol         = "udp"
-    port_range       = "30000-32767"
-    source_addresses = ["0.0.0.0/0"]
-  }
-
-  inbound_rule {
-    protocol         = "tcp"
     port_range       = "80"
     source_addresses = ["0.0.0.0/0", "::/0"]
   }
@@ -101,23 +77,6 @@ resource "digitalocean_firewall" "verdun_infra" {
     protocol         = "tcp"
     port_range       = "1935"
     source_addresses = ["0.0.0.0/0", "::/0"]
-  }
-
-  outbound_rule {
-    protocol              = "tcp"
-    port_range            = "1-65535"
-    destination_addresses = ["0.0.0.0/0", "::/0"]
-  }
-
-  outbound_rule {
-    protocol              = "udp"
-    port_range            = "1-65535"
-    destination_addresses = ["0.0.0.0/0", "::/0"]
-  }
-
-  outbound_rule {
-    protocol              = "icmp"
-    destination_addresses = ["0.0.0.0/0", "::/0"]
   }
 }
 
