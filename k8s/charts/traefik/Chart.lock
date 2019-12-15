@@ -2,8 +2,5 @@ dependencies:
 - name: auth-proxy
   repository: file://../auth-proxy
   version: 0.0.1
-- name: restic
-  repository: file://../restic
-  version: 0.0.1
-digest: sha256:9a65b32fe0b229a8a3416d24611f2fe67bcd0cfa957f47964e95ff45d974fd24
-generated: "2019-11-03T20:08:17.032251689+01:00"
+digest: sha256:666c863984a0cad52b85e9efd107fd92221ccb87ff842bf96b85cec1e262d86f
+generated: "2019-12-15T03:23:33.66726281+01:00"
