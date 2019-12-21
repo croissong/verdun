@@ -1,6 +1,4 @@
 auth-proxy:
-  clientId: {{ .Values.authProxy.clientId }}
-  clientSecret: {{ .Values.authProxy.clientSecret }}
   host: traefik.patrician.cloud
   upstream: traefik-dashboard:80
   domains:

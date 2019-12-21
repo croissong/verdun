@@ -9,7 +9,9 @@ metadata:
     heritage: {{ .Release.Service | quote }}
 data:
   oauth2_proxy.cfg: |
-    provider = "github"
+    provider = "oidc"
+    oidc_issuer_url = "https://dex.patrician.cloud"
+
     skip_provider_button = true
     http_address = "0.0.0.0:3000"
     email_domains = [
@@ -17,9 +19,9 @@ data:
     ]
     cookie_refresh = "1h"
 
-    redirect_url = "https://{{ .Values.host }}/oauth2/callback"
     upstreams = [
     "http://{{ .Values.upstream }}"
     ]
     request_logging = false
     standard_logging = false
+    auth_logging = false

@@ -24,12 +24,12 @@ releases:
   values:
     - values/prometheus.yml.gotmpl
 
-# - name: kubedb-operator
-#   namespace: kubedb
-#   chart: appscode/kubedb
-#   version: 0.13.0-rc.0
-#   wait: false
-#   atomic: false
+- name: kubedb
+  namespace: kubedb
+  chart: appscode/kubedb
+  version: 0.13.0-rc.0
+  wait: false
+  atomic: false
 
 - name: kubedb-catalog
   namespace: kubedb
@@ -113,3 +113,10 @@ releases:
   chart: ./charts/tekton
   values:
     - values/tekton.yml
+
+- name: dex
+  namespace: dex
+  chart: ./charts/dex
+  values:
+    - values/common.yml.gotmpl
+    - values/dex.yml.gotmpl

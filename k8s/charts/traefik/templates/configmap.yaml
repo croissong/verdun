@@ -29,6 +29,7 @@ data:
     ping: true
     log:
       level: {{ .Values.log.level }}
+      format: json
     certificatesResolvers:
       default:
         acme:

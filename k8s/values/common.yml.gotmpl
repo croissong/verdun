@@ -11,11 +11,6 @@ mysql:
   s3AccessId: {{ .Values.s3AccessId }}
   s3SecretKey: {{ .Values.s3SecretKey }}
 
-restic:
-  s3AccessId: {{ .Values.s3AccessId }}
-  s3SecretKey: {{ .Values.s3SecretKey }}
-  password: {{ .Values.restic.password }}
-
 nginx:
   repo: {{ .Values.common.nginx.repo }}
   tag: {{ .Values.common.nginx.tag }}
@@ -29,3 +24,5 @@ auth-proxy:
     tag: {{ .Values.common.authProxy.tag }}
   cookieSecret: {{ .Values.authProxy.cookieSecret }}
   githubOrg: {{ .Values.authProxy.githubOrg }}
+  clientId: {{ .Values.dex.clientId }}
+  clientSecret: {{ .Values.dex.clientSecret }}
