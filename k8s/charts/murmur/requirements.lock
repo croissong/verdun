@@ -2,5 +2,5 @@ dependencies:
 - name: mysql
   repository: file://../mysql
   version: 0.1.0
-digest: sha256:73d1cfd7321e603c1ff8310b7e587f53bf09baa0f41222765466f31e36d09d59
-generated: "2019-05-22T22:03:50.753052177+02:00"
+digest: sha256:4809745b718a8ad2211b2c1c8ee5a63d3e995f089b9adcd2967fbeba33774cb6
+generated: "2019-12-21T22:18:25.79873484+01:00"

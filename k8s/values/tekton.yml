@@ -1,0 +1,3 @@
+auth-proxy:
+  host: tekton.patrician.cloud
+  upstream: tekton-dashboard:9097

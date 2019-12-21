@@ -112,6 +112,7 @@ releases:
   namespace: tekton
   chart: ./charts/tekton
   values:
+    - values/common.yml.gotmpl
     - values/tekton.yml
 
 - name: dex
