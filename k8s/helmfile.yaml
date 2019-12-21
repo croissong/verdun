@@ -23,6 +23,8 @@ releases:
   chart: ./charts/prometheus
   values:
     - values/prometheus.yml.gotmpl
+  needs:
+    - traefik
 
 - name: kubedb
   namespace: kubedb
@@ -43,17 +45,24 @@ releases:
   values:
     - values/traefik.yml.gotmpl
     - values/common.yml.gotmpl
+  needs:
+    - prometheus
+
+- name: traefik-middlewares
+  namespace: traefik
+  chart: ./charts/traefik-middlewares
+  needs:
+    - traefik
 
 - name: matrix-synapse
   namespace: matrix
   chart: ./charts/matrix-synapse/
-  verify: false
   values:
     - values/synapse.yml.gotmpl
     - values/common.yml.gotmpl
-  # needs:
-  #   - traefik
-  #   - kubedb-operator
+  needs:
+    - traefik
+    - kubedb
 
 - name: matrix-riot
   namespace: matrix
