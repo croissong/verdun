@@ -1,4 +1,0 @@
-dependencies:
-  - name: dex
-    version: 2.5.0
-    repository: '@stable'

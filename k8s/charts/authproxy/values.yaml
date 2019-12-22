@@ -1,0 +1,6 @@
+ingressroute:
+  service:
+    suffix: -authproxy
+    port: 80
+service:
+  type: ClusterIP

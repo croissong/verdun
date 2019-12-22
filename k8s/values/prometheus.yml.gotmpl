@@ -1,98 +1,97 @@
 host: prometheus.patrician.cloud
 
-prometheus-operator:
-  defaultRules:
-    create: false
+defaultRules:
+  create: false
 
-  alertmanager:
-    serviceMonitor:
-      selfMonitor: false
-    config:
-      receivers:
-      - name: 'null'
+alertmanager:
+  serviceMonitor:
+    selfMonitor: false
+  config:
+    receivers:
+    - name: 'null'
 
-  kubeApiServer:
-    enabled: false
-  kubelet:
-    enabled: false
-  kubeControllerManager:
-    enabled: false
-  coreDns:
-    enabled: false
-  kubeEtcd:
-    enabled: false
-  kubeScheduler:
-    enabled: false
-  kubeProxy:
+kubeApiServer:
+  enabled: false
+kubelet:
+  enabled: false
+kubeControllerManager:
+  enabled: false
+coreDns:
+  enabled: false
+kubeEtcd:
+  enabled: false
+kubeScheduler:
+  enabled: false
+kubeProxy:
+  enabled: false
+
+kubeStateMetrics:
+  enabled: true
+  serviceMonitor:
+    metricRelabelings:
+      - sourceLabels: [namespace]
+        regex: kube-system
+        action: drop
+
+
+## Manages Prometheus and Alertmanager components
+##
+prometheusOperator:
+  enabled: true
+  image:
+    pullPolicy: Always
+  serviceMonitor:
+    selfMonitor: false
+  kubeletService:
     enabled: false
 
-  kubeStateMetrics:
-    enabled: true
-    serviceMonitor:
-      metricRelabelings:
-        - sourceLabels: [namespace]
-          regex: kube-system
-          action: drop
-
-
-  ## Manages Prometheus and Alertmanager components
-  ##
-  prometheusOperator:
-    enabled: true
+prometheus:
+  enabled: true
+  serviceMonitor:
+    selfMonitor: false
+  prometheusSpec:
     image:
-      pullPolicy: Always
-    serviceMonitor:
-      selfMonitor: false
-    kubeletService:
-      enabled: false
-
-  prometheus:
-    enabled: true
-    serviceMonitor:
-      selfMonitor: false
-    prometheusSpec:
-      image:
-        tag: {{ .Environment.Values.prometheus.tag }}
-      serviceMonitorSelectorNilUsesHelmValues: false
-      retention: 1d
-    ingress:
-      enabled: false
-
-  grafana:
+      tag: {{ .Environment.Values.prometheus.tag }}
+    serviceMonitorSelectorNilUsesHelmValues: false
+    retention: 1d
+  ingress:
     enabled: false
 
-  nodeExporter:
-    enabled: false
+grafana:
+  enabled: false
+
+nodeExporter:
+  enabled: false
 
 
 
-  ### subcharts
+### subcharts
 
-  kube-state-metrics:
-    image:
-      repository: {{ .Environment.Values.prometheus.kubeStateMetrics.repo }}
-      tag: {{ .Environment.Values.prometheus.kubeStateMetrics.tag }}
-    prometheusScrape: false
-    collectors:
-      certificatesigningrequests: false
-      configmaps: false
-      cronjobs: false
-      daemonsets: false
-      deployments: false
-      endpoints: false
-      horizontalpodautoscalers: false
-      ingresses: false
-      jobs: false
-      limitranges: false
-      namespaces: false
-      nodes: false
-      persistentvolumeclaims: false
-      persistentvolumes: false
-      poddisruptionbudgets: false
-      pods: true
-      replicasets: false
-      replicationcontrollers: false
-      resourcequotas: false
-      secrets: false
-      services: false
-      statefulsets: false
+kube-state-metrics:
+  image:
+    repository: {{ .Environment.Values.prometheus.kubeStateMetrics.repo }}
+    tag: {{ .Environment.Values.prometheus.kubeStateMetrics.tag }}
+  prometheusScrape: false
+  collectors:
+    certificatesigningrequests: false
+    configmaps: false
+    cronjobs: false
+    daemonsets: false
+    deployments: false
+    endpoints: false
+    horizontalpodautoscalers: false
+    ingresses: false
+    jobs: false
+    limitranges: false
+    namespaces: false
+    nodes: false
+    persistentvolumeclaims: false
+    persistentvolumes: false
+    poddisruptionbudgets: false
+    pods: true
+    replicasets: false
+    replicationcontrollers: false
+    resourcequotas: false
+    secrets: false
+    services: false
+    statefulsets: false

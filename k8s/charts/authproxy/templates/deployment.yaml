@@ -1,0 +1,33 @@
+{{- template "common.deployment" (list . "mychart.deployment") -}}
+{{- define "mychart.deployment" -}}
+## Define overrides for your Deployment resource here, e.g.
+spec:
+  template:
+    metadata:
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yml") . | sha256sum }}
+        checksum/secret: {{ include (print $.Template.BasePath "/secret.yml") . | sha256sum }}
+    spec:
+      containers:
+      - {{ template "common.container" (list . "mychart.deployment.container") }}
+      volumes:
+      - name: auth-proxy
+        configMap:
+          name: {{ template "common.fullname" . }}
+{{- end -}}
+
+{{- define "mychart.deployment.container" -}}
+## Define overrides for your Container here, e.g.
+args:
+  - --config=/opt/oauth2_proxy.cfg
+envFrom:
+  - secretRef:
+      name: {{ template "common.fullname" . }}
+volumeMounts:
+  - name: auth-proxy
+    mountPath: /opt/oauth2_proxy.cfg
+    subPath: oauth2_proxy.cfg
+ports:
+  - name: auth-proxy
+    containerPort: 3000
+{{- end -}}

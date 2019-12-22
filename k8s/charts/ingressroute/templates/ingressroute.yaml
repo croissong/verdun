@@ -1,0 +1,42 @@
+{{- $serviceNameDefault :=  printf "%s-%s" .Release.Name .Values.service.suffix -}}
+
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+{{ template "common.metadata" . }}
+spec:
+  entryPoints:
+    - websecure
+  tls:
+    certResolver: default
+    options:
+      name: default
+      namespace: traefik
+{{- if .Values.domains }}
+    domains: 
+{{ toYaml .Values.domains | indent 6 }}
+{{- end }}
+  routes:
+  - match: Host(`{{ required "host is required" .Values.host }}`)
+    kind: Rule
+    services:
+    - name: {{ .Values.service.name | default $serviceNameDefault }}
+      port: {{ required "service.port is required" .Values.service.port }}
+    middlewares:
+    - name: sec-headers
+      namespace: traefik
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: {{ template "common.fullname" . }}-https-redirect
+{{ template "common.labels.standard" . }}
+spec:
+  entryPoints:
+    - web
+  routes:
+  - match: Host(`{{ .Values.host }}`)
+    kind: Rule
+    middlewares:
+    - name: redirect-https
+      namespace: traefik

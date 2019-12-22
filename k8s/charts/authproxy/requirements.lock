@@ -1,0 +1,9 @@
+dependencies:
+- name: common
+  repository: file://../common
+  version: 0.0.5
+- name: ingressroute
+  repository: file://../ingressroute
+  version: 0.0.1
+digest: sha256:0b768ea9aa032471944980b9d5992675c66c889ea332c3ae345c2535f7a3f03e
+generated: "2019-12-22T03:04:37.847828883+01:00"

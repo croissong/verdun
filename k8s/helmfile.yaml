@@ -6,6 +6,8 @@ helmDefaults:
 repositories:
 - name: stable
   url: https://kubernetes-charts.storage.googleapis.com
+- name: incubator
+  url: https://kubernetes-charts-incubator.storage.googleapis.com
 - name: appscode
   url: https://charts.appscode.com/stable/
 
@@ -20,11 +22,23 @@ releases:
 
 - name: prometheus
   namespace: prometheus
-  chart: ./charts/prometheus
+  chart: stable/prometheus-operator
+  version: 8.3.0
   values:
     - values/prometheus.yml.gotmpl
+
+- name: prometheus-ingress
+  namespace: prometheus
+  chart: ./charts/ingressroute
+  values:
+    - host: prometheus.patrician.cloud
+      service:
+        name: prometheus-prometheus-oper-prometheus
+        port: 9090
   needs:
-    - traefik
+    - prometheus/prometheus
+    - traefik/traefik
+    - traefik/traefik-middlewares
 
 - name: kubedb
   namespace: kubedb
@@ -44,15 +58,31 @@ releases:
   chart: ./charts/traefik
   values:
     - values/traefik.yml.gotmpl
-    - values/common.yml.gotmpl
   needs:
-    - prometheus
+    - prometheus/prometheus
 
 - name: traefik-middlewares
   namespace: traefik
   chart: ./charts/traefik-middlewares
   needs:
-    - traefik
+    - traefik/traefik
+
+- name: traefik-authproxy
+  namespace: traefik
+  chart: ./charts/authproxy
+  values:
+    - values/authproxy.yml.gotmpl
+    - upstream: traefik-dashboard:80
+      ingressroute:
+        host: traefik.patrician.cloud
+        domains:
+          - main: "patrician.cloud"
+          - sans:
+              - "*.patrician.cloud"
+  needs:
+    - traefik/traefik
+    - traefik/traefik-middlewares
+    - dex/dex-ingress
 
 - name: matrix-synapse
   namespace: matrix
@@ -126,7 +156,21 @@ releases:
 
 - name: dex
   namespace: dex
-  chart: ./charts/dex
+  chart: stable/dex
+  version: 2.5.0
   values:
     - values/common.yml.gotmpl
     - values/dex.yml.gotmpl
+
+- name: dex-ingress
+  namespace: dex
+  chart: ./charts/ingressroute
+  values:
+    - host: dex.patrician.cloud
+      service:
+        name: dex
+        port: 5556
+  needs:
+    - dex/dex
+    - traefik/traefik
+    - traefik/traefik-middlewares

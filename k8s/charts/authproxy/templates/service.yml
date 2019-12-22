@@ -1,0 +1,9 @@
+{{- template "common.service" (list . "mychart.mail.service") -}}
+{{- define "mychart.mail.service" -}}
+
+spec:
+  ports:
+  - name: auth-proxy
+    port: 80
+    targetPort: auth-proxy
+{{- end -}}

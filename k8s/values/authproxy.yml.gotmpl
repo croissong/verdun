@@ -1,0 +1,7 @@
+image:
+  repository: {{ .Values.common.authProxy.repo }}
+  tag: {{ .Values.common.authProxy.tag }}
+cookieSecret: {{ .Values.authProxy.cookieSecret }}
+githubOrg: {{ .Values.authProxy.githubOrg }}
+clientId: {{ .Values.dex.clientId }}
+clientSecret: {{ .Values.dex.clientSecret }}
