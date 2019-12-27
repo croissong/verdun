@@ -1,4 +1,0 @@
-dependencies:
-  - name: auth-proxy
-    repository: "file://../auth-proxy"
-    version: 0.0.1

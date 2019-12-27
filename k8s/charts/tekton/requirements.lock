@@ -1,6 +1,0 @@
-dependencies:
-- name: auth-proxy
-  repository: file://../auth-proxy
-  version: 0.0.1
-digest: sha256:666c863984a0cad52b85e9efd107fd92221ccb87ff842bf96b85cec1e262d86f
-generated: "2019-12-21T22:18:47.589615711+01:00"

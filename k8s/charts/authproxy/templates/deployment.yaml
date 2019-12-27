@@ -1,6 +1,6 @@
 {{- template "common.deployment" (list . "mychart.deployment") -}}
 {{- define "mychart.deployment" -}}
-## Define overrides for your Deployment resource here, e.g.
+
 spec:
   template:
     metadata:
@@ -14,10 +14,11 @@ spec:
       - name: auth-proxy
         configMap:
           name: {{ template "common.fullname" . }}
+
 {{- end -}}
 
 {{- define "mychart.deployment.container" -}}
-## Define overrides for your Container here, e.g.
+
 args:
   - --config=/opt/oauth2_proxy.cfg
 envFrom:
@@ -30,4 +31,5 @@ volumeMounts:
 ports:
   - name: auth-proxy
     containerPort: 3000
+
 {{- end -}}

@@ -1,5 +1,6 @@
+host:
 image:
-  name: {{ .Values.matrix.synapse.repo }}
+  repository: {{ .Values.matrix.synapse.repo }}
   tag: {{ .Values.matrix.synapse.tag }}
 postgres:
   user: {{ .Values.synapse.postgres.user }}

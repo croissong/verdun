@@ -1,20 +1,10 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: {{ include "helm-chart.fullname" . }}-config
-  labels:
-    app: {{ include "helm-chart.name" . }}
-    chart: {{ include "helm-chart.chart" . }}
-    release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }}
+{{- template "common.configmap" (list . "mychart.configmap") -}}
+{{- define "mychart.configmap" -}}
 data:
   # https://github.com/matrix-org/synapse/blob/develop/docs/sample_config.yaml
-  homeserver.yaml: |
-    ## TLS ##
+  homeserver.yaml: |-
     no_tls: True
-
     ## Server ##
-
     # server_name cannot be changed
     server_name: matrix.patrician.gold
     pid_file: /homeserver.pid
@@ -22,7 +12,6 @@ data:
     soft_file_limit: 0
 
     ## Ports ##
-
     listeners:
       - port: 8008
         tls: false
@@ -40,8 +29,6 @@ data:
         bind_addresses: ['0.0.0.0']
 
     ## Database ##
-
-
     database:
       name: "psycopg2"
       args:
@@ -53,17 +40,13 @@ data:
         cp_min: 5
         cp_max: 10
 
-
-
     ## Performance ##
-
     event_cache_size: "10K"
     verbose: 0
     log_file: "/data/homeserver.log"
     log_config: "/conf/log.config"
 
     ## Ratelimiting ##
-
     rc_messages_per_second: 0.2
     rc_message_burst_count: 10.0
     federation_rc_window_size: 1000
@@ -178,7 +161,7 @@ data:
 
 
     
-  log.config: |
+  log.config: |-
     version: 1
 
     formatters:
@@ -208,3 +191,5 @@ data:
     root:
         level: WARNING
         handlers: [console]
+    
+{{- end -}}

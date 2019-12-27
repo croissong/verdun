@@ -2,5 +2,8 @@ dependencies:
 - name: postgres
   repository: file://../postgres
   version: 0.1.0
-digest: sha256:1aaaa13a592cc477db71f3b39fa68aee272e9ed8250e92e449479d03ba00bf62
-generated: "2019-05-19T01:09:28.748153554+02:00"
+- name: ingressroute
+  repository: file://../ingressroute
+  version: 0.0.1
+digest: sha256:c9c89aae6fbdb65c14dcde9d9de6e349b471448206a526279588b2ef09002879
+generated: "2019-12-22T18:51:15.887236717+01:00"

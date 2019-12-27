@@ -1,10 +1,7 @@
 {{- define "common.container.tpl" -}}
 name: {{ .Chart.Name }}
 image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-imagePullPolicy: {{ .Values.image.pullPolicy }}
-ports:
-- name: http
-  containerPort: 80
+imagePullPolicy: Always
 resources:
 {{ toYaml .Values.resources | indent 2 }}
 {{- end -}}

@@ -37,6 +37,9 @@ spec:
   routes:
   - match: Host(`{{ .Values.host }}`)
     kind: Rule
+    services:
+    - name: {{ .Values.service.name | default $serviceNameDefault }}
+      port: {{ required "service.port is required" .Values.service.port }}
     middlewares:
     - name: redirect-https
       namespace: traefik

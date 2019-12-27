@@ -1,3 +1,12 @@
 host: matrix.patrician.cloud
+ingressroute:
+  host: matrix.patrician.cloud
+  service:
+    port: 8008
+    suffix: matrix-synapse
 persistence:
+  enabled: true
+  accessMode: ReadWriteOnce
   size: 5Gi
+service:
+  type: ClusterIP

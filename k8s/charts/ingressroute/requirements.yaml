@@ -1,4 +1,4 @@
 dependencies:
   - name: common
     version: 0.0.5
-    repository: '@incubator'
+    repository: "file://../common"

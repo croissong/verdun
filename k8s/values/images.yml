@@ -14,11 +14,11 @@ common:
     version: 11.2
 matrix:
   riot:
-    repo: bubuntux/riot-web
-    tag: v1.5.5
+    repo: vectorim/riot-web
+    tag: v1.5.6
   synapse:
     repo: croissong/matrix-synapse-s3-storage
-    tag: v1.6.1
+    tag: v1.7.2
 misc:
   nginxRtmp:
     repo: tiangolo/nginx-rtmp
@@ -30,11 +30,11 @@ murmur:
 prometheus:
   kubeStateMetrics:
     repo: bitnami/kube-state-metrics
-    tag: 1.8.0
-  tag: v2.14.0
+    tag: 1.9.0
+  tag: v2.15.0-rc.0
 traefik:
   repo: traefik
-  tag: v2.1
+  tag: v2.1.1
 verdun:
   api:
     repo: croissong/verdun-api

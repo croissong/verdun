@@ -1,12 +1,6 @@
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
-metadata:
-  labels:
-    app: {{ include "helm-chart.name" . }}
-    chart: {{ include "helm-chart.chart" . }}
-    release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }}
-  name: {{ include "helm-chart.fullname" . }}
+{{ template "common.metadata" . }}
 spec:
   endpoints:
   - honorLabels: true

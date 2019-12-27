@@ -23,7 +23,7 @@ releases:
 - name: prometheus
   namespace: prometheus
   chart: stable/prometheus-operator
-  version: 8.3.0
+  version: 8.4.0
   values:
     - values/prometheus.yml.gotmpl
 
@@ -52,6 +52,8 @@ releases:
   chart: appscode/kubedb-catalog
   version: 0.13.0-rc.0
   atomic: false
+  needs:
+    - kubedb/kubedb
 
 - name: traefik
   namespace: traefik
@@ -67,22 +69,22 @@ releases:
   needs:
     - traefik/traefik
 
-- name: traefik-authproxy
-  namespace: traefik
-  chart: ./charts/authproxy
-  values:
-    - values/authproxy.yml.gotmpl
-    - upstream: traefik-dashboard:80
-      ingressroute:
-        host: traefik.patrician.cloud
-        domains:
-          - main: "patrician.cloud"
-          - sans:
-              - "*.patrician.cloud"
-  needs:
-    - traefik/traefik
-    - traefik/traefik-middlewares
-    - dex/dex-ingress
+# - name: traefik-authproxy
+#   namespace: traefik
+#   chart: ./charts/authproxy
+#   values:
+#     - values/authproxy.yml.gotmpl
+#     - upstream: traefik-dashboard:80
+#       ingressroute:
+#         host: traefik.patrician.cloud
+#         domains:
+#           - main: "patrician.cloud"
+#           - sans:
+#               - "*.patrician.cloud"
+#   needs:
+#     - traefik/traefik
+#     - traefik/traefik-middlewares
+#     - dex/dex-ingress
 
 - name: matrix-synapse
   namespace: matrix
@@ -91,17 +93,17 @@ releases:
     - values/synapse.yml.gotmpl
     - values/common.yml.gotmpl
   needs:
-    - traefik
-    - kubedb
+    - traefik/traefik-middlewares
+    - kubedb/kubedb-catalog
 
 - name: matrix-riot
   namespace: matrix
   chart: ./charts/matrix-riot/
-  verify: false
   values:
     - values/riot.yml.gotmpl
-  # needs:
-  #   - traefik
+  needs:
+    - matrix/matrix-synapse
+    - traefik/traefik-middlewares
 
 - name: murmur
   namespace: murmur

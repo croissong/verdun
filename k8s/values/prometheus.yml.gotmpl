@@ -4,11 +4,7 @@ defaultRules:
   create: false
 
 alertmanager:
-  serviceMonitor:
-    selfMonitor: false
-  config:
-    receivers:
-    - name: 'null'
+  enabled: false
 
 kubeApiServer:
   enabled: false

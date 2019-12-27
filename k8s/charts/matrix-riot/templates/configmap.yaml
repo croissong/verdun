@@ -1,53 +1,9 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: {{ include "helm-chart.fullname" . }}-config
-  labels:
-    app: {{ include "helm-chart.name" . }}
-    chart: {{ include "helm-chart.chart" . }}
-    release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }}
+{{- template "common.configmap" (list . "mychart.configmap") -}}
+{{- define "mychart.configmap" -}}
+
 data:
   # https://github.com/vector-im/riot-web/blob/develop/config.sample.json
-  config.json: |
-    {
-        "default_hs_url": "https://matrix.patrician.cloud",
-        "default_is_url": "https://vector.im",
-        "disable_custom_urls": false,
-        "disable_guests": true,
-        "default_theme": "dark",
-        "brand": "Riot",
-        "integrations_ui_url": "https://scalar.vector.im/",
-        "integrations_rest_url": "https://scalar.vector.im/api",
-        "integrations_jitsi_widget_url": "https://scalar.vector.im/api/widgets/jitsi.html",
-        "bug_report_endpoint_url": "https://riot.im/bugreports/submit",
-        "features": {
-            "feature_groups": "labs",
-            "feature_rich_quoting": "labs",
-            "feature_pinning": "labs",
-            "feature_presence_management": "labs",
-            "feature_sticker_messages": "labs",
-            "feature_tag_panel": "enable",
-            "feature_lazyloading": "enable"
-        },
-        "teamServerConfig": {
-            "supportEmail": "support@riot.im",
-            "teamServerURL": "https://riot.im/rts"
-        },
-        "teamTokenMap": {
-            "matrix": "88b6e5b3785960ab",
-            "geektime": "00065f1403571278",
-            "chatbotsummit": "ff5218fc50552903",
-            "studenthack": "2fa79727cc3f56df"
-        },
-        "referralBaseUrl": "https://riot.im/develop",
-        "welcomeUserId": "@riot-bot:matrix.org",
-        "piwik": {
-            "url": "https://piwik.riot.im/",
-            "siteId": 1,
-            "policyUrl": "https://matrix.org/docs/guides/riot_im_cookie_policy"
-        },
-        "enable_presence_by_hs_url": {
-            "https://matrix.org": false
-        }
-    }
+  config.json: |-
+{{ .Files.Get "files/config.json" | indent 4 }}
+
+{{- end -}}
