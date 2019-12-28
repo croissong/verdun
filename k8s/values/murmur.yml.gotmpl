@@ -1,6 +1,3 @@
 image:
-  name: {{ .Values.murmur.murmur.repo }}
+  repository: {{ .Values.murmur.murmur.repo }}
   tag: {{ .Values.murmur.murmur.tag }}
-mysql:
-  user: {{ .Values.murmur.mysql.user }}
-  password: {{ .Values.murmur.mysql.password }}

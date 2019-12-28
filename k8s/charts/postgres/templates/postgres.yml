@@ -21,6 +21,7 @@ spec:
   {{- end }}
   postgresql:
     version: "11"
+  {{- if .Values.clone }}
   clone:
     cluster: {{ template "common.fullname" . }}
     timestamp: '3000-01-01T00:00:00+00:00'
@@ -28,3 +29,4 @@ spec:
     s3_endpoint: {{ .Values.s3_endpoint }}
     s3_access_key_id: {{ required "s3AccessId user is required" .Values.s3AccessId | quote }}
     s3_secret_access_key: {{ required "s3SecretKey user is required" .Values.s3SecretKey | quote }}
+  {{- end }}

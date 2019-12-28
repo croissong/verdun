@@ -1,5 +1,7 @@
 {{- define "homeserver.yaml" -}}
 
+# https://github.com/matrix-org/synapse/blob/develop/docs/sample_config.yaml
+
 no_tls: True
 ## Server ##
 # server_name cannot be changed
@@ -29,7 +31,7 @@ listeners:
 database:
   name: "psycopg2"
   args:
-    user: "$POSTGRES_USER"
+    user: "synapse"
     password: "$POSTGRES_PASSWORD"
     database: "synapse"
     host: "{{ include "common.name" . }}-postgres"

@@ -1,6 +1,9 @@
 dependencies:
-- name: mysql
-  repository: file://../mysql
+- name: postgres
+  repository: file://../postgres
   version: 0.1.0
-digest: sha256:4809745b718a8ad2211b2c1c8ee5a63d3e995f089b9adcd2967fbeba33774cb6
-generated: "2019-12-21T22:18:25.79873484+01:00"
+- name: common
+  repository: file://../common
+  version: 0.0.5
+digest: sha256:613b2994f3fd3eadd0f4695793206aae759dccee06b1b324c834551f3ec2a01f
+generated: "2019-12-28T04:50:00.461075962+01:00"

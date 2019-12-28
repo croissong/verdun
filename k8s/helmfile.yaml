@@ -2,6 +2,7 @@ helmDefaults:
   kubeContext: do-fra1-verdun
   atomic: true
   recreatePods: false
+  timeout: 180
 
 repositories:
 - name: stable
@@ -96,7 +97,6 @@ releases:
     - traefik/traefik-middlewares
     - postgres-operator/postgres-operator
     - prometheus/prometheus
-  wait: false
 
 - name: matrix-riot
   namespace: matrix
@@ -110,7 +110,6 @@ releases:
 - name: murmur
   namespace: murmur
   chart: ./charts/murmur/
-  recreatePods: true
   values:
     - values/murmur.yml.gotmpl
     - values/common.yml.gotmpl

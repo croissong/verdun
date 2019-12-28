@@ -1,5 +1,8 @@
 # requirements.yaml
 dependencies:
-- name: mysql
+- name: postgres
   version: "0.1.0"
-  repository: "file://../mysql"
+  repository: "file://../postgres"
+- name: common
+  version: 0.0.5
+  repository: "file://../common"

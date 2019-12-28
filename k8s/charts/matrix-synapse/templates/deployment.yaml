@@ -42,11 +42,6 @@ spec:
                     'until pg_isready -h {{ include "common.name" . }}-postgres -p 5432;
                     do echo waiting for database; sleep 2; done;']
           env:
-          - name: POSTGRES_USER
-            valueFrom:
-              secretKeyRef:
-                name: synapse.{{ include "common.name" . }}-postgres.credentials
-                key: username
           - name: POSTGRES_PASSWORD
             valueFrom:
               secretKeyRef:

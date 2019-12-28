@@ -10,9 +10,8 @@ postgres:
     - synapse
   databases:
     synapse: synapse
+  clone: true
 persistence:
   enabled: true
   accessMode: ReadWriteOnce
   size: 5Gi
-service:
-  type: ClusterIP

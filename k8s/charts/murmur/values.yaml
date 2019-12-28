@@ -1,2 +1,7 @@
-mysql:
-  initConfig: mumble-mysql-init
+postgres:
+  storageSize: 1Gi
+  users:
+    - murmur
+  databases:
+    murmur: murmur
+  clone: true
