@@ -1,5 +1,5 @@
-{{- template "common.service" (list . "mychart.mail.service") -}}
-{{- define "mychart.mail.service" -}}
+{{- template "common.service" (list . "matrix-synapse.mail.service") -}}
+{{- define "matrix-synapse.mail.service" -}}
 
 spec:
   ports:

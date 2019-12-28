@@ -4,6 +4,12 @@ ingressroute:
   service:
     port: 8008
     suffix: matrix-synapse
+postgres:
+  storageSize: 10Gi
+  users:
+    - synapse
+  databases:
+    synapse: synapse
 persistence:
   enabled: true
   accessMode: ReadWriteOnce

@@ -1,1 +1,3 @@
 storageSize: 1Gi
+s3_endpoint: https://fra1.digitaloceanspaces.com
+s3_prefix: s3://verdun/backup/postgres

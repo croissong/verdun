@@ -1,5 +1,5 @@
-{{- template "common.deployment" (list . "mychart.deployment") -}}
-{{- define "mychart.deployment" -}}
+{{- template "common.deployment" (list . "authproxy.deployment") -}}
+{{- define "authproxy.deployment" -}}
 
 spec:
   template:
@@ -9,7 +9,7 @@ spec:
         checksum/secret: {{ include (print $.Template.BasePath "/secret.yml") . | sha256sum }}
     spec:
       containers:
-      - {{ template "common.container" (list . "mychart.deployment.container") }}
+      - {{ template "common.container" (list . "authproxy.deployment.container") }}
       volumes:
       - name: auth-proxy
         configMap:
@@ -17,7 +17,7 @@ spec:
 
 {{- end -}}
 
-{{- define "mychart.deployment.container" -}}
+{{- define "authproxy.deployment.container" -}}
 
 args:
   - --config=/opt/oauth2_proxy.cfg

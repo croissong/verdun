@@ -1,5 +1,5 @@
-{{- template "common.deployment" (list . "mychart.deployment") -}}
-{{- define "mychart.deployment" -}}
+{{- template "common.deployment" (list . "matrix-riot.deployment") -}}
+{{- define "matrix-riot.deployment" -}}
 
 spec:
   template:
@@ -8,7 +8,7 @@ spec:
         checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
     spec:
       containers:
-      - {{ template "common.container" (list . "mychart.deployment.container") }}
+      - {{ template "common.container" (list . "matrix-riot.deployment.container") }}
       volumes:
         - name: "riot-config"
           configMap:
@@ -16,7 +16,7 @@ spec:
 
 {{- end -}}
 
-{{- define "mychart.deployment.container" -}}
+{{- define "matrix-riot.deployment.container" -}}
 
 ports:
 - name: riot

@@ -96,6 +96,7 @@ releases:
     - traefik/traefik-middlewares
     - postgres-operator/postgres-operator
     - prometheus/prometheus
+  wait: false
 
 - name: matrix-riot
   namespace: matrix

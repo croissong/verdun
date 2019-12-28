@@ -9,5 +9,5 @@ spec:
   jobLabel: app
   selector:
     matchLabels:
-      app: {{ include "helm-chart.name" . }}
+      app: {{ include "common.name" . }}
       release: {{ .Release.Name }}

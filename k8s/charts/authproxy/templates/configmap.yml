@@ -1,5 +1,5 @@
-{{- template "common.configmap" (list . "mychart.configmap") -}}
-{{- define "mychart.configmap" -}}
+{{- template "common.configmap" (list . "authproxy.configmap") -}}
+{{- define "authproxy.configmap" -}}
 data:
   oauth2_proxy.cfg: |-
     provider = "oidc"

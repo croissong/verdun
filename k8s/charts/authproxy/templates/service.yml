@@ -1,5 +1,5 @@
-{{- template "common.service" (list . "mychart.mail.service") -}}
-{{- define "mychart.mail.service" -}}
+{{- template "common.service" (list . "authproxy.service") -}}
+{{- define "authproxy.service" -}}
 
 spec:
   ports:

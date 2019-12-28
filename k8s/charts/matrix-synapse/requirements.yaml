@@ -5,3 +5,6 @@ dependencies:
 - name: ingressroute
   version: "0.0.1"
   repository: "file://../ingressroute"
+- name: common
+  version: 0.0.5
+  repository: "file://../common"

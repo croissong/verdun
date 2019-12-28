@@ -1,5 +1,5 @@
-{{- template "common.configmap" (list . "mychart.configmap") -}}
-{{- define "mychart.configmap" -}}
+{{- template "common.configmap" (list . "matrix-riot.configmap") -}}
+{{- define "matrix-riot.configmap" -}}
 
 data:
   # https://github.com/vector-im/riot-web/blob/develop/config.sample.json

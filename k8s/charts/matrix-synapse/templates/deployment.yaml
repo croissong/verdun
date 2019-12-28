@@ -1,5 +1,5 @@
-{{- template "common.deployment" (list . "mychart.deployment") -}}
-{{- define "mychart.deployment" -}}
+{{- template "common.deployment" (list . "matrix-synapse.deployment") -}}
+{{- define "matrix-synapse.deployment" -}}
 
 spec:
   template:
@@ -9,7 +9,7 @@ spec:
         checksum/secret: {{ include (print $.Template.BasePath "/secret.yaml") . | sha256sum }}
     spec:
       containers:
-      - {{ template "common.container" (list . "mychart.deployment.container") }}
+      - {{ template "common.container" (list . "matrix-synapse.deployment.container") }}
       initContainers:
         - name: config-envsubst
           image: supinf/envsubst
@@ -34,6 +34,25 @@ spec:
               subPath: homeserver.yaml
             - name: envsubst-conf
               mountPath: "/envsubst-conf"
+
+        - name: {{ .Chart.Name }}-readycheck
+          image: "postgres:11"
+          imagePullPolicy: Always
+          command: ['sh', '-c',
+                    'until pg_isready -h {{ include "common.name" . }}-postgres -p 5432;
+                    do echo waiting for database; sleep 2; done;']
+          env:
+          - name: POSTGRES_USER
+            valueFrom:
+              secretKeyRef:
+                name: synapse.{{ include "common.name" . }}-postgres.credentials
+                key: username
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: synapse.{{ include "common.name" . }}-postgres.credentials
+                key: password
+
       volumes:
         - name: "synapse-config"
           configMap:
@@ -51,7 +70,7 @@ spec:
 
 {{- end -}}
 
-{{- define "mychart.deployment.container" -}}
+{{- define "matrix-synapse.deployment.container" -}}
 
 ports:
   - name: http

@@ -1,8 +1,4 @@
 image:
   repository: {{ .Values.matrix.synapse.repo }}
   tag: {{ .Values.matrix.synapse.tag }}
-postgres:
-  user: {{ .Values.synapse.postgres.user }}
-  password: {{ .Values.synapse.postgres.password }}
-  storageSize: 10Gi
 signingKeyB64: {{ .Values.synapse.signingKeyB64 }}
