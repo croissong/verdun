@@ -12,6 +12,10 @@ common:
     tag: 1.16.1
   postgres:
     version: 11.2
+hefeteig:
+  app:
+    repository: registry.gitlab.com/donkebap/hefeteig-app
+    tag: latest
 matrix:
   riot:
     repo: vectorim/riot-web
@@ -25,7 +29,7 @@ misc:
     tag: latest
 murmur:
   murmur:
-    repo: goofball222/murmur
+    repo: croissong/murmur-psql
     tag: 1.3.0
 prometheus:
   kubeStateMetrics:

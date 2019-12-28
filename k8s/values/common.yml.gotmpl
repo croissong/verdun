@@ -6,11 +6,6 @@ postgres:
   s3AccessId: {{ .Values.s3AccessId }}
   s3SecretKey: {{ .Values.s3SecretKey }}
 
-mysql:
-  mysqlVersion: {{ .Values.common.mysql.version }}
-  s3AccessId: {{ .Values.s3AccessId }}
-  s3SecretKey: {{ .Values.s3SecretKey }}
-
 nginx:
   repo: {{ .Values.common.nginx.repo }}
   tag: {{ .Values.common.nginx.tag }}

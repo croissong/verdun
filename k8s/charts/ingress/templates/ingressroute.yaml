@@ -1,4 +1,4 @@
-{{- $serviceNameDefault :=  printf "%s-%s" .Release.Name .Values.service.suffix -}}
+{{- $serviceNameDefault :=  printf "%s-%s" .Release.Name .Release.Name -}}
 
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
@@ -19,8 +19,8 @@ spec:
   - match: Host(`{{ required "host is required" .Values.host }}`)
     kind: Rule
     services:
-    - name: {{ .Values.service.name | default $serviceNameDefault }}
-      port: {{ required "service.port is required" .Values.service.port }}
+    - name: {{ .Values.serviceName | default $serviceNameDefault }}
+      port: {{ required "servicePort is required" .Values.servicePort }}
     middlewares:
     - name: sec-headers
       namespace: traefik
@@ -38,8 +38,8 @@ spec:
   - match: Host(`{{ .Values.host }}`)
     kind: Rule
     services:
-    - name: {{ .Values.service.name | default $serviceNameDefault }}
-      port: {{ required "service.port is required" .Values.service.port }}
+    - name: {{ .Values.serviceName | default $serviceNameDefault }}
+      port: {{ required "servicePort is required" .Values.servicePort }}
     middlewares:
     - name: redirect-https
       namespace: traefik

@@ -1,5 +1,5 @@
-{{- template "common.service" (list . "matrix-riot.mail.service") -}}
-{{- define "matrix-riot.mail.service" -}}
+{{- template "common.service" (list . "matrix-riot.service") -}}
+{{- define "matrix-riot.service" -}}
 
 spec:
   ports:

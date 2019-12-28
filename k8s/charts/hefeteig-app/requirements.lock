@@ -1,0 +1,9 @@
+dependencies:
+- name: common
+  repository: file://../common
+  version: 0.0.5
+- name: ingress
+  repository: file://../ingress
+  version: 0.0.1
+digest: sha256:3622731d5b4f65769b3457d6ec5e5a4873a4b65771eedce5190bd190aed01c24
+generated: "2019-12-28T22:47:46.523932412+01:00"
