@@ -11,15 +11,17 @@ provider "digitalocean" {
   spaces_secret_key = data.sops_file.secrets.data["digitalocean.spaces.secretKey"]
 }
 
+provider "uptimerobot" {
+  version = "~> v0.4.3"
+}
+
+
 provider "sops" {
   version = "~> v0.3.3"
 }
 
 data "sops_file" "secrets" {
   source_file = "secrets.yml"
-}
-
-provider "drone" {
 }
 
 provider "tls" {
