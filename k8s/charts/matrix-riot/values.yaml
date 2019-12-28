@@ -2,3 +2,4 @@ ingressroute:
   host: riot.patrician.cloud
   service:
     port: 80
+    suffix: matrix-riot

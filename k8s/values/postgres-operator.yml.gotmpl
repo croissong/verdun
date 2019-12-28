@@ -1,0 +1,5 @@
+configAwsOrGcp:
+  wal_s3_bucket: "verdun"
+configKubernetes:
+  pod_environment_configmap: postgresql
+  secret_name_template: "{username}.{cluster}.credentials

@@ -12,7 +12,7 @@ spec:
       volumes:
         - name: "riot-config"
           configMap:
-            name: {{ include "common.fullname" . }}-config
+            name: {{ include "common.fullname" . }}
 
 {{- end -}}
 

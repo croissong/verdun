@@ -17,9 +17,17 @@ spec:
           args:
             - '-c'
             - 'cat /conf/homeserver.yaml | envsubst > /envsubst-conf/homeserver.yaml'
-          envFrom:
-          - secretRef:
-              name: {{ template "common.name" . }}-postgres-auth
+          env:
+          - name: POSTGRES_USER
+            valueFrom:
+              secretKeyRef:
+                name: synapse.{{ template "common.name" . }}-postgres.credentials
+                key: username
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: synapse.{{ template "common.name" . }}-postgres.credentials
+                key: password
           volumeMounts:
             - name: "synapse-config"
               mountPath: "/conf/homeserver.yaml"

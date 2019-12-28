@@ -94,7 +94,8 @@ releases:
     - values/common.yml.gotmpl
   needs:
     - traefik/traefik-middlewares
-    - kubedb/kubedb-catalog
+    - postgres-operator/postgres-operator
+    - prometheus/prometheus
 
 - name: matrix-riot
   namespace: matrix
@@ -176,3 +177,10 @@ releases:
     - dex/dex
     - traefik/traefik
     - traefik/traefik-middlewares
+
+- name: postgres-operator
+  namespace: postgres-operator
+  chart: ./charts/postgres-operator
+  values:
+    - charts/postgres-operator/values-crd.yaml
+    - values/postgres-operator.yml.gotmpl

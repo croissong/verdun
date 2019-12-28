@@ -1,0 +1,27 @@
+apiVersion: "acid.zalan.do/v1"
+kind: postgresql
+metadata:
+  name: {{ include "helm-chart.fullname" . }}
+spec:
+  teamId: {{ .Release.Name }}
+  volume:
+    size: {{ .Values.storageSize}}
+  numberOfInstances: 1
+  users:
+    # database owner
+    synapse:
+    - superuser
+    - createdb
+
+  #databases: name->owner
+  databases:
+    synapse: synapse
+  postgresql:
+    version: "11"
+  clone:
+    cluster: {{ include "helm-chart.fullname" . }}
+    timestamp: '3000-01-01T00:00:00+00:00'
+    s3_wal_path: 's3://verdun/spilo/{{ include "helm-chart.fullname" . }}'
+    s3_endpoint: https://fra1.digitaloceanspaces.com
+    s3_access_key_id: {{ required "s3AccessId user is required" .Values.s3AccessId | quote }}
+    s3_secret_access_key: {{ required "s3SecretKey user is required" .Values.s3SecretKey | quote }}

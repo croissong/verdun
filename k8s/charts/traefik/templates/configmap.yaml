@@ -37,3 +37,8 @@ data:
           storage: /acme/acme.json
           dnsChallenge:
             provider: {{ .Values.acme.provider.name }}
+
+    {{- if .Values.accessLog }}
+    accessLog:
+      format: json
+    {{- end }}
