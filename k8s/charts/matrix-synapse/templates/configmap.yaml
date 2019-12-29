@@ -2,11 +2,10 @@
 {{- define "matrix-synapse.configmap" -}}
 
 data:
-  # https://github.com/matrix-org/synapse/blob/develop/docs/sample_config.yaml
   homeserver.yaml: |-
-{{ include "homeserver.yaml" . | indent 4 }}
-    
+{{ tpl (.Files.Get "files/homeserver.yaml") . | indent 4 }}
+
   log.config: |-
-{{ include "log.config" . | indent 4 }}
+{{ tpl (.Files.Get "files/log.config") . | indent 4 }}
 
 {{- end -}}

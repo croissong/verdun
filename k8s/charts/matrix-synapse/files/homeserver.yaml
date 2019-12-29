@@ -1,5 +1,3 @@
-{{- define "homeserver.yaml" -}}
-
 # https://github.com/matrix-org/synapse/blob/develop/docs/sample_config.yaml
 
 no_tls: True
@@ -157,5 +155,3 @@ perspectives:
 
 password_config:
    enabled: true
-
-{{- end -}}
