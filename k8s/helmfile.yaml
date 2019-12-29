@@ -30,7 +30,7 @@ releases:
 
 - name: prometheus-ingress
   namespace: prometheus
-  chart: ./charts/ingressroute
+  chart: ./charts/ingress
   values:
   - host: prometheus.patrician.cloud
     service:
@@ -60,7 +60,7 @@ releases:
 #   values:
 #     - values/authproxy.yml.gotmpl
 #     - upstream: traefik-dashboard:80
-#       ingressroute:
+#       ingress:
 #         host: traefik.patrician.cloud
 #         domains:
 #           - main: "patrician.cloud"
@@ -147,7 +147,7 @@ releases:
 
 - name: dex-ingress
   namespace: dex
-  chart: ./charts/ingressroute
+  chart: ./charts/ingress
   values:
   - host: dex.patrician.cloud
     service:

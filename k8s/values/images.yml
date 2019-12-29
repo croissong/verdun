@@ -2,16 +2,12 @@ common:
   authProxy:
     repo: quay.io/pusher/oauth2_proxy
     tag: v4.0.0
-  mysql:
-    version: 5.7.25
   nginx:
     metrics:
       repository: bitnami/nginx-exporter
       tag: 0.4.2
     repository: bitnami/nginx
     tag: 1.16.1
-  postgres:
-    version: 11.2
 hefeteig:
   app:
     repository: registry.gitlab.com/donkebap/hefeteig-app

@@ -2,9 +2,9 @@ dependencies:
 - name: postgres
   version: "0.1.0"
   repository: "file://../postgres"
-- name: ingressroute
+- name: ingress
   version: "0.0.1"
-  repository: "file://../ingressroute"
+  repository: "file://../ingress"
 - name: common
   version: 0.0.5
   repository: "file://../common"

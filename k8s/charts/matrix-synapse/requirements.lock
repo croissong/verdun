@@ -2,11 +2,11 @@ dependencies:
 - name: postgres
   repository: file://../postgres
   version: 0.1.0
-- name: ingressroute
-  repository: file://../ingressroute
+- name: ingress
+  repository: file://../ingress
   version: 0.0.1
 - name: common
   repository: file://../common
   version: 0.0.5
-digest: sha256:b2ffeaf938be004ca8738eff1b023b537ba001d814497510ee4dc63155c33d59
-generated: "2019-12-28T03:05:34.205411401+01:00"
+digest: sha256:b5d4db8994e3cee00a6b4576170843867601aca435c0d59690a63fb8a401c225
+generated: "2019-12-29T04:09:41.331762998+01:00"

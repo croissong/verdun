@@ -1,9 +1,8 @@
 host: matrix.patrician.cloud
-ingressroute:
+ingress:
   host: matrix.patrician.cloud
-  service:
-    port: 8008
-    suffix: matrix-synapse
+  servicePort: 8008
+
 postgres:
   storageSize: 10Gi
   users:
