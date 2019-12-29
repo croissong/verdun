@@ -33,9 +33,8 @@ releases:
   chart: ./charts/ingress
   values:
   - host: prometheus.patrician.cloud
-    service:
-      name: prometheus-prometheus-oper-prometheus
-      port: 9090
+    serviceName: prometheus-prometheus-oper-prometheus
+    servicePort: 9090
   needs:
   - prometheus/prometheus
   - traefik/traefik-middlewares

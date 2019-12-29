@@ -7,7 +7,7 @@ api-ingress:
 nginx:
   ingress:
     host: verdun.patrician.cloud
-    serviceName: verdun-scribble-nginx
+    serviceName: verdun-nginx
   serverBlock: |
     server {
       listen 0.0.0.0:8080;
