@@ -35,7 +35,7 @@ prometheus:
   kubeStateMetrics:
     repo: bitnami/kube-state-metrics
     tag: 1.9.0
-  tag: v2.15.0-rc.0
+  tag: v2.15.1
 traefik:
   repo: traefik
   tag: v2.1.1

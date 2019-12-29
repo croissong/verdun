@@ -15,60 +15,44 @@ repositories:
 environments:
   default:
     values:
-      - values/images.yml
+    - values/images.yml
     secrets:
-      - values/secrets.yaml
+    - values/secrets.yaml
 
 releases:
 
 - name: prometheus
   namespace: prometheus
   chart: stable/prometheus-operator
-  version: 8.4.0
+  version: 8.5.0
   values:
-    - values/prometheus.yml.gotmpl
+  - values/prometheus.yml.gotmpl
 
 - name: prometheus-ingress
   namespace: prometheus
   chart: ./charts/ingressroute
   values:
-    - host: prometheus.patrician.cloud
-      service:
-        name: prometheus-prometheus-oper-prometheus
-        port: 9090
+  - host: prometheus.patrician.cloud
+    service:
+      name: prometheus-prometheus-oper-prometheus
+      port: 9090
   needs:
-    - prometheus/prometheus
-    - traefik/traefik
-    - traefik/traefik-middlewares
-
-- name: kubedb
-  namespace: kubedb
-  chart: appscode/kubedb
-  version: 0.13.0-rc.0
-  wait: false
-  atomic: false
-
-- name: kubedb-catalog
-  namespace: kubedb
-  chart: appscode/kubedb-catalog
-  version: 0.13.0-rc.0
-  atomic: false
-  needs:
-    - kubedb/kubedb
+  - prometheus/prometheus
+  - traefik/traefik-middlewares
 
 - name: traefik
   namespace: traefik
   chart: ./charts/traefik
   values:
-    - values/traefik.yml.gotmpl
+  - values/traefik.yml.gotmpl
   needs:
-    - prometheus/prometheus
+  - prometheus/prometheus
 
 - name: traefik-middlewares
   namespace: traefik
   chart: ./charts/traefik-middlewares
   needs:
-    - traefik/traefik
+  - traefik/traefik
 
 # - name: traefik-authproxy
 #   namespace: traefik
@@ -91,54 +75,58 @@ releases:
   namespace: matrix
   chart: ./charts/matrix-synapse/
   values:
-    - values/synapse.yml.gotmpl
-    - values/common.yml.gotmpl
+  - values/synapse.yml.gotmpl
+  - values/common.yml.gotmpl
   needs:
-    - traefik/traefik-middlewares
-    - postgres-operator/postgres-operator
-    - prometheus/prometheus
+  - traefik/traefik-middlewares
+  - postgres-operator/postgres-operator
+  - prometheus/prometheus
 
 - name: matrix-riot
   namespace: matrix
   chart: ./charts/matrix-riot/
   values:
-    - values/riot.yml.gotmpl
+  - values/riot.yml.gotmpl
   needs:
-    - matrix/matrix-synapse
-    - traefik/traefik-middlewares
+  - matrix/matrix-synapse
+  - traefik/traefik-middlewares
 
 - name: murmur
   namespace: murmur
   chart: ./charts/murmur/
   values:
-    - values/murmur.yml.gotmpl
-    - values/common.yml.gotmpl
+  - values/murmur.yml.gotmpl
+  - values/common.yml.gotmpl
 
 - name: nginx-rtmp
   namespace: misc
   chart: ./charts/nginx-rtmp/
   recreatePods: true
   values:
-    - values/nginx-rtmp.yml.gotmpl
+  - values/nginx-rtmp.yml.gotmpl
 
 - name: verdun
   namespace: verdun
   chart: ./charts/verdun
   values:
-    - values/common.yml.gotmpl
-    - values/verdun.yml.gotmpl
+  - values/common.yml.gotmpl
+  - values/verdun.yml.gotmpl
+  needs:
+  - traefik/traefik-middlewares
 
 - name: hefeteig-app
   namespace: hefeteig
   chart: ./charts/hefeteig-app/
   values:
   - values/hefeteig-app.yml.gotmpl
+  needs:
+  - traefik/traefik-middlewares
 
 - name: hefeteig-scribble
   namespace: hefeteig
   chart: ./charts/hefeteig-scribble
   values:
-    - values/common.yml.gotmpl
+  - values/common.yml.gotmpl
   needs:
   - traefik/traefik-middlewares
 
@@ -146,33 +134,33 @@ releases:
   namespace: tekton
   chart: ./charts/tekton
   values:
-    - values/common.yml.gotmpl
-    - values/tekton.yml
+  - values/common.yml.gotmpl
+  - values/tekton.yml
 
 - name: dex
   namespace: dex
   chart: stable/dex
   version: 2.5.0
   values:
-    - values/common.yml.gotmpl
-    - values/dex.yml.gotmpl
+  - values/common.yml.gotmpl
+  - values/dex.yml.gotmpl
 
 - name: dex-ingress
   namespace: dex
   chart: ./charts/ingressroute
   values:
-    - host: dex.patrician.cloud
-      service:
-        name: dex
-        port: 5556
+  - host: dex.patrician.cloud
+    service:
+      name: dex
+      port: 5556
   needs:
-    - dex/dex
-    - traefik/traefik
-    - traefik/traefik-middlewares
+  - dex/dex
+  - traefik/traefik
+  - traefik/traefik-middlewares
 
 - name: postgres-operator
   namespace: postgres-operator
   chart: ./charts/postgres-operator
   values:
-    - charts/postgres-operator/values-crd.yaml
-    - values/postgres-operator.yml.gotmpl
+  - charts/postgres-operator/values-crd.yaml
+  - values/postgres-operator.yml.gotmpl
