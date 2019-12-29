@@ -26,9 +26,6 @@ spec:
         - name: tekton-pipelines-controller
           image: '{{ .Values.pipeline.image.repository }}:{{ .Values.pipeline.image.tag }}'
           args:
-            - -logtostderr
-            - -stderrthreshold
-            - INFO
 {{- range $key, $value := .Values.pipeline.helperImages }}
             - -{{ $key }}
             - '{{ $value.repository }}:{{ $value.tag }}'
