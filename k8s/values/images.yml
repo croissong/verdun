@@ -21,7 +21,7 @@ matrix:
     tag: v1.7.2
 misc:
   nginxRtmp:
-    repo: tiangolo/nginx-rtmp
+    repository: tiangolo/nginx-rtmp
     tag: latest
 murmur:
   murmur:

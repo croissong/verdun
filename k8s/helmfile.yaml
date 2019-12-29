@@ -141,7 +141,6 @@ releases:
   chart: stable/dex
   version: 2.5.0
   values:
-  - values/common.yml.gotmpl
   - values/dex.yml.gotmpl
 
 - name: dex-ingress
@@ -149,9 +148,8 @@ releases:
   chart: ./charts/ingress
   values:
   - host: dex.patrician.cloud
-    service:
-      name: dex
-      port: 5556
+    serviceName: dex
+    servicePort: 5556
   needs:
   - dex/dex
   - traefik/traefik
