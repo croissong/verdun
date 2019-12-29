@@ -25,8 +25,9 @@ spec:
     middlewares:
     - name: sec-headers
       namespace: traefik
+    {{- if and .Values.path .Values.stripPath }}
     - name: {{ template "common.fullname" . }}-stripprefix
-
+    {{- end }}
 
 ---
 apiVersion: traefik.containo.us/v1alpha1
