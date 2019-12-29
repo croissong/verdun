@@ -1,0 +1,26 @@
+{{- template "common.deployment" (list . "verdun.deployment") -}}
+{{- define "verdun.deployment" -}}
+
+spec:
+  template:
+    spec:
+      containers:
+      - {{ template "common.container" (list . "verdun.container") }}
+
+{{- end -}}
+
+{{- define "verdun.container" -}}
+
+ports:
+- name: http
+  containerPort: 4000
+livenessProbe:
+  httpGet:
+    path: /.well-known/apollo/server-health
+    port: http
+readinessProbe:
+  httpGet:
+    path: /.well-known/apollo/server-health
+    port: http
+
+{{- end -}}

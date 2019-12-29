@@ -1,5 +1,9 @@
+image:
+  repository: {{ .Environment.Values.verdun.api.repo }}
+  tag: {{ .Environment.Values.verdun.api.tag }}
+
 nginx:
-  fileContainers:
+  staticContainers:
     - name: frontend
       image: {{ .Environment.Values.verdun.frontend.repo }}:{{ .Environment.Values.verdun.frontend.tag }}
       srcPath: /app

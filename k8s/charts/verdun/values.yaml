@@ -1,5 +1,13 @@
-nginx:
+api-ingress:
   host: verdun.patrician.cloud
+  path: /api
+  servicePort: 80
+  stripPath: true
+
+nginx:
+  ingress:
+    host: verdun.patrician.cloud
+    serviceName: verdun-scribble-nginx
   serverBlock: |
     server {
       listen 0.0.0.0:8080;

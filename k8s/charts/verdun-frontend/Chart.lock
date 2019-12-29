@@ -1,6 +1,0 @@
-dependencies:
-- name: nginx
-  repository: file://../nginx
-  version: 0.1.0
-digest: sha256:28d350974d500269dc254711a4dc29bf8a15aa0049eb0a1f407f8f19a7cc5c88
-generated: "2019-12-01T02:26:34.109296801+01:00"

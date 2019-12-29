@@ -121,18 +121,12 @@ releases:
   values:
     - values/nginx-rtmp.yml.gotmpl
 
-- name: verdun-frontend
+- name: verdun
   namespace: verdun
-  chart: ./charts/verdun-frontend/
+  chart: ./charts/verdun
   values:
     - values/common.yml.gotmpl
     - values/verdun.yml.gotmpl
-
-- name: verdun-api
-  namespace: verdun
-  chart: ./charts/verdun-api/
-  values:
-    - values/verdun-api.yml.gotmpl
 
 - name: hefeteig-app
   namespace: hefeteig

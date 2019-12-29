@@ -1,0 +1,10 @@
+{{- template "common.service" (list . "verdun.service") -}}
+{{- define "verdun.service" -}}
+
+spec:
+  ports:
+  - name: http
+    port: 80
+    targetPort: http
+
+{{- end -}}
