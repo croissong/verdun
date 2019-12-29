@@ -12,11 +12,12 @@ spec:
       name: default
       namespace: traefik
 {{- if .Values.domains }}
-    domains: 
+    domains:
 {{ toYaml .Values.domains | indent 6 }}
 {{- end }}
   routes:
   - match: Host(`{{ required "host is required" .Values.host }}`)
+    {{- if .Values.path }} && PathPrefix(`{{ .Values.path }}`) {{- end }}
     kind: Rule
     services:
     - name: {{ .Values.serviceName | default $serviceNameDefault }}
@@ -24,18 +25,22 @@ spec:
     middlewares:
     - name: sec-headers
       namespace: traefik
+    - name: {{ template "common.fullname" . }}-stripprefix
+
 
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
   name: {{ template "common.fullname" . }}-https-redirect
-{{ template "common.labels.standard" . }}
+  labels:
+{{ include "common.labels.standard" . | indent 4 }}
 spec:
   entryPoints:
     - web
   routes:
   - match: Host(`{{ .Values.host }}`)
+    {{- if .Values.path }} && PathPrefix(`{{ .Values.path }}`) {{- end }}
     kind: Rule
     services:
     - name: {{ .Values.serviceName | default $serviceNameDefault }}
@@ -43,3 +48,18 @@ spec:
     middlewares:
     - name: redirect-https
       namespace: traefik
+
+
+{{- if and .Values.path .Values.stripPath }}
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: {{ template "common.fullname" . }}-stripprefix
+  labels:
+{{ include "common.labels.standard" . | indent 4 }}
+spec:
+  stripPrefix:
+    prefixes:
+      - {{ .Values.path }}
+{{- end }}

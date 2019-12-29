@@ -1,80 +1,10 @@
-apiVersion: v1
-kind: ConfigMap
+{{- template "common.configmap" (list . "nginx.configmaps.nginx-conf") -}}
+{{- define "nginx.configmaps.nginx-conf" -}}
+
 metadata:
-  name: {{ include "helm-chart.fullname" . }}-conf
-  labels:
-    app: {{ include "helm-chart.name" . }}
-    chart: {{ include "helm-chart.chart" . }}
-    release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }}
+  name: {{ include "common.fullname" . }}-nginx
 data:
-  nginx.conf: |
-    worker_processes auto;
-    worker_rlimit_nofile 8192;
-    events {
-      worker_connections 8000;
-    }
-    error_log /opt/bitnami/nginx/logs/error.log warn;
-    pid /opt/bitnami/nginx/tmp/nginx.pid;
+  nginx.conf: |-
+{{ .Files.Get "files/nginx.conf" | indent 4 }}
 
-    http {
-      include h5bp/server_software_information.conf;
-      include h5bp/media_types.conf;
-      include h5bp/character_encodings.conf;
-
-      log_format json '{'
-      '"time": "$time_iso8601", '
-      '"remote_addr": "$remote_addr", '
-      '"body_bytes_sent": "$body_bytes_sent", '
-      '"gzip_ratio": "$gzip_ratio", '
-      '"status": "$status", '
-      '"request": "$request", '
-      '"request_method": "$request_method", '
-      '"http_referrer": "$http_referer", '
-      '"http_user_agent": "$http_user_agent", '
-      '"http_x_forwarded_for": "$http_x_forwarded_for", '
-      '"request_time": "$request_time", '
-      '"upstream_addr": "$upstream_addr", '
-      '"upstream_response_time": "$upstream_response_time"'
-      '}';
-
-      map $status $abnormal {
-        ~^(200|304) 0;
-        default 1;
-      }
-      access_log /opt/bitnami/nginx/logs/access.log json if=$abnormal;
-
-      client_body_temp_path  "/opt/bitnami/nginx/tmp/client_body" 1 2;
-      proxy_temp_path        "/opt/bitnami/nginx/tmp/proxy" 1 2;
-      fastcgi_temp_path      "/opt/bitnami/nginx/tmp/fastcgi" 1 2;
-      scgi_temp_path         "/opt/bitnami/nginx/tmp/scgi" 1 2;
-      uwsgi_temp_path        "/opt/bitnami/nginx/tmp/uwsgi" 1 2;
-
-      keepalive_timeout 20s;
-      sendfile on;
-      tcp_nopush on;
-
-      include h5bp/compression.conf;
-      include h5bp/pre-compressed_content_gzip.conf;
-      include h5bp/cache_expiration.conf;
-
-      map $sent_http_content_type $x_ua_compatible {
-        ~*text/html "IE=edge";
-      }
-      include h5bp/x-ua-compatible.conf;
-
-      include server_blocks/*.conf;
-
-      # Metrics
-      server {
-        # port to listen on. Can also be set to an IP:PORT
-        listen  8081;
-
-        location /status {
-          stub_status on;
-          access_log   off;
-          allow 127.0.0.1;
-          deny all;
-        }
-      }
-    }
+{{- end -}}

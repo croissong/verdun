@@ -1,5 +1,0 @@
-host: scribble.hefeteig.io
-path: /api
-image:
-  repo: registry.gitlab.com/donkebap/hefeteig-scribble-backend
-  tag: latest

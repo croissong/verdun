@@ -1,12 +1,10 @@
-apiVersion: v1
-kind: ConfigMap
+{{- template "common.configmap" (list . "nginx.configmaps.server-block") -}}
+{{- define "nginx.configmaps.server-block" -}}
+
 metadata:
-  name: {{ include "helm-chart.fullname" . }}-server-block
-  labels:
-    app: {{ include "helm-chart.name" . }}
-    chart: {{ include "helm-chart.chart" . }}
-    release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }}
+  name: {{ include "common.fullname" . }}-server-block
 data:
-  server-block.conf: |-
+  server-block.conf: |
 {{ .Values.serverBlock | indent 4 }}
+
+{{- end -}}

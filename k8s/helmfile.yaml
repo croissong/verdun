@@ -138,19 +138,15 @@ releases:
   namespace: hefeteig
   chart: ./charts/hefeteig-app/
   values:
-    - values/hefeteig-app.yml.gotmpl
+  - values/hefeteig-app.yml.gotmpl
 
-- name: hefeteig-scribble-backend
+- name: hefeteig-scribble
   namespace: hefeteig
-  chart: ./charts/hefeteig-scribble-backend
-
-- name: hefeteig-scribble-app
-  namespace: hefeteig
-  chart: ./charts/hefeteig-scribble-app
+  chart: ./charts/hefeteig-scribble
   values:
     - values/common.yml.gotmpl
   needs:
-    - traefik/traefik-middlewares
+  - traefik/traefik-middlewares
 
 - name: tekton
   namespace: tekton

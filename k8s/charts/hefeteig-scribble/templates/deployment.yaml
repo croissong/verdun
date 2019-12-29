@@ -1,0 +1,18 @@
+{{- template "common.deployment" (list . "hefeteig-scribble.deployment") -}}
+{{- define "hefeteig-scribble.deployment" -}}
+
+spec:
+  template:
+    spec:
+      containers:
+      - {{ template "common.container" (list . "hefeteig-scribble.container") }}
+
+{{- end -}}
+
+{{- define "hefeteig-scribble.container" -}}
+
+ports:
+- name: http
+  containerPort: 8080
+
+{{- end -}}

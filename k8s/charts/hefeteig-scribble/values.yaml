@@ -1,0 +1,31 @@
+api-ingress:
+  host: scribble.hefeteig.io
+  path: /api
+  stripPath: true
+  servicePort: 80
+image:
+  repository: registry.gitlab.com/donkebap/hefeteig-scribble-backend
+  tag: latest
+
+nginx:
+  ingress:
+    host: scribble.hefeteig.io
+    serviceName: hefeteig-scribble-nginx
+  serverBlock: |
+    server {
+      listen 0.0.0.0:8080;
+
+      location ~ \..* {
+        root   /static/frontend;
+      }
+
+      location / {
+        rewrite ^.*$ /index.html;
+      }
+    }
+
+  staticContainers:
+    - name: frontend
+      image: registry.gitlab.com/donkebap/hefeteig-scribble-app:latest
+      srcPath: /app
+      dstPath: frontend

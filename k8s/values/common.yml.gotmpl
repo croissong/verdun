@@ -7,8 +7,9 @@ postgres:
   s3SecretKey: {{ .Values.s3SecretKey }}
 
 nginx:
-  repo: {{ .Values.common.nginx.repo }}
-  tag: {{ .Values.common.nginx.tag }}
+  image:
+    repository: {{ .Values.common.nginx.repository }}
+    tag: {{ .Values.common.nginx.tag }}
   metrics:
-    repo: {{ .Values.common.nginx.metrics.repo }}
+    repository: {{ .Values.common.nginx.metrics.repository }}
     tag: {{ .Values.common.nginx.metrics.tag }}

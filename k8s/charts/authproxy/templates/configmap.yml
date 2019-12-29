@@ -1,5 +1,6 @@
 {{- template "common.configmap" (list . "authproxy.configmap") -}}
 {{- define "authproxy.configmap" -}}
+
 data:
   oauth2_proxy.cfg: |-
     provider = "oidc"
@@ -18,4 +19,5 @@ data:
     request_logging = false
     standard_logging = false
     auth_logging = false
+
 {{- end -}}

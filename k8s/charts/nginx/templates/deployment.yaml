@@ -1,95 +1,87 @@
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: {{ include "helm-chart.fullname" . }}
-  labels:
-    app: {{ include "helm-chart.fullname" . }}
-    chart: {{ include "helm-chart.chart" . }}
-    release: "{{ .Release.Name }}"
-    heritage: "{{ .Release.Service }}"
+{{- template "common.deployment" (list . "nginx.deployment") -}}
+{{- define "nginx.deployment" -}}
+
 spec:
-  selector:
-    matchLabels:
-      app: {{ include "helm-chart.fullname" . }}
-      release: "{{ .Release.Name }}"
-  replicas: 1
   template:
     metadata:
-      labels:
-        app: {{ include "helm-chart.fullname" . }}
-        chart: {{ include "helm-chart.chart" . }}
-        release: "{{ .Release.Name }}"
-        heritage: "{{ .Release.Service }}"
       annotations:
         checksum/nginx-conf: {{ include (print $.Template.BasePath "/nginx-conf.cm.yaml") . | sha256sum }}
         checksum/h5bp-configs: {{ include (print $.Template.BasePath "/h5bp-configs.cm.yaml") . | sha256sum }}
         checksum/server-block: {{ include (print $.Template.BasePath "/server-block.cm.yaml") . | sha256sum }}
+
     spec:
       initContainers:
-      {{- range $container := .Values.fileContainers }}
-      - name: {{ $container.name }}
+      {{- range $container := .Values.staticContainers }}
+      - name: static-{{ $container.name }}
         image: {{ $container.image }}
         imagePullPolicy: Always
         command: ['/bin/cp']
         args:
-          - '-r'
-          - {{ $container.srcPath }}
-          - /static/{{ $container.dstPath }}
+        - '-r'
+        - {{ $container.srcPath }}
+        - /static/{{ $container.dstPath }}
         volumeMounts:
           - name: static
             mountPath: /static/
       {{- end }}
+
       containers:
-      - name: {{ include "helm-chart.fullname" . }}
-        image: {{ .Values.repo }}:{{ .Values.tag }}
-        imagePullPolicy: Always
-        ports:
-        - name: http
-          containerPort: 8080
-        livenessProbe:
-          tcpSocket:
-            port: 8080
-        readinessProbe:
-          tcpSocket:
-            port: 8080
-        volumeMounts:
-        - name: nginx-conf
-          mountPath: /opt/bitnami/nginx/conf/nginx.conf
-          subPath: nginx.conf
-        - name: h5bp-configs
-          mountPath: /opt/bitnami/nginx/conf/h5bp
-        - name: nginx-server-block
-          mountPath: /opt/bitnami/nginx/conf/server_blocks
-        - name: static
-          mountPath: /static
-      - name: metrics
-        image: {{ .Values.metrics.repo }}:{{ .Values.metrics.tag }}
-        imagePullPolicy: Always
-        command: [ '/usr/bin/exporter', '-nginx.scrape-uri', 'http://127.0.0.1:8081/status']
-        ports:
-          - name: metrics
-            containerPort: 9113
-        livenessProbe:
-          httpGet:
-            path: /metrics
-            port: metrics
-          initialDelaySeconds: 15
-          timeoutSeconds: 5
-        readinessProbe:
-          httpGet:
-            path: /metrics
-            port: metrics
-          initialDelaySeconds: 5
-          timeoutSeconds: 1
+      - {{ template "common.container" (list . "nginx.containers.nginx") }}
+      - {{ template "common.container" (list . "nginx.containers.metrics") }}
       volumes:
       - name: nginx-conf
         configMap:
-          name: {{ include "helm-chart.fullname" . }}-conf
+          name: {{ include "common.fullname" . }}-nginx
       - name: h5bp-configs
         configMap:
-          name: {{ include "helm-chart.fullname" . }}-h5bp-configs
+          name: {{ include "common.fullname" . }}-h5bp-configs
       - name: nginx-server-block
         configMap:
-          name: {{ include "helm-chart.fullname" . }}-server-block
+          name: {{ include "common.fullname" . }}-server-block
       - name: static
         emptyDir: {}
+
+{{- end -}}
+
+{{- define "nginx.containers.nginx" -}}
+
+ports:
+- name: http
+  containerPort: 8080
+livenessProbe:
+  tcpSocket:
+    port: 8080
+readinessProbe:
+  tcpSocket:
+    port: 8080
+volumeMounts:
+- name: nginx-conf
+  mountPath: /opt/bitnami/nginx/conf/nginx.conf
+  subPath: nginx.conf
+- name: h5bp-configs
+  mountPath: /opt/bitnami/nginx/conf/h5bp
+- name: nginx-server-block
+  mountPath: /opt/bitnami/nginx/conf/server_blocks
+- name: static
+  mountPath: /static
+
+{{- end -}}
+
+{{- define "nginx.containers.metrics" -}}
+
+name: metrics
+image: {{ .Values.metrics.repository }}:{{ .Values.metrics.tag }}
+command: [ '/usr/bin/exporter', '-nginx.scrape-uri', 'http://127.0.0.1:8081/status']
+ports:
+- name: metrics
+  containerPort: 9113
+livenessProbe:
+  httpGet:
+    path: /metrics
+    port: metrics
+readinessProbe:
+  httpGet:
+    path: /metrics
+    port: metrics
+
+{{- end -}}

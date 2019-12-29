@@ -5,6 +5,7 @@ imagePullPolicy: Always
 resources:
 {{ toYaml .Values.resources | indent 2 }}
 {{- end -}}
+
 {{- define "common.container" -}}
 {{- /* clear new line so indentation works correctly */ -}}
 {{- println "" -}}
