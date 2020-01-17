@@ -40,7 +40,7 @@ database:
 ## Performance ##
 event_cache_size: "10K"
 verbose: 0
-log_file: "/data/homeserver.log"
+
 log_config: "/conf/log.config"
 
 ## Ratelimiting ##

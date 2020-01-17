@@ -139,7 +139,7 @@ releases:
 - name: dex
   namespace: dex
   chart: stable/dex
-  version: 2.5.0
+  version: 2.6.1
   values:
   - values/dex.yml.gotmpl
 
