@@ -1,11 +1,11 @@
 common:
   authProxy:
     repo: quay.io/pusher/oauth2_proxy
-    tag: v4.0.0
+    tag: v4.1.0
   nginx:
     metrics:
       repository: bitnami/nginx-exporter
-      tag: 0.4.2
+      tag: 0.5.0
     repository: bitnami/nginx
     tag: 1.16.1
 hefeteig:
@@ -15,10 +15,10 @@ hefeteig:
 matrix:
   riot:
     repo: vectorim/riot-web
-    tag: v1.5.6
+    tag: v1.5.7
   synapse:
     repo: croissong/matrix-synapse-s3-storage
-    tag: v1.7.2
+    tag: v1.8.0
 misc:
   nginxRtmp:
     repository: tiangolo/nginx-rtmp
@@ -30,11 +30,11 @@ murmur:
 prometheus:
   kubeStateMetrics:
     repo: bitnami/kube-state-metrics
-    tag: 1.9.0
-  tag: v2.15.1
+    tag: 1.9.2
+  tag: v2.15.2
 traefik:
   repo: traefik
-  tag: v2.1.1
+  tag: v2.1.2
 verdun:
   api:
     repo: croissong/verdun-api

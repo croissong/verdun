@@ -1,0 +1,10 @@
+version: v0.98.1
+dependencies:
+- name: dex
+  repository: https://kubernetes-charts.storage.googleapis.com
+  version: 2.5.0
+- name: prometheus-operator
+  repository: https://kubernetes-charts.storage.googleapis.com
+  version: 8.5.0
+digest: sha256:8e81e313b0adc79af20ffbe22e85720f354edd7546f6e5bb4e6b750f4e37bc13
+generated: "2019-12-29T22:41:55.254525707+01:00"

@@ -2,8 +2,8 @@ dependencies:
 - name: common
   repository: file://../common
   version: 0.0.5
-- name: ingressroute
-  repository: file://../ingressroute
+- name: ingress
+  repository: file://../ingress
   version: 0.0.1
-digest: sha256:0b768ea9aa032471944980b9d5992675c66c889ea332c3ae345c2535f7a3f03e
-generated: "2019-12-22T03:04:37.847828883+01:00"
+digest: sha256:3622731d5b4f65769b3457d6ec5e5a4873a4b65771eedce5190bd190aed01c24
+generated: "2019-12-29T22:57:29.470274262+01:00"
