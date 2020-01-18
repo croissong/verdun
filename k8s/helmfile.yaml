@@ -129,13 +129,6 @@ releases:
   needs:
   - traefik/traefik-middlewares
 
-- name: tekton
-  namespace: tekton
-  chart: ./charts/tekton
-  values:
-  - values/common.yml.gotmpl
-  - values/tekton.yml
-
 - name: dex
   namespace: dex
   chart: stable/dex
