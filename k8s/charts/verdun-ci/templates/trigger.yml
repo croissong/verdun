@@ -32,9 +32,9 @@ spec:
   - name: verdun-ci
     interceptors:
     - github:
-        secretRef:
-          secretName: {{ template "common.fullname" . }}-webhook
-          secretKey: secret
+        # secretRef:
+        #   secretName: {{ template "common.fullname" . }}-webhook
+        #   secretKey: secret
         eventTypes:
         - push
     bindings:
