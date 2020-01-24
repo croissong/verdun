@@ -4,7 +4,7 @@ resource "digitalocean_kubernetes_cluster" "verdun" {
   region = "fra1"
 
   # doctl kubernetes options versions
-  version = "1.16.2-do.2"
+  version = "1.16.2-do.3"
 
   node_pool {
     name       = "worker-pool"

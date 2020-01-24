@@ -1,0 +1,85 @@
+apiVersion: tekton.dev/v1alpha1
+kind: PipelineResource
+{{ template "common.metadata" . | merge (dict "fullnameSuffix" "-git") }}
+spec:
+  type: git
+  params:
+    - name: revision
+      value: master
+    - name: url
+      value: https://github.com/Croissong/verdun
+
+---
+apiVersion: tekton.dev/v1alpha1
+kind: Task
+{{ template "common.metadata" . | merge (dict "fullnameSuffix" "-helmfile-apply") }}
+spec:
+  inputs:
+    resources:
+      - name: verdun-git
+        type: git
+  steps:
+    - name: helmfile
+      image: {{ .Values.helmfile.repository }}:{{ .Values.helmfile.tag }}
+      script: |
+        # required for helm plugins
+        export HOME=/root
+        apk add gnupg
+        gpg --import /tmp/verdun-gpg/privkey.asc
+        sed -i '/kubeContext/d' ./helmfile.yaml
+        # build chart dependencies for each chart
+        # because helmfile does not resolve deps recursively
+        find charts/ -maxdepth 1 -mindepth 1 -type d -print0 \
+        | xargs -0 -r -n 1 -P0 sh -c 'cd "$0" && helm dep up '
+
+        helmfile apply
+      workingDir: /workspace/verdun-git/k8s
+      volumeMounts:
+      - mountPath: /etc/apk/cache
+        name: apk-cache
+      - mountPath: /tmp/verdun-gpg
+        name: verdun-gpg
+  volumes:
+  - name: apk-cache
+    persistentVolumeClaim:
+      claimName: {{ template "common.fullname" . }}-apk-cache
+  - name: verdun-gpg
+    secret:
+      secretName: {{ template "common.fullname" . }}-gpg
+
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+{{ template "common.metadata"  . | merge (dict "fullnameSuffix" "-apk-cache") }}
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+
+---
+apiVersion: v1
+kind: ServiceAccount
+{{ template "common.metadata" . }}
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+{{ template "common.metadata" . | merge (dict "fullnameSuffix" "-clusteradmin") }}
+subjects:
+- kind: ServiceAccount
+  name: {{ template "common.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+roleRef:
+  kind: ClusterRole
+  name: cluster-admin
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: v1
+kind: Secret
+{{ template "common.metadata" . | merge (dict "fullnameSuffix" "-gpg") }}
+type: Opaque
+data:
+  privkey.asc: {{ .Values.gpgPrivKeyB64 }}

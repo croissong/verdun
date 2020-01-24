@@ -42,3 +42,7 @@ verdun:
   frontend:
     repo: croissong/verdun-frontend
     tag: 585774c1
+cicd:
+  helmfile:
+    repository: quay.io/roboll/helmfile
+    tag: helm3-v0.98.2

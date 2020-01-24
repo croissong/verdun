@@ -1,0 +1,70 @@
+apiVersion: tekton.dev/v1alpha1
+kind: TriggerBinding
+{{ template "common.metadata" . }}
+
+---
+apiVersion: tekton.dev/v1alpha1
+kind: TriggerTemplate
+{{ template "common.metadata" . }}
+spec:
+  resourcetemplates:
+  - apiVersion: tekton.dev/v1alpha1
+    kind: TaskRun
+    metadata:
+      generateName: verdun-ci-
+    spec:
+      serviceAccountName: {{ template "common.fullname" . }}
+      taskRef:
+        name: {{ template "common.fullname" . }}-helmfile-apply
+      inputs:
+        resources:
+          - name: verdun-git
+            resourceRef:
+              name: {{ template "common.fullname" . }}-git
+
+---
+apiVersion: tekton.dev/v1alpha1
+kind: EventListener
+{{ template "common.metadata" . }}
+spec:
+  serviceAccountName: {{ template "common.fullname" . }}
+  triggers:
+  - name: verdun-ci
+    interceptors:
+    - github:
+        # secretRef:
+        #   secretName: verdun-ci-webhook
+        #   secretKey: secret
+        eventTypes:
+        - push
+    bindings:
+    - name: {{ template "common.fullname" . }}
+    template:
+      name: {{ template "common.fullname" . }}
+
+---
+apiVersion: v1
+data:
+  secret: {{ .Values.webhookSecret | b64enc }}
+kind: Secret
+{{ template "common.metadata" . | merge (dict "fullnameSuffix" "-webhook") }}
+type: Opaque
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+{{ template "common.metadata" . }}
+kind: IngressRoute
+spec:
+  entryPoints:
+    - websecure
+  tls:
+    certResolver: default
+    options:
+      name: default
+      namespace: traefik
+  routes:
+  - match: Host(`triggers.tekton.patrician.cloud`) && PathPrefix(`/verdun-ci`)
+    kind: Rule
+    services:
+    - name: el-{{ template "common.fullname" . }}
+      port: 8080

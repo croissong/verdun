@@ -1,0 +1,5 @@
+helmfile:
+  repository: {{ .Values.cicd.helmfile.repository }}
+  tag: {{ .Values.cicd.helmfile.tag }}
+gpgPrivKeyB64: {{ .Values.cicd.gpgPrivKeyB64 }}
+webhookSecret: {{ .Values.cicd.webhookSecret }}
