@@ -1,7 +1,7 @@
 common:
   authProxy:
     repo: quay.io/pusher/oauth2_proxy
-    tag: v4.1.0
+    tag: v5.0.0
   nginx:
     metrics:
       repository: bitnami/nginx-exporter
@@ -31,10 +31,10 @@ prometheus:
   kubeStateMetrics:
     repo: bitnami/kube-state-metrics
     tag: 1.9.2
-  tag: v2.15.2
+  tag: v2.16.0
 traefik:
   repo: traefik
-  tag: v2.1.3
+  tag: v2.1.4
 verdun:
   api:
     repo: croissong/verdun-api

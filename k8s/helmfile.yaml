@@ -24,7 +24,7 @@ releases:
 - name: prometheus
   namespace: prometheus
   chart: stable/prometheus-operator
-  version: 8.5.0
+  version: 8.7.0
   values:
   - values/prometheus.yml.gotmpl
 
